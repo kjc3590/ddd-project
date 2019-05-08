@@ -3,30 +3,42 @@ package io.github.wotjd243.findbyhint.treasure.domain;
 import io.github.wotjd243.findbyhint.mission.domain.Mission;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class Treasure {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long treasureId;
 
-    //보물의 이름2
+    //보물의 이름
+    @Column(nullable = false)
     private String treasureName;
 
     //현재상태
+    @Column(nullable = false)
     private String runningStatus;
 
+    @Column(nullable = false)
     private List<TargetPoint> targetPointList;
 
+    @OneToOne
     private RunningTime runningTime;
 
     //보물로 접근할 수 있는 QR코드
+    @OneToOne
     private QRCodeVO qrCodeVO;
 
+    @OneToMany
     private List<Mission> missionList;
+
+    //기본 생성자
+    public Treasure() {}
 
     public Treasure(String treasureName,
                     String runningStatus, QRCodeVO qrCodeVO,
@@ -34,7 +46,6 @@ public class Treasure {
                     RunningTime runningTime,
                     final List<Mission> missionList) {
         validation(treasureName,runningStatus,targetPointList,runningTime,missionList);
-        this.treasureId = UUID.randomUUID().getMostSignificantBits();
         this.treasureName= treasureName;
         this.runningStatus = runningStatus;
         this.qrCodeVO = qrCodeVO;
