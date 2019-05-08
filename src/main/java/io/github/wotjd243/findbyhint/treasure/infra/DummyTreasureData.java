@@ -13,6 +13,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
+/**
+ *
+ * @author DoYoung
+ *
+ */
 
 public class DummyTreasureData {
 
@@ -99,7 +104,7 @@ public class DummyTreasureData {
                                 RunningTime runningTime,
                                 final List<Mission> missionList) {
 
-        return data.put(treasureId,new Treasure(treasureName,runningStatus,qrCodeVO,targetPointList,runningTime,missionList));
+        return data.put(treasureId,new Treasure(treasureName,qrCodeVO,targetPointList,runningTime,missionList));
 
     }
 }

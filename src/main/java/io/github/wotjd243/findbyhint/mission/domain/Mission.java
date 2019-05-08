@@ -1,5 +1,15 @@
 package io.github.wotjd243.findbyhint.mission.domain;
 
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@NoArgsConstructor
+@Table(name = "mission")
 public class Mission {
     // TODO (1) '미션’은 난이도가 4개가 있다. (브론즈, 실버, 골드, 플래티넘)
     // TODO (2) '미션' 은 Easy일 경우 브론즈, 실버 난이도로, Medium일 경우 골드 난이도로, Hard일 경우 플래티넘 난이도로 레벨이 적용된다.
@@ -9,6 +19,7 @@ public class Mission {
     // TODO (6) '미션 포인트'는 최대 100점을 넘을 수 없다.
 
     //미션키
+    @Id
     private final int missionKey;
     //미션 문제
     private final String question;
@@ -20,6 +31,7 @@ public class Mission {
 //    private final MissionLevel level;
 
     //미션성공시 증정 포인트
+    @Embedded
     private final MissionPoint point;
 
     /*public Mission(final int missionKey, final String question, final String answer, final String level, final int point) {

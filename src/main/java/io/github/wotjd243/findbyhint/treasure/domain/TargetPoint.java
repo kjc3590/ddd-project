@@ -1,24 +1,36 @@
 package io.github.wotjd243.findbyhint.treasure.domain;
+/**
+ *
+ * @author DoYoung
+ *
+ */
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.*;
 import java.util.Random;
 import java.util.function.DoubleUnaryOperator;
 
-// TODO (1) 경도(Hardness)범위는 124 – 132, 위도(Latitude)범위는 33 – 43 안에 범주한다.
-
+@Entity
+@Table(name = "targetPoint")
 public class TargetPoint {
 
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long targetPointId;
 
     /*실제 보물의 위치*/
     //위도
+    @Column(nullable = false)
     private final Double latitude;
 
     //경도
+    @Column(nullable = false)
     private final Double hardness;
 
     //진짜 가짜 유무
+    @Column(nullable = false)
     private final String distinguish;
 
     private TargetPoint(Double latitude, Double hardness,String distinguish) {
@@ -31,8 +43,6 @@ public class TargetPoint {
     public static TargetPoint valueOfIatitudeAndHardness (final Double latitude,final Double hardness,final String distinguish){
         return new TargetPoint(latitude,hardness,distinguish);
     }
-
-    // TODO (1) 경도(Hardness)범위는 124 – 132, 위도(Latitude)범위는 33 – 43 안에 범주한다.
 
     //nullCHeck
     public void validation(final Double latitude,final Double hardness,final String distinguish){
@@ -52,9 +62,7 @@ public class TargetPoint {
         return TargetPoint.valueOfIatitudeAndHardness(latitude,hardness,"0");
     }
 
-    public Double getHardness() {
-        return hardness;
-    }
+    public Double getHardness() { return hardness; }
 
     public Double getLatitude() {
         return latitude;

@@ -1,4 +1,4 @@
-package io.github.wotjd243.findbyhint.util.check;
+package io.github.wotjd243.findbyhint.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
