@@ -30,5 +30,10 @@ public class HunterPictureName {
 
     }
 
-
+    @Override
+    public String toString() {
+        return "HunterPictureName{" +
+                "hunterPictureName='" + hunterPictureName + '\'' +
+                '}';
+    }
 }

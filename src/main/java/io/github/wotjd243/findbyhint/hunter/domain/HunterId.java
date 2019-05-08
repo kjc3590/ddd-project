@@ -22,4 +22,10 @@ public class HunterId {
         Check.idpwCheck(hunterId);
     }
 
+    @Override
+    public String toString() {
+        return "HunterId{" +
+                "hunterId='" + hunterId + '\'' +
+                '}';
+    }
 }

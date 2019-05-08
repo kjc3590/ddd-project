@@ -5,4 +5,11 @@ import org.junit.Test;
 
 public class HunterTest {
 
+    @Test
+    public void hunterCreate() {
+        Hunter hunter = new Hunter("kjc3590","2222","김종찬","/file/file.png","file.png",200,3);
+
+        System.out.println(hunter);
+    }
+
 }

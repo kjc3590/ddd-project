@@ -42,4 +42,12 @@ public class HunterPoint {
     public int getHunterPoint() {
         return hunterPoint;
     }
+
+    @Override
+    public String
+    toString() {
+        return "HunterPoint{" +
+                "hunterPoint=" + hunterPoint +
+                '}';
+    }
 }

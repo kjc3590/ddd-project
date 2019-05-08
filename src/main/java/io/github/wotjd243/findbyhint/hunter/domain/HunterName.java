@@ -16,4 +16,11 @@ public class HunterName {
         Check.lengthLimit(hunterName, 15);
 
     }
+
+    @Override
+    public String toString() {
+        return "HunterName{" +
+                "hunterName='" + hunterName + '\'' +
+                '}';
+    }
 }

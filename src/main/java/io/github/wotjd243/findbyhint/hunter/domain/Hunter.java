@@ -32,8 +32,6 @@ public class Hunter {
 
     public void decreaseOneBullet() {
 
-        int aa;
-
         if (hunterBullet < 1) {
             throw new IllegalStateException();
         }
@@ -64,4 +62,16 @@ public class Hunter {
         log.println("after_hunterBullet : " + hunterBullet);
     }
 
+    @Override
+    public String toString() {
+        return "Hunter{" +
+                "hunterId=" + hunterId +
+                ", hunterPw=" + hunterPw +
+                ", hunterName=" + hunterName +
+                ", hunterPicturePath='" + hunterPicturePath + '\'' +
+                ", hunterPictureName=" + hunterPictureName +
+                ", hunterPoint=" + hunterPoint +
+                ", hunterBullet=" + hunterBullet +
+                '}';
+    }
 }
