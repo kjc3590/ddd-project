@@ -3,6 +3,7 @@ package io.github.wotjd243.findbyhint.treasure.domain;
 import io.github.wotjd243.findbyhint.mission.domain.Mission;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +11,13 @@ import java.util.UUID;
 
 public class Treasure {
 
-    // TODO (2) 보물의 위치 : 위도 경도 VO로 만들기
-    // TODO (3) 러닝타임 : 시작일 종료일 VO로 만들기
-
     private Long treasureId;
 
     //보물의 이름
+    //보물의 이름
+    //보물의 이름  asd
+    //보물의 이름  asd
+    //보물의 이름  asd
     private String treasureName;
 
     //현재상태
