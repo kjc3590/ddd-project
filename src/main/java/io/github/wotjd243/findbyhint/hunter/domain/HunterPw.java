@@ -16,5 +16,10 @@ public class HunterPw {
         Check.idpwCheck(hunterPw);
     }
 
-
+    @Override
+    public String toString() {
+        return "HunterPw{" +
+                "hunterPw='" + hunterPw + '\'' +
+                '}';
+    }
 }
