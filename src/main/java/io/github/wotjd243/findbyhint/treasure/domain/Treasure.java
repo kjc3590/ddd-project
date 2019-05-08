@@ -14,10 +14,6 @@ public class Treasure {
     private Long treasureId;
 
     //보물의 이름
-    //보물의 이름
-    //보물의 이름  asd
-    //보물의 이름  asd
-    //보물의 이름  asd
     private String treasureName;
 
     //현재상태
