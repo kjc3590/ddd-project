@@ -16,7 +16,7 @@ public class MissionController {
 
     @GetMapping("/mission")
     public void mission(Model model) throws IOException {
-        MissionVO missionVO = new MissionVO();
-        missionVO.execute(model);
+//        MissionVO missionVO = new MissionVO();
+////        missionVO.execute(model);
     }
 }
