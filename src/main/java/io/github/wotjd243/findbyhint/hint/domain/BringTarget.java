@@ -1,5 +1,7 @@
 package io.github.wotjd243.findbyhint.hint.domain;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
 import java.util.ArrayList;
 import java.util.List;
 
