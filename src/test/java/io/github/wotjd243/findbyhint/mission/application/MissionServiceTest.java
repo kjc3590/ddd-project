@@ -43,7 +43,7 @@ public class MissionServiceTest {
         given(missionRepository.findById(any()))
                 .willReturn(
                         Optional.of(
-                                new Mission(1, "How many points did LeBron James score in his first NBA game?", "25", MissionLevel.valueOf("EASY"), 0)
+                                new Mission(MissionLevel.valueOf("EASY"))
                         )
                 )
         ;
@@ -62,7 +62,7 @@ public class MissionServiceTest {
         given(missionRepository.findById(any()))
                 .willReturn(
                         Optional.of(
-                                new Mission(1, "How many points did LeBron James score in his first NBA game?", "25", MissionLevel.EASY, 0)
+                                new Mission(MissionLevel.EASY)
                         )
                 )
         ;

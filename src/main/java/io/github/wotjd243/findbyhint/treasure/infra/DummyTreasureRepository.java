@@ -5,12 +5,17 @@ import io.github.wotjd243.findbyhint.treasure.domain.TreasureRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+/**
+ *
+ * @author DoYoung
+ *
+ */
 
-@Repository
-public class DummyTreasureRepository implements TreasureRepository {
-
-    @Override
-    public Optional<Treasure> findById(final Long id) {
-        return Optional.ofNullable(DummyTreasureData.get(id));
-    }
-}
+//@Repository
+//public class DummyTreasureRepository implements TreasureRepository {
+//
+//    @Override
+//    public Optional<Treasure> findById(final Long id) {
+//        return Optional.ofNullable(DummyTreasureData.get(id));
+//    }
+//}
