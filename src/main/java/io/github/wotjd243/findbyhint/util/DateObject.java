@@ -1,4 +1,4 @@
-package io.github.wotjd243.findbyhint.treasure.domain;
+package io.github.wotjd243.findbyhint.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
