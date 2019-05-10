@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.Period;
 
 @Getter
+@Embeddable
 public class RunningTime {
 
     // 러닝타임 시작일
@@ -22,6 +23,11 @@ public class RunningTime {
     // 러닝타임 종료일
     @Column(nullable = false)
     private final LocalDate endDate;
+
+    //현재상태 기본값 대기
+    @Column(nullable = false)
+    private String runningStatus = "대기";
+
 
     private RunningTime(LocalDate startDate, LocalDate endDate) {
 
@@ -83,8 +89,6 @@ public class RunningTime {
 
         return check;
     }
-
-
 
     //러닝타임을 구하는 기능
     public int getRunningRangeDays(){
