@@ -1,6 +1,6 @@
 package io.github.wotjd243.findbyhint.treasure.domain;
 
-import io.github.wotjd243.findbyhint.util.check.DateObject;
+import io.github.wotjd243.findbyhint.util.DateObject;
 import org.junit.Test;
 
 import java.time.LocalDate;

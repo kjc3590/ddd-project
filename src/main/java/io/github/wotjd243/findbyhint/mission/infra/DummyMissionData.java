@@ -35,6 +35,6 @@ public class DummyMissionData {
     }
 
     private static Mission put(final int missionKey, final String question, final String answer, MissionLevel level, final int point) {
-        return data.put(missionKey, new Mission(missionKey, question, answer, level, point));
+        return data.put(missionKey, new Mission(level));
     }
 }
