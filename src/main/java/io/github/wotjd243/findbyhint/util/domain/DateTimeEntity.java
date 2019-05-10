@@ -1,10 +1,11 @@
-package io.github.wotjd243.findbyhint.util;
+package io.github.wotjd243.findbyhint.util.domain;
 /*
  *
  * @author DoYoung
- *
+ * 생성시간과 업데이트 시간
  */
 
+import io.github.wotjd243.findbyhint.util.LocalDateTimePersistenceConverter;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

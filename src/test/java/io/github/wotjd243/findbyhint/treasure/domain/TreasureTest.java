@@ -10,7 +10,7 @@ public class TreasureTest {
     @Test
     public void 보물생성(){
         // given
-        DateObject dateObject = new DateObject();
+        DateObject dateObject = DateObject.getInstance();
         final LocalDate startDate = dateObject.getDate().plusDays(10L);
         final LocalDate endDate = dateObject.getDate().plusDays(11L);
         final String latitude = "126.9941658";

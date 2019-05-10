@@ -7,20 +7,23 @@ package io.github.wotjd243.findbyhint.treasure.domain;
 
 import io.github.wotjd243.findbyhint.mission.domain.Mission;
 import io.github.wotjd243.findbyhint.mission.domain.MissionLevel;
-import io.github.wotjd243.findbyhint.util.DateTimeEntity;
+import io.github.wotjd243.findbyhint.util.VO.Event;
+import io.github.wotjd243.findbyhint.util.domain.DateTimeEntity;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.lang.NonNull;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
-import java.lang.annotation.Target;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 // TODO (1) 1급컬렉션으로 만들수 있으면 만들어보기
 // TODO (2) 인스턴스 변수 2개로 줄이기
+// TODO (3) getHintCounter 완성시키기
+// TODO (4) Domain Service 만들기
 
 @Entity
 @Table(name = "treasure")
@@ -32,51 +35,48 @@ public class Treasure extends DateTimeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long treasureId;
 
-
-    @NonNull
-    @Column(nullable = false)
-    private String treasureName;
+    @Embedded
+    private QRCode qrCodeVO;
 
     @Embedded
-    private RunningTime runningTime;
-
-    @Embedded
-    private QRCodeVO qrCodeVO;
-
-
-    // SubEntity 로 묶기
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "targetPointId")
-    private List<TargetPoint> targetPointList;
-
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "missionKey")
-    private List<Mission> missionList = new ArrayList<>();
-
-
-
-
+    private TreasureInventory  treasureInventory;
 
     //기본 생성자
     private Treasure() {}
 
-    public Treasure(String treasureName,
-                    QRCodeVO qrCodeVO,
-                    List<TargetPoint> targetPointList,
-                    RunningTime runningTime) {
-        validation(treasureName,targetPointList,runningTime);
-        this.treasureName= treasureName;
-        this.qrCodeVO = qrCodeVO;
-        this.targetPointList= targetPointList;
-        this.runningTime = runningTime;
-        generateMissionList();
+    public Treasure(String qrUrl, String qrPw,
+                    Double latitude, Double hardness,
+                    LocalDate startDate, LocalDate endDate, String name
+                    ) {
+
+        Event runningTime = Event.valueOf(startDate, endDate, name);
+        TargetPoint targetPoint = TargetPoint.valueOf(latitude,hardness);
+        Period period = runningTime.getEventPeriod().getPeriod();
+
+        List<Mission> missionList = generateMissionList();
+
+
+        this.qrCodeVO = QRCode.valueOf(qrUrl, qrPw);
+        this.treasureInventory= TreasureInventory.valueOf(runningTime,targetPointList,missionList);
+
     }
 
 
-    //미션을 생성하는 메소드
-    public void generateMissionList(){
+    //러닝타임의 따라 풀어야 하는 미션의 개수
+    // 공식 :  1주일에 개의 문제  7일당 5문제
+    public int getMissionCountByRunningTime(Period period){
+        int runningRangeDays = period.getDays();
+        //설명변수
+        int missionCount = runningRangeDays  - runningRangeDays/7 * 2;
+        return missionCount;
+    }
 
-        int missionCount = this.runningTime.getMissionCountByRunningRangeDays();
+
+
+    //미션을 생성하는 메소드
+    public List<Mission> generateMissionList(){
+
+        int missionCount = getMissionCountByRunningTime();
         final List<Mission> missionList = new ArrayList<>();
         int missionLevelCount = MissionLevel.size();
 
@@ -112,7 +112,7 @@ public class Treasure extends DateTimeEntity {
             }
 
         }
-        this.missionList=  missionList;
+        return  missionList;
     }
 
     public void generateTargetPointList(TargetPoint realTargetPoint) throws IllegalAccessException {
@@ -126,7 +126,6 @@ public class Treasure extends DateTimeEntity {
         this.targetPointList = targetPointList;
 
     }
-
 
     private int getHintCounter() throws IllegalAccessException {
 
@@ -142,27 +141,11 @@ public class Treasure extends DateTimeEntity {
     }
 
 
-    public int getTargetPointCount(){
-        return this.targetPointList.size();
-    }
-
-    public int getMissionCount(){
-        return this.missionList.size();
-    }
-
-    public static Treasure valueOf(String treasureName, QRCodeVO qrCodeVO,
+    public static Treasure valueOf(String treasureName, QRCode qrCodeVO,
                                    List<TargetPoint> targetPointList,
-                                   RunningTime runningTime,
+                                   Event runningTime,
                                    List<Mission> missionList){
         return new Treasure(treasureName,qrCodeVO,targetPointList,runningTime);
     }
-
-    //유효성 체크
-    public void validation(String name,  List<TargetPoint> targetPointList,RunningTime runningTime){
-        if(StringUtils.isEmpty(name)|| targetPointList == null || targetPointList.isEmpty() || runningTime == null) {
-            new IllegalArgumentException("Treasure Exception !!!");
-        }
-    }
-
 
 }

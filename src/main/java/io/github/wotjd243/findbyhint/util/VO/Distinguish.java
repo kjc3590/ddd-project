@@ -1,4 +1,4 @@
-package io.github.wotjd243.findbyhint.treasure.domain;
+package io.github.wotjd243.findbyhint.util.VO;
 
 import lombok.Getter;
 
