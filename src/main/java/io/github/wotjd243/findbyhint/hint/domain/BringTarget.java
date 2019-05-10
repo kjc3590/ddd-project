@@ -18,4 +18,7 @@ public class BringTarget {
         return new BringTarget(bringtargetId);
     }
 
+    public List<Long> getBringtargetId() { return bringtargetId; }
+
+
 }

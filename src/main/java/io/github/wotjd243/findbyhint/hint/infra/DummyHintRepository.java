@@ -1,4 +1,4 @@
-/*
+
 package io.github.wotjd243.findbyhint.hint.infra;
 
 import io.github.wotjd243.findbyhint.hint.domain.Hint;
@@ -15,4 +15,4 @@ import java.util.Optional;
         return Optional.ofNullable(DummyHintData.get(id));
     }
 }
-*/
+
