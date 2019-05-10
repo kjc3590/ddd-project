@@ -11,12 +11,11 @@ public class MissionTest {
         // given
         // when
         // then
-        new Mission(1,"미션 문제 테스트", "미션 답 테스트",MissionLevel.EASY,70);
+        new Mission(MissionLevel.EASY);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void 다이아_레벨_미션_생성() {
-        new Mission(2,"미션 문제 테스트", "미션 답 테스트",MissionLevel.HARD, 30);
+    public void 다이아_레벨_미션_생성() {new Mission(MissionLevel.HARD);
     }
 
 
