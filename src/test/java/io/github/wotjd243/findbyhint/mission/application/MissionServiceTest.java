@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +26,7 @@ public class MissionServiceTest {
     private MissionService missionService;
 
     @Test
-    public void 아이디_찾기() {
+    public void 아이디_찾기() throws IOException{
         System.out.println(missionRepository.findById(MissionLevel.valueOf("HARD")));
         for(MissionLevel level : MissionLevel.values()) {
             level.getLevelValue();
@@ -37,7 +38,7 @@ public class MissionServiceTest {
     }
 
     @Test
-    public void 미션_맞추면_포인트_증정() {
+    public void 미션_맞추면_포인트_증정() throws IOException{
 
         // given
         given(missionRepository.findById(any()))
@@ -57,7 +58,7 @@ public class MissionServiceTest {
     }
 
     @Test
-    public void testMission() {
+    public void testMission() throws IOException {
         // given
         given(missionRepository.findById(any()))
                 .willReturn(
