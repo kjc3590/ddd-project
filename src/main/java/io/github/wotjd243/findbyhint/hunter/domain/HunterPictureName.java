@@ -2,10 +2,12 @@ package io.github.wotjd243.findbyhint.hunter.domain;
 
 import io.github.wotjd243.findbyhint.util.check.Check;
 
+import javax.persistence.Embeddable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+@Embeddable
 public class HunterPictureName {
 
     private String hunterPictureName;

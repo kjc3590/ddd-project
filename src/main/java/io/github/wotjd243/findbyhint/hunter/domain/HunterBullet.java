@@ -35,4 +35,10 @@ public class HunterBullet {
         hunterBullet++;
     }
 
+    @Override
+    public String toString() {
+        return "HunterBullet{" +
+                "hunterBullet=" + hunterBullet +
+                '}';
+    }
 }
