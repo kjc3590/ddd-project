@@ -20,8 +20,8 @@ import java.util.function.DoubleUnaryOperator;
 public class TargetPoint {
 
 
-
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long targetPointId;
 
     /*실제 보물의 위치*/
@@ -38,33 +38,33 @@ public class TargetPoint {
     @Column(nullable = false)
     private final Distinguish distinguish;
 
-    private TargetPoint(Double latitude, Double hardness,Distinguish distinguish) {
-        validation(latitude,hardness,distinguish);
+    private TargetPoint(Double latitude, Double hardness, Distinguish distinguish) {
+        validation(latitude, hardness, distinguish);
         this.latitude = latitude;
         this.hardness = hardness;
-        this.distinguish =distinguish;
+        this.distinguish = distinguish;
     }
 
-    public static TargetPoint valueOfIatitudeAndHardness (final Double latitude,final Double hardness){
-        return new TargetPoint(latitude,hardness,Distinguish.REAL);
+    public static TargetPoint valueOfIatitudeAndHardness(final Double latitude, final Double hardness) {
+        return new TargetPoint(latitude, hardness, Distinguish.REAL);
     }
 
     //nullCHeck
-    public void validation(final Double latitude,final Double hardness,final Distinguish distinguish){
+    public void validation(final Double latitude, final Double hardness, final Distinguish distinguish) {
 
-        if(latitude == null || hardness ==null || distinguish == null){
+        if (latitude == null || hardness == null || distinguish == null) {
             throw new IllegalArgumentException("TargetPoint Exception !!!");
-        }else if (latitude < 33 || latitude > 43 ||  hardness < 124 || hardness > 132){
-            throw new IllegalArgumentException("경도와 위도범위가 맞지 않음 " + "경도 (hardness) :" + hardness + "위도(latitude) : "+latitude);
+        } else if (latitude < 33 || latitude > 43 || hardness < 124 || hardness > 132) {
+            throw new IllegalArgumentException("경도와 위도범위가 맞지 않음 " + "경도 (hardness) :" + hardness + "위도(latitude) : " + latitude);
         }
 
     }
 
-    public TargetPoint getFakeTargetPoint(){
+    public TargetPoint getFakeTargetPoint() {
         Random random = new Random();
-        Double latitude = 33 + random.nextInt(10) +random.nextDouble();
-        Double hardness = 124 + random.nextInt(8) +random.nextDouble();
-        return new TargetPoint(latitude,hardness,Distinguish.FAKE);
+        Double latitude = 33 + random.nextInt(10) + random.nextDouble();
+        Double hardness = 124 + random.nextInt(8) + random.nextDouble();
+        return new TargetPoint(latitude, hardness, Distinguish.FAKE);
     }
-
+}
 
