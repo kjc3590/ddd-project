@@ -40,4 +40,8 @@ public enum MissionLevel {
     }
 
     public int getHintCounter() { return hintCounter;}
+
+    public static int size(){ return values().length; }
+
+
 }
