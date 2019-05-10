@@ -1,4 +1,9 @@
 package io.github.wotjd243.findbyhint.treasure.domain;
+/**
+ *
+ * @author DoYoung
+ *
+ */
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -6,24 +11,40 @@ import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.AbstractView;
 
+import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QRCodeVO {
 
+    @Column(nullable = false)
     private String qrUrl;
+
+    @Column(nullable = false)
     private int width;
+
+    @Column(nullable = false)
     private int height;
+
+    @Column(nullable = false)
     private String qrColor;
+
+    @Column(nullable = false)
     private String backColor;
+
+    @Column(nullable = false)
     private String qrPw;
 
     public QRCodeVO(String qrUrl, int width, int height, String qrColor, String backColor,String qrPw) {
@@ -103,47 +124,6 @@ public class QRCodeVO {
 
         };
     }
-
-    public String getUrl() {
-        return qrUrl;
-    }
-
-    public void setUrl(String qrUrl) {
-        this.qrUrl = qrUrl;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public String getQrColor() {
-        return qrColor;
-    }
-
-    public void setQrColor(String qrColor) {
-        this.qrColor = qrColor;
-    }
-
-    public String getBackColor() {
-        return backColor;
-    }
-
-    public void setBackColor(String backColor) {
-        this.backColor = backColor;
-    }
-
 
     public boolean isEmpty() {
         return  StringUtils.isEmpty(this.qrUrl) || StringUtils.isEmpty(this.width) || StringUtils.isEmpty(this.height)

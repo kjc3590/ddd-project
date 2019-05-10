@@ -1,24 +1,35 @@
 package io.github.wotjd243.findbyhint.treasure.domain;
+/**
+ *
+ * @author DoYoung
+ *
+ */
 
-import io.github.wotjd243.findbyhint.util.check.DateObject;
+import io.github.wotjd243.findbyhint.util.DateObject;
+import lombok.Getter;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
 
+@Getter
 public class RunningTime {
 
     // 러닝타임 시작일
+    @Column(nullable = false)
     private final LocalDate startDate;
+
     // 러닝타임 종료일
+    @Column(nullable = false)
     private final LocalDate endDate;
 
     private RunningTime(LocalDate startDate, LocalDate endDate) {
 
         validation(startDate,endDate);
 
-
         this.startDate = startDate;
         this.endDate = endDate;
+
     }
 
 
@@ -99,13 +110,5 @@ public class RunningTime {
                 "startDate=" + startDate +
                 ", endDate=" + endDate +
                 '}';
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
     }
 }

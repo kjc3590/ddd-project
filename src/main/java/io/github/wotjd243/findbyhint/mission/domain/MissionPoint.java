@@ -1,9 +1,15 @@
 package io.github.wotjd243.findbyhint.mission.domain;
 
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+
 public class MissionPoint {
 
+    MissionPoint(){}
+
     private int point;
-    public MissionPoint(final int point) {
+    private MissionPoint(final int point) {
 //        randomPoint(point);
         validate(point);
         this.point = point;
