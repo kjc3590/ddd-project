@@ -29,6 +29,7 @@ public class Mission {
     private Long missionKey;
 
     //미션 난이도
+    //미션 난이도
     private MissionLevel missionLevel;
 
 
