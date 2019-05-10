@@ -4,7 +4,6 @@ package io.github.wotjd243.findbyhint.hint.domain;
 //TODO 3. 미션을 맞출 때 마다 Mission Level에 해당하는 수 만큼의 Tagetpoint List를 힌트로 가져온다.  distinguish 가 1이어야함
 
 import io.github.wotjd243.findbyhint.hunter.domain.HunterId;
-import java.util.List;
 
 public class Hint {
     // 힌트 엔티티의 PK  보물 "" 에 해당하는 힌트값을 찾을 때 유용
@@ -12,18 +11,16 @@ public class Hint {
     // FK
     private final HunterId hunterId;
     // FK 나중에 주입받는다 .(referenced Column ID)
-    private final Long treasureId;
-    // targetPointList 에서 추출할 값은 latitude , hardness , distinguish , hintOrder => (TargetPoint 의 PK값)
-    private final List<Long> targetPointIds;
 
-    public Hint(String hunterId, Long treasureId, List<Long> targetPointIds) {
+    private final HintEffect hintEffect;
+
+    public Hint(String hunterId, HintEffect hintEffect){
         this.hunterId = new HunterId(hunterId);
-        this.treasureId = treasureId;
-        this.targetPointIds = targetPointIds;
+        this.hintEffect = hintEffect;
     }
 
-    public static Hint valueOf(String hunterId, Long treasureId, List<Long> targetPointIds) {
-        return new Hint(hunterId, treasureId, targetPointIds);
+    public static Hint valueOf(String hunterId, HintEffect hintEffect) {
+        return new Hint(hunterId, hintEffect);
     }
 
 
