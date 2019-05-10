@@ -30,10 +30,10 @@ public class TreasureController {
     public String  saveTreasure(@Valid Treasure treasure){
 
         log.info("saveTreasure 실행 및 파라미터 확인");
-        log.info("saveTreasure treasure -> " + treasure.getQrCodeVO());
-        log.info("saveTreasure RunningStatus -> " + treasure.getRunningStatus());
-        log.info("saveTreasure TreasureName -> " + treasure.getTreasureName());
-        log.info("saveTreasure TargetPointList -> " + treasure.getTargetPointList());
+//        log.info("saveTreasure treasure -> " + treasure.getQrCodeVO());
+//        log.info("saveTreasure RunningStatus -> " + treasure.getRunningStatus());
+//        log.info("saveTreasure TreasureName -> " + treasure.getTreasureName());
+//        log.info("saveTreasure TargetPointList -> " + treasure.getTargetPointList());
 
         treasureService.save(treasure);
 
