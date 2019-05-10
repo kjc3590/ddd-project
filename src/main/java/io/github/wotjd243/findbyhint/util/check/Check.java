@@ -26,7 +26,7 @@ public class Check {
             } else if (chrInput >= 0x30 && chrInput <= 0x39) {
                 // 숫자 OK!
             } else {
-                log.println("영소문자,대문자,숫자만 사용해서 아이디를 만들어야합니다.");
+                log.println("영소문자,대문자,숫자만 사용해야 합니다.");
                 throw new IllegalArgumentException();
             }
         }

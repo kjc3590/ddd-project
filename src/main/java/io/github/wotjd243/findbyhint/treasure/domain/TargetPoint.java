@@ -64,4 +64,3 @@ public class TargetPoint {
         return distinguish;
     }
 }
-
