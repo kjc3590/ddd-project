@@ -27,6 +27,7 @@ import java.util.Map;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Embeddable
 public class QRCodeVO {
 
     @Column(nullable = false)
