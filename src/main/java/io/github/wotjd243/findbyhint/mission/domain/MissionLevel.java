@@ -1,5 +1,6 @@
 package io.github.wotjd243.findbyhint.mission.domain;
 
+
 public enum MissionLevel {
     EASY(1, "BRONZE",2), MEDIUM(2, "SILVER",4), HARD(3, "GOLD",8);
 
@@ -21,6 +22,6 @@ public enum MissionLevel {
     public String getLevelName() {
         return levelName;
     }
-
+  
     public int getHintCounter() { return hintCounter;}
 }

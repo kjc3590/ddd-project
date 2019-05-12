@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
-@Service
 public class Check {
 
     public static void idpwCheck(String value) {
