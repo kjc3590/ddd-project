@@ -7,14 +7,19 @@ import java.time.LocalDate;
 
 public class TreasureTest {
 
-    @Test
-    public void 보물생성(){
+    @Test(expected = IllegalArgumentException.class)
+    public void 보물생성() throws IllegalAccessException {
+
         // given
-        DateObject dateObject = new DateObject();
+        DateObject dateObject = DateObject.getInstance();
+        final String qrPw = "1234";
+        final Double latitude = 126.9941658;
+        final Double longitude = 37.4954676;
         final LocalDate startDate = dateObject.getDate().plusDays(10L);
         final LocalDate endDate = dateObject.getDate().plusDays(11L);
-        final String latitude = "126.9941658";
-        final String hardness = "37.4954676";
+        final String name = "보물의 이름";
+
+        Treasure.valueOf(qrPw,latitude,longitude,startDate,endDate,name);
 
 
         // when

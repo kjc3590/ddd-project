@@ -19,9 +19,9 @@ public class TreasureRestController {
         this.treasureService = treasureService;
     }
 
-    @GetMapping(value = "/treasure/{id}")
-    public boolean isExist(@PathVariable Long id) {
-        return treasureService.isExist(id);
-    }
+//    @GetMapping(value = "/treasure/{id}")
+//    public boolean isExist(@PathVariable Long id) {
+//        return treasureService.isExist(id);
+//    }
 
 }

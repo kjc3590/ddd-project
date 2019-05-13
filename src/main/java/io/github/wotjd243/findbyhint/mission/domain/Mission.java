@@ -1,6 +1,7 @@
 package io.github.wotjd243.findbyhint.mission.domain;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.thymeleaf.util.StringUtils;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "mission")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Mission {
 
     // TODO (1) '미션’은 난이도가 4개가 있다. (브론즈, 실버, 골드, 플래티넘)
@@ -24,9 +25,12 @@ public class Mission {
     // todo (3-1) :: 만약없다면 다푼 것으로 간주 -> 상태를 알려줘야함  Expcetion https://github.com/wotjd243/ddd-project/pull/19/files 여기 참고하면 될것같은데 너무 어렵다..
 
 
+    public Mission() {
+    }
+
     //미션키
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long missionKey;
+    private Long missionId;
 
     //미션 난이도
     //미션 난이도
@@ -51,7 +55,12 @@ public class Mission {
     }
 
     public MissionLevel getMissionLevel() {
-        return missionLevel;
+        return this.missionLevel;
+    }
+
+    // hintCounter 가져오기
+    public int getHintCounter(){
+        return this.missionLevel.getHintCounter();
     }
 
 

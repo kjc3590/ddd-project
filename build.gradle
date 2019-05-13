@@ -19,9 +19,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.h2database:h2'
+    //runtime으로 scope가 등록되는 것을 compile로 변경
+    //기본적으로 JVM 메모리에 올라가게 되는데 이렇게 되면 외부에선 절대 h2에 접근할 수 없다.
+    //그래서 이를 회피하여 접근하기 위해 h2 라이브러리에서 제공하는TcpServer 를 사용하기위해 runtime -> compile 로 변경
+    // runtimeOnly 'com.h2database:h2'
+    compile('com.h2database:h2')
     annotationProcessor 'org.projectlombok:lombok'
     //providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -33,6 +38,8 @@ dependencies {
     implementation 'org.webjars:popper.js:1.15.0'
     implementation 'org.webjars:bootstrap:4.3.1'
 
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.2.Final'
 
     //QRCODE DEPENDENCY
     // https://mvnrepository.com/artifact/com.google.zxing/core
