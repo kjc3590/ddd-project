@@ -26,7 +26,7 @@ public class Mission {
 
     //미션키
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long missionKey;
+    private Long missionId;
 
     //미션 난이도
     //미션 난이도
@@ -51,7 +51,12 @@ public class Mission {
     }
 
     public MissionLevel getMissionLevel() {
-        return missionLevel;
+        return this.missionLevel;
+    }
+
+    // hintCounter 가져오기
+    public int getHintCounter(){
+        return this.missionLevel.getHintCounter();
     }
 
 

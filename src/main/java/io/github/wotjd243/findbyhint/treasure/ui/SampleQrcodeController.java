@@ -21,7 +21,7 @@ public class SampleQrcodeController {
         //default config
 
         String url = "https://blog.naver.com/doyoung0205";
-        QRCode sampleQrCodeVO= QRCode.valueOf(url,"비밀번호");
+        QRCode sampleQrCodeVO= QRCode.valueOf("비밀번호");
         return sampleQrCodeVO.getQrView();
 }
 

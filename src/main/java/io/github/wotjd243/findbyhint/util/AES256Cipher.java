@@ -14,6 +14,7 @@ import javax.crypto.spec.SecretKeySpec;
  * @author Doyoung
  *
  */
+
 @Slf4j
 public class AES256Cipher {
 

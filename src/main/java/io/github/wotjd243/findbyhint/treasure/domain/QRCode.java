@@ -11,6 +11,7 @@ import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import io.github.wotjd243.findbyhint.util.AES256Cipher;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,10 +26,12 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-@Getter
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class QRCode {
+
+    private final String preixUrl = "http://localhost:8080/findByHint?url=";
 
     @Column(nullable = false)
     private String qrUrl;
@@ -39,21 +42,34 @@ public class QRCode {
 // qrColor ="0xff000000";
 // backColor ="0xffffffff";
 
-    private QRCode(String qrUrl, String qrPw) {
-        validation(qrUrl,qrPw);
-        this.qrUrl = qrUrl;
-        this.qrPw = qrPw;
+    private QRCode(String qrPw) {
+
+        validation(qrPw);
+
+        AES256Cipher cipher = AES256Cipher.getInstance();
+        String aes_encode_pw = cipher.AES_Encode(qrPw);
+
+        this.qrUrl = preixUrl+aes_encode_pw;
+        this.qrPw = aes_encode_pw;
     }
 
-    public static QRCode valueOf(String qrUrl,String qrPw){
-        return new QRCode(qrUrl, qrPw);
+    public static QRCode valueOf(String qrPw){
+        return new QRCode(qrPw);
     }
 
-    private void validation(String qrUrl, String qrPw) {
+    public String getQrPw(){
+        AES256Cipher cipher = AES256Cipher.getInstance();
+        return cipher.AES_Decode(this.qrPw);
 
-        if(StringUtils.isEmpty(qrUrl)){
-            throw new IllegalArgumentException("QrCode 의 URL을 할당받지 못했습니다.");
-        }
+    }
+
+
+    public String getQrUrl(){
+        return this.qrUrl;
+    }
+
+    private void validation(String qrPw) {
+
 
         if(StringUtils.isEmpty(qrPw)){
             throw new IllegalArgumentException("QrCode 의 비밀번호를 할당받지 못했습니다.");

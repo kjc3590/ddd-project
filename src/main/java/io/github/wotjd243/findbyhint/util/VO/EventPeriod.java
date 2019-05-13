@@ -6,19 +6,22 @@ package io.github.wotjd243.findbyhint.util.VO;
  */
 
 import io.github.wotjd243.findbyhint.util.DateObject;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.java.Log;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.security.acl.LastOwnerException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
-@Getter
+@Getter(AccessLevel.PROTECTED)
 @Embeddable
 @Log
-public class EventPeriod {
+public class
+EventPeriod {
 
     // 이벤트 시작일
     @Column(nullable = false)
@@ -55,26 +58,27 @@ public class EventPeriod {
         }
 
         //현재 날짜
-        DateObject today = DateObject.getInstance();
+        DateObject dateObject= DateObject.getInstance();
+        LocalDate todayDate = dateObject.getDate();
 
-        if(startDate.isAfter(today.getDate())){
-            eventPeriodValidationInfo();
+        if(startDate.isAfter(todayDate)){
+            eventPeriodValidationInfo(startDate, endDate);
             throw new IllegalArgumentException("이벤트의 시작날짜가 현재 시간보다 빠르면 안됩니다.");
         }
 
-        if(endDate.isAfter(today.getDate())){
-            eventPeriodValidationInfo();
+        if(endDate.isAfter(todayDate)){
+            eventPeriodValidationInfo(startDate, endDate);
             throw new IllegalArgumentException("이벤트의 종료날짜가 현재 날짜보다 빠르면 안됩니다.");
         }
 
         if(endDate.isAfter(startDate)){
-            eventPeriodValidationInfo();
+            eventPeriodValidationInfo(startDate, endDate);
             throw new IllegalArgumentException("이벤트의 종료날짜가 시작날짜 보다 빠르면 안됩니다.");
         }
 
     }
 
-    private void eventPeriodValidationInfo(){
+    private void eventPeriodValidationInfo(LocalDate startDate, LocalDate endDate){
 
         DateObject today = DateObject.getInstance();
 

@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @EnableJpaAuditing
-
+@EnableScheduling
 @EntityScan(
         basePackageClasses = {Jsr310JpaConverters.class}, // basePackageClasses 에 지정
         basePackages = {"io.github.wotjd243.findbyhint"})

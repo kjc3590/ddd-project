@@ -19,19 +19,15 @@ public class DateObject {
     private LocalTime time;
     private LocalDateTime localDateTime;
 
-    private static DateObject dateObject;
-
     private  DateObject() {
-        date = LocalDate.now();
-        time = LocalTime.now();
-        localDateTime = LocalDateTime.now();
+        final LocalDateTime localDateTime = LocalDateTime.now();
+        date = localDateTime.toLocalDate();
+        time = localDateTime.toLocalTime();
+        this.localDateTime = localDateTime;
     }
 
     public static synchronized DateObject getInstance(){
-        if(dateObject == null){
-            dateObject = new DateObject();
-        }
-        return dateObject;
+        return new DateObject();
     }
 
 

@@ -10,10 +10,5 @@ import lombok.Getter;
 
 @Getter
 public enum Distinguish {
-
-    FAKE("0"), REAL("1");
-
-    private final String destines;
-
-    Distinguish(String destines) { this.destines = destines; }
+    FAKE, REAL;
 }

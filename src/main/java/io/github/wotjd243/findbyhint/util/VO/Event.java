@@ -5,12 +5,14 @@ package io.github.wotjd243.findbyhint.util.VO;
  *
  */
 
+import io.github.wotjd243.findbyhint.util.DateObject;
 import lombok.Getter;
 import lombok.extern.java.Log;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Getter
 @Embeddable
@@ -19,9 +21,11 @@ public class Event {
 
     // 이벤트 상태
     @Column(nullable = false)
+    @Enumerated(value = EnumType.ORDINAL)
     private EventStatus status;
 
     //이벤트 기간
+    @Enumerated(value = EnumType.ORDINAL)
     private EventPeriod eventPeriod;
 
     // 이벤트 이름
@@ -38,6 +42,51 @@ public class Event {
         return new Event(startDate,endDate,name);
     }
 
+    //현재 시간과 비교하기
+    public int checkEvent(){
+
+        //현재 날짜가 이벤트기간안에 있으면 0
+        if(safeEvent()){
+            return 0;
+        //현재 날짜가 이벤트기간보다 늦으면 1
+        }else if(lateEvent()){
+            return 1;
+        //현재 날짜가 이벤트기간보다 빠르면 -1
+        }else if(fastEvent()){
+            return -1;
+
+        //전부 아닐경우 -2
+        }else{
+            return -2;
+        }
+    }
+
+    private Boolean safeEvent(){
+        DateObject today = DateObject.getInstance();
+        LocalDate todayDate =today.getDate();
+        LocalDate eventEndDate = this.eventPeriod.getEndDate();
+
+        return (todayDate.isEqual(eventEndDate) || todayDate.isAfter(eventEndDate));
+
+    }
+
+    private Boolean lateEvent(){
+        DateObject today = DateObject.getInstance();
+        LocalDate todayDate =today.getDate();
+        LocalDate eventEndDate = this.eventPeriod.getEndDate();
+
+        return (todayDate.isBefore(eventEndDate));
+
+    }
+
+    private Boolean fastEvent(){
+        DateObject today = DateObject.getInstance();
+        LocalDate todayDate =today.getDate();
+        LocalDate eventStartDate = this.eventPeriod.getStartDate();
+
+        return (todayDate.isAfter(eventStartDate));
+
+    }
 
     //validation
     private String validation(final String name){
@@ -59,7 +108,7 @@ public class Event {
         return this.status == EventStatus.CLOSE;
     }
 
-    //TODO  eventStatus 변경하는 메소드 진행으로 완료로 대기로
+    // eventStatus 변경하는 메소드 진행으로 완료로 대기로
 
     public Boolean waitEvent(){
         this.status = EventStatus.WAIT;
@@ -73,5 +122,11 @@ public class Event {
         this.status = EventStatus.CLOSE;
         return isClose();
     }
+
+    // 이벤트 기간 가져오는 메소드
+    public Period getPeriod(){
+        return this.eventPeriod.getPeriod();
+    }
+
 
 }

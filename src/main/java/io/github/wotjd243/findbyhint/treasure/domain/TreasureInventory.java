@@ -5,8 +5,8 @@ import io.github.wotjd243.findbyhint.util.VO.Event;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Embeddable
 @Getter

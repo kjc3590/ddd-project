@@ -11,19 +11,20 @@ import io.github.wotjd243.findbyhint.util.VO.Event;
 import io.github.wotjd243.findbyhint.util.domain.DateTimeEntity;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-// TODO (1) 1급컬렉션으로 만들수 있으면 만들어보기
-// TODO (2) 인스턴스 변수 2개로 줄이기
-// TODO (3) getHintCounter 완성시키기
-// TODO (4) Domain Service 만들기
+//TODO (1) 현재 진행중인 보물이 있는지 확인 : findActiveTreasure() 메소드
+//TODO (1 -1) 있다면 날짜가 유효한지 확인 날짜가 지났다면 : validEvent() 메소드만들기
+//TODO (1 -2)  완료로 상태 변경하기 : closeTreasure() 메소드
+//TODO (2) 대기중인 보물이 있는지 확인 : 메소드만들기
+//TODO (2-1) 시작일 맞다면 진행중으로 상태 변경하기 activeTreasure() 메소드
 
 @Entity
 @Table(name = "treasure")
@@ -44,25 +45,47 @@ public class Treasure extends DateTimeEntity {
     //기본 생성자
     private Treasure() {}
 
-    public Treasure(String qrUrl, String qrPw,
-                    Double latitude, Double hardness,
+    public Treasure(String qrPw,
+                    Double latitude, Double longitude,
                     LocalDate startDate, LocalDate endDate, String name
                     ) {
 
+        //보물의 이벤트 생성
         Event runningTime = Event.valueOf(startDate, endDate, name);
-        TargetPoint targetPoint = TargetPoint.valueOf(latitude,hardness);
-        Period period = runningTime.getEventPeriod().getPeriod();
 
-        List<Mission> missionList = generateMissionList();
+        //진짜 타겟좌표로 만든 targetPoint 생성
+        TargetPoint baseTargetPoint = TargetPoint.valueOf(latitude,longitude);
 
+        Period runningTimePeriod = runningTime.getPeriod();
 
-        this.qrCodeVO = QRCode.valueOf(qrUrl, qrPw);
+        List<Mission> missionList = generateMissionList(getMissionCountByRunningTime(runningTimePeriod));
+
+        List<TargetPoint> targetPointList = generateTargetPointList(baseTargetPoint, getHintCount(missionList));
+
+        this.qrCodeVO = QRCode.valueOf(qrPw);
+
         this.treasureInventory= TreasureInventory.valueOf(runningTime,targetPointList,missionList);
 
     }
 
+    //RunningTime 으로 날짜 유효성 체크하기
+    public int validEvent(){
+        return this.treasureInventory.getRunningTime().checkEvent();
+    }
 
-    //러닝타임의 따라 풀어야 하는 미션의 개수
+
+    public Boolean isActive(){
+        return this.treasureInventory.getRunningTime().isActive();
+    }
+    public Boolean isWait(){
+        return this.treasureInventory.getRunningTime().isWait();
+    }
+    public Boolean isClose(){
+        return this.treasureInventory.getRunningTime().isClose();
+    }
+
+
+    //러닝타임의 따라 풀어야 하는 미션의 개수를 구하는 메소드는 Event 말고 Treasure 에서 만듬
     // 공식 :  1주일에 개의 문제  7일당 5문제
     public int getMissionCountByRunningTime(Period period){
         int runningRangeDays = period.getDays();
@@ -72,11 +95,26 @@ public class Treasure extends DateTimeEntity {
     }
 
 
+    //미션의 총 hintCount 가져오기
+    public int getHintCount(List<Mission> missionList) /*throws IllegalAccessException */{
+
+        AtomicInteger hintCounter = new AtomicInteger();
+//
+//        if(missionList == null){
+//            throw  new  IllegalAccessException("미션리스트가 존재 하지 않습니다.");
+//        }
+
+        for (Mission mission : missionList) {
+            hintCounter.addAndGet(mission.getHintCounter());
+        }
+
+        return hintCounter.get();
+    }
+
 
     //미션을 생성하는 메소드
-    public List<Mission> generateMissionList(){
+    public List<Mission> generateMissionList(int missionCount){
 
-        int missionCount = getMissionCountByRunningTime();
         final List<Mission> missionList = new ArrayList<>();
         int missionLevelCount = MissionLevel.size();
 
@@ -115,37 +153,27 @@ public class Treasure extends DateTimeEntity {
         return  missionList;
     }
 
-    public void generateTargetPointList(TargetPoint realTargetPoint) throws IllegalAccessException {
+
+    //가짜 TargetPoint 생성
+    public List<TargetPoint> generateTargetPointList(TargetPoint realTargetPoint,int hintCount) /*throws IllegalAccessException*/ {
 
         List<TargetPoint> targetPointList = new ArrayList<>();
 
-        IntStream.range(1,this.getHintCounter()).forEach(i ->{
+        IntStream.range(1,hintCount).forEach(i ->{
             targetPointList.add(realTargetPoint.getFakeTargetPoint());
         });
 
-        this.targetPointList = targetPointList;
+      return targetPointList;
 
     }
 
-    private int getHintCounter() throws IllegalAccessException {
 
-        if(this.missionList == null){
-            throw  new  IllegalAccessException("미션리스트가 존재 하지 않습니다.");
-        }
-
-        this.missionList.forEach(mission -> {
-            mission.getMissionLevel().getHintCounter();
-        });
-
-        return 0;
+    public static Treasure valueOf(String qrPw,
+                                   Double latitude, Double longitude,
+                                   LocalDate startDate, LocalDate endDate, String name) {
+        return new Treasure(qrPw,latitude,longitude,startDate,endDate,name);
     }
 
 
-    public static Treasure valueOf(String treasureName, QRCode qrCodeVO,
-                                   List<TargetPoint> targetPointList,
-                                   Event runningTime,
-                                   List<Mission> missionList){
-        return new Treasure(treasureName,qrCodeVO,targetPointList,runningTime);
-    }
 
 }

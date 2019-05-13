@@ -122,6 +122,9 @@ int count = 12;
 | 좌표 | targetPoint | 보물의 위치를 뜻 한다. | 
 | QR 코드 경로 | qrUrl | Qr코드를 통해서 접속하는 주소 |
 | 좌표의 진짜 유무 | distinguish | 좌표가 진짜 보물의 위치인지 아닌지 판별해주는 역활을 한다. |
+| 좌표 | Coordinates | 위도와 경도를 가진다. |
+| 위도 | latitude | 좌표의 위도를 뜻한다. |
+| 경도 | hardness | 좌표의 경도를 뜻한다. |
 
 
 | 미션 | mission | 헌터가 힌트를 보기 위해 풀어야하는 과제 |
