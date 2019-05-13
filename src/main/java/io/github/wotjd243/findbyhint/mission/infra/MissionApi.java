@@ -24,7 +24,6 @@ public class MissionApi {
     // TODO (4) 문제는 쉬운 문제부터 -> 어려운 문제로 나와야 함
     // TODO (5) 문제를 맞출 때마다 포인트를 증정해 주어야함
 
-//    public static void main(String[] args) throws IOException, IllegalAccessException {
         public void execute2(Model model) throws IOException, IllegalAccessException {
 //        ArrayList<Map<String, Object>> treasureList = 보물1 문제 데이터;
 //            for(Map<String, Object> tr : treasureList) {
@@ -55,8 +54,7 @@ public class MissionApi {
             }
 
 
-
-//    public static void main(String[] args)  throws IOException {
+    //open trivia db json
     public void execute(Model model) throws IOException {
 
         URL url = new URL("https://opentdb.com/api.php?amount=1");
