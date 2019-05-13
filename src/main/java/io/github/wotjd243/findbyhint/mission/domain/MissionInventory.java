@@ -1,54 +1,24 @@
 package io.github.wotjd243.findbyhint.mission.domain;
 
-import io.github.wotjd243.findbyhint.hunter.domain.Hunter;
-import io.github.wotjd243.findbyhint.treasure.domain.Treasure;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
+import io.github.wotjd243.findbyhint.util.DateTimeEntity;
+
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Embeddable
-public class MissionInventory {
+public class MissionInventory extends DateTimeEntity {
 
-    // TODO (1) '일급 콜렉션' 필요한 부분에서 만들어보기
-    // TODO (2) 인스턴스 변수 3개 이하로 줄이기
+    private Long missionId;
 
-    @Id
-    private int inventoryId;
-
-    @ManyToOne
-    @JoinColumn(name = "hunterId")
-    private Hunter hunter;
-
-    @ManyToOne
-    @JoinColumn(name = "treasureId")
-    private Treasure treasure;
-
-    @Embedded
-    private MissionId missionId;
-
+    @ColumnDefault("N")
     private String success;
 
-    @CreationTimestamp
-    private Timestamp createTime;
+    private MissionQnA missionQnA;
 
-    private String question;
-    private String answer;
-
-    private MissionInventory() {
-
-    }
-
-    public MissionInventory(int inventoryId, Hunter hunter, Treasure treasure, MissionId missionId, String success, Timestamp createTime, String question, String answer) {
-        this.inventoryId = inventoryId;
-        this.hunter = hunter;
-        this.treasure = treasure;
+    public MissionInventory(Long missionId, String success) {
         this.missionId = missionId;
         this.success = success;
-        this.createTime = createTime;
-        this.question = question;
-        this.answer = answer;
     }
+
 }

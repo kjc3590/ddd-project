@@ -2,7 +2,6 @@ package io.github.wotjd243.findbyhint.mission.domain;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.*;
 
