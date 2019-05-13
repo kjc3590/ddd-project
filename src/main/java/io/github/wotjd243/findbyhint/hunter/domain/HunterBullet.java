@@ -6,6 +6,9 @@ public class HunterBullet {
 
     private int hunterBullet;
 
+    public HunterBullet() {
+    }
+
     public HunterBullet(int hunterBullet) {
 
         hunterBullet = maxBullet(hunterBullet);

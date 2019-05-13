@@ -9,6 +9,9 @@ public class HunterName {
 
     private String hunterName;
 
+    public HunterName() {
+    }
+
     public HunterName(String hunterName) {
         validation(hunterName);
         this.hunterName = hunterName;

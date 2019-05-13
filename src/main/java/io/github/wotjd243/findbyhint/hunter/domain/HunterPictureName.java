@@ -12,6 +12,9 @@ public class HunterPictureName {
 
     private String hunterPictureName;
 
+    public HunterPictureName() {
+    }
+
     public HunterPictureName(String hunterPictureName) {
         validation(hunterPictureName);
         this.hunterPictureName = fileNameUnique(hunterPictureName);

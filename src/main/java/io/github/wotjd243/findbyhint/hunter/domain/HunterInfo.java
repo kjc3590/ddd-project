@@ -13,6 +13,12 @@ public class HunterInfo {
 
     private String hunterPicturePath;
 
+    @Embedded
+    private HunterPictureName hunterPictureName;
+
+    public HunterInfo() {
+    }
+
     @Override
     public String toString() {
         return "HunterInfo{" +
@@ -22,9 +28,6 @@ public class HunterInfo {
                 ", hunterPictureName=" + hunterPictureName +
                 '}';
     }
-
-    @Embedded
-    private HunterPictureName hunterPictureName;
 
     public HunterInfo(HunterPw hunterPw, HunterName hunterName, String hunterPicturePath, HunterPictureName hunterPictureName) {
         this.hunterPw = hunterPw;

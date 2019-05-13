@@ -1,13 +1,12 @@
 package io.github.wotjd243.findbyhint.hunter.domain;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import io.github.wotjd243.findbyhint.util.DateTimeEntity;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "hunter")
-public class Hunter {
+public class Hunter extends DateTimeEntity {
 
     // TODO (0) 올바른 Exception 처리 관련 질문해서 반영하기.
     // TODO (1) 총알 리필 시간 관련 메소드 정리
@@ -18,7 +17,9 @@ public class Hunter {
     // TODO (2-2)
     // TODO (3) 1급콜렉션 3개까지 허용
 
-    @Id
+    public Hunter() {}
+
+    @EmbeddedId
     private HunterId hunterId;
 
     @Embedded

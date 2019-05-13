@@ -9,6 +9,9 @@ public class HunterPoint {
 
     private int hunterPoint;
 
+    public HunterPoint() {
+    }
+
     public HunterPoint(int hunterPoint) {
 
         validation(hunterPoint);

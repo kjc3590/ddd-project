@@ -11,11 +11,14 @@ import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 @Getter
 public class HunterPointBullet {
 
-    @Embedded
-    private final HunterPoint hunterPoint;
+    public HunterPointBullet() {
+    }
 
     @Embedded
-    private final HunterBullet hunterBullet;
+    private HunterPoint hunterPoint;
+
+    @Embedded
+    private HunterBullet hunterBullet;
 
     public HunterPointBullet(HunterPoint hunterPoint, HunterBullet hunterBullet) {
         this.hunterPoint = hunterPoint;

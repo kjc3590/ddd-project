@@ -9,6 +9,9 @@ public class HunterPw {
 
     private String hunterPw;
 
+    public HunterPw() {
+    }
+
     public HunterPw(String hunterPw) {
         validation(hunterPw);
         this.hunterPw = hunterPw;
