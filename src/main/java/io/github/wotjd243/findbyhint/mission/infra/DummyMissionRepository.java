@@ -12,7 +12,7 @@ import java.util.Optional;
 public class DummyMissionRepository implements MissionRepository {
 
     @Override
-    public Optional<Mission> findById(Long missionId) throws IOException {
+    public Optional<Mission> findById(Long missionId) {
         return Optional.empty();
     }
 }

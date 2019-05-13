@@ -1,7 +1,6 @@
 package io.github.wotjd243.findbyhint.mission.domain;
 
-import io.github.wotjd243.findbyhint.util.DateTimeEntity;
-
+import io.github.wotjd243.findbyhint.util.domain.DateTimeEntity;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
