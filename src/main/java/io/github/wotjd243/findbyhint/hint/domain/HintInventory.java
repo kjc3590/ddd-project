@@ -1,11 +1,23 @@
 package io.github.wotjd243.findbyhint.hint.domain;
 
-public class HintInventory {
-    private final Long treasureId;
-    private BringTarget bringtargetId;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 
-    public HintInventory(final Long treasureId, BringTarget bringtargetId) {
+@Embeddable
+public class HintInventory {
+    public HintInventory() {}
+
+    private Long treasureId;
+    @Embedded
+    private BringTarget bringtarget;
+
+    private HintInventory(final Long treasureId, BringTarget bringtarget) {
         this.treasureId = treasureId;
-        this.bringtargetId = bringtargetId;
+        this.bringtarget = bringtarget;
     }
+    public static HintInventory valueOf(Long treasureId, BringTarget bringtarget) {
+        return new HintInventory(treasureId,  bringtarget);
+    }
+
+
 }

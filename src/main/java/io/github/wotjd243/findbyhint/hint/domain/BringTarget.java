@@ -8,17 +8,16 @@ import java.util.List;
 @Embeddable
 public class BringTarget {
     @ElementCollection
-    private List<Long> bringtargetId;
-
-    private BringTarget(final List<Long> bringtargetId) {
-        this.bringtargetId = new ArrayList<>(bringtargetId);
+    private List<Long> bringtargetIds;
+    private BringTarget(final List<Long> bringtargetIds) {
+        this.bringtargetIds = new ArrayList<>(bringtargetIds);
+    }
+    public static BringTarget valueOf(List<Long> bringtargetIds) {
+        return new BringTarget(bringtargetIds);
     }
 
-    public static BringTarget valueOf(List<Long> bringtargetId) {
-        return new BringTarget(bringtargetId);
+    public List<Long> getBringtargetIds() {
+        return bringtargetIds;
     }
-
-    public List<Long> getBringtargetId() { return bringtargetId; }
-
 
 }
