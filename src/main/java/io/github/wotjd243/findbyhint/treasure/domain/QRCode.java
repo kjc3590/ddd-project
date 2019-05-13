@@ -27,9 +27,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+
 @Embeddable
 public class QRCode {
+
+    //기본생성자
+    public QRCode(){}
 
     private final String preixUrl = "http://localhost:8080/findByHint?url=";
 

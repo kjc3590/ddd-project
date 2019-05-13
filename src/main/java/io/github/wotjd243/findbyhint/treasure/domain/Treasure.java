@@ -26,6 +26,9 @@ import java.util.stream.IntStream;
 @ToString
 public class Treasure extends DateTimeEntity {
 
+    //기본 생성자
+    private Treasure() {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long treasureId;
@@ -35,9 +38,6 @@ public class Treasure extends DateTimeEntity {
 
     @Embedded
     private TreasureInventory  treasureInventory;
-
-    //기본 생성자
-    private Treasure() {}
 
     public Treasure(String qrPw,
                     Double latitude, Double longitude,

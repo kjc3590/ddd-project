@@ -17,11 +17,14 @@ import java.util.Random;
 @Getter(value = AccessLevel.PROTECTED)
 public class TargetPoint {
 
+    //기본생성자
+    public TargetPoint() {
+    }
+
     //longitude 경도
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long targetPointId;
-
 
     @Embedded
     private Coordinates coordinates;
@@ -30,7 +33,7 @@ public class TargetPoint {
     //파라미터로 distinguish  값을 받으면 안될것같아서 내부적으로 만들어지게 설정
     @Column(nullable = false)
     @Enumerated(value =EnumType.ORDINAL)
-    private final Distinguish distinguish;
+    private Distinguish distinguish;
 
     private TargetPoint(Double latitude, Double longitude,Distinguish distinguish) {
         this.coordinates = Coordinates.valueOf(latitude,longitude);

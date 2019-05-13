@@ -14,6 +14,8 @@ public class TreasureInventory {
 
     //다른 에그리거트에서 많이 조회할 것 같다 (runningTime, TargetPoint, Mission)
 
+    public TreasureInventory() {}
+
     @Embedded
     @Column(name = "runningTime")
     private Event runningTime;

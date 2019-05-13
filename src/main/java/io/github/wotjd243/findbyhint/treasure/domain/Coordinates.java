@@ -24,12 +24,13 @@ public class Coordinates {
     /*실제 보물의 위치*/
     //위도
     @Column(nullable = false)
-    private final Double latitude;
+    private Double latitude;
     //경도
     @Column(nullable = false)
-    private final Double longitude;
+    private Double longitude;
 
-
+    public Coordinates() {
+    }
 
     private Coordinates(Double latitude, Double longitude) {
         validation(latitude, longitude);

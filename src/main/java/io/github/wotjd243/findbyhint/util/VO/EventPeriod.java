@@ -23,13 +23,15 @@ import java.time.format.DateTimeFormatter;
 public class
 EventPeriod {
 
+    public EventPeriod() {}
+
     // 이벤트 시작일
     @Column(nullable = false)
-    private final LocalDate startDate;
+    private  LocalDate startDate;
 
     // 이벤트 종료일
     @Column(nullable = false)
-    private final LocalDate endDate;
+    private  LocalDate endDate;
 
     private EventPeriod(LocalDate startDate, LocalDate endDate) {
         validation(startDate,endDate);

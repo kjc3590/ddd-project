@@ -11,4 +11,6 @@ import lombok.Getter;
 @Getter
 public enum Distinguish {
     FAKE, REAL;
+
+    Distinguish() {}
 }

@@ -19,13 +19,16 @@ import java.time.Period;
 @Log
 public class Event {
 
+    //기본셍성자
+    public Event() {}
+
     // 이벤트 상태
     @Column(nullable = false)
     @Enumerated(value = EnumType.ORDINAL)
     private EventStatus status;
 
     //이벤트 기간
-    @Enumerated(value = EnumType.ORDINAL)
+    @Embedded
     private EventPeriod eventPeriod;
 
     // 이벤트 이름
