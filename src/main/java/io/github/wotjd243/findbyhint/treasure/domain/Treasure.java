@@ -20,12 +20,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-//TODO (1) 현재 진행중인 보물이 있는지 확인 : findActiveTreasure() 메소드
-//TODO (1 -1) 있다면 날짜가 유효한지 확인 날짜가 지났다면 : validEvent() 메소드만들기
-//TODO (1 -2)  완료로 상태 변경하기 : closeTreasure() 메소드
-//TODO (2) 대기중인 보물이 있는지 확인 : 메소드만들기
-//TODO (2-1) 시작일 맞다면 진행중으로 상태 변경하기 activeTreasure() 메소드
-
 @Entity
 @Table(name = "treasure")
 @Getter
