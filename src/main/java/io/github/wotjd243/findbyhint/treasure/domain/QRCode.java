@@ -11,6 +11,7 @@ import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import io.github.wotjd243.findbyhint.util.AES256Cipher;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,36 +26,58 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+
+
 @Embeddable
-public class QRCodeVO {
+public class QRCode {
+
+    //기본생성자
+    public QRCode(){}
+
+    private final String preixUrl = "http://localhost:8080/findByHint?url=";
 
     @Column(nullable = false)
     private String qrUrl;
 
     @Column(nullable = false)
-    private int width;
-
-    @Column(nullable = false)
-    private int height;
-
-    @Column(nullable = false)
-    private String qrColor;
-
-    @Column(nullable = false)
-    private String backColor;
-
-    @Column(nullable = false)
     private String qrPw;
 
-    public QRCodeVO(String qrUrl, int width, int height, String qrColor, String backColor,String qrPw) {
-        this.qrUrl = qrUrl;
-        this.width = width;
-        this.height = height;
-        this.qrColor = qrColor;
-        this.backColor = backColor;
-        this.qrPw = qrPw;
+// qrColor ="0xff000000";
+// backColor ="0xffffffff";
+
+    private QRCode(String qrPw) {
+
+        validation(qrPw);
+
+        AES256Cipher cipher = AES256Cipher.getInstance();
+        String aes_encode_pw = cipher.AES_Encode(qrPw);
+
+        this.qrUrl = preixUrl+aes_encode_pw;
+        this.qrPw = aes_encode_pw;
+    }
+
+    public static QRCode valueOf(String qrPw){
+        return new QRCode(qrPw);
+    }
+
+    public String getQrPw(){
+        AES256Cipher cipher = AES256Cipher.getInstance();
+        return cipher.AES_Decode(this.qrPw);
+
+    }
+
+
+    public String getQrUrl(){
+        return this.qrUrl;
+    }
+
+    private void validation(String qrPw) {
+
+
+        if(StringUtils.isEmpty(qrPw)){
+            throw new IllegalArgumentException("QrCode 의 비밀번호를 할당받지 못했습니다.");
+        }
+
     }
 
 
@@ -67,7 +90,7 @@ public class QRCodeVO {
         try {
             this.qrUrl = new String(this.qrUrl.getBytes("UTF-8"), "ISO-8859-1");
 
-            matrix = qrCodeWriter.encode(this.qrUrl, BarcodeFormat.QR_CODE, width, height);
+            matrix = qrCodeWriter.encode(this.qrUrl, BarcodeFormat.QR_CODE, 300 , 300);
 
 
         } catch (UnsupportedEncodingException e) {
@@ -85,13 +108,13 @@ public class QRCodeVO {
         int intBackColor = 0;
 
         try{
-            intQrColor = Integer.parseUnsignedInt(qrColor,16);
+            intQrColor = Integer.parseUnsignedInt("qrColor",16);
         }catch(Exception e){
             intQrColor = 0xff000000;
         }
 
         try{
-            intBackColor = Integer.parseUnsignedInt(backColor,16);
+            intBackColor = Integer.parseUnsignedInt("0xffffffff",16);
         }catch(Exception e){
             intBackColor = 0xffffffff;
         }
@@ -126,22 +149,11 @@ public class QRCodeVO {
         };
     }
 
-    public boolean isEmpty() {
-        return  StringUtils.isEmpty(this.qrUrl) || StringUtils.isEmpty(this.width) || StringUtils.isEmpty(this.height)
-                || StringUtils.isEmpty(this.qrColor) || StringUtils.isEmpty(this.backColor) || StringUtils.isEmpty(this.qrPw);
-    }
-
-
     @Override
     public String toString() {
-        return "QRCodeVO{" +
+        return "QRCode{" +
                 "qrUrl='" + qrUrl + '\'' +
-                ", width=" + width +
-                ", height=" + height +
-                ", qrColor='" + qrColor + '\'' +
-                ", backColor='" + backColor + '\'' +
                 ", qrPw='" + qrPw + '\'' +
                 '}';
     }
-
 }
