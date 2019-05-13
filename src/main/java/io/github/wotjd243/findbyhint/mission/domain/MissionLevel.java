@@ -9,7 +9,6 @@ public enum MissionLevel {
     private final String levelName;
     private final int hintCounter ;
 
-
     MissionLevel(int levelValue, String levelName, int hintCounter) {
         this.levelValue = levelValue;
         this.levelName = levelName;

@@ -1,9 +1,5 @@
 package io.github.wotjd243.findbyhint.mission.domain;
 
-import lombok.NoArgsConstructor;
-
-import javax.persistence.Entity;
-
 public class MissionPoint {
 
     private static final int MINIMUM_POINT = 0;
@@ -25,7 +21,7 @@ public class MissionPoint {
     //유효성 검사
     private void validate(final int point) {
         if(point < MINIMUM_POINT || point > MAXIMUM_POINT) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("포인트는 0점 이상, 100점 이하여야 합니다.");
         }
     }
 }
