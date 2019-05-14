@@ -2,12 +2,21 @@ package io.github.wotjd243.findbyhint.hunter.domain;
 
 import io.github.wotjd243.findbyhint.util.check.Check;
 
-public class HunterId {
+import javax.persistence.Embeddable;
+import java.io.Serializable;
+
+@Embeddable
+public class HunterId implements Serializable {
 
     private String hunterId;
 
     public HunterId() {
     }
+
+    public static HunterId valueOf(final String hunterId) {
+        return new HunterId(hunterId);
+    }
+
 
     public HunterId(final String hunterId) {
 

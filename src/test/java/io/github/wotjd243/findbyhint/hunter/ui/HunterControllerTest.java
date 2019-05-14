@@ -1,8 +1,6 @@
 package io.github.wotjd243.findbyhint.hunter.ui;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,10 +21,6 @@ public class HunterControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Rule
-    public ExpectedException expectedExcetption = ExpectedException.none();
-
 
     @Test
     public void 총알구매성공() throws Exception {
@@ -78,4 +73,5 @@ public class HunterControllerTest {
                 .andDo(print());
         //.andExpect(status().is5xxServerError());
     }
+
 }
