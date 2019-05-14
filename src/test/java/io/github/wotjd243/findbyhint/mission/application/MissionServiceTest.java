@@ -31,7 +31,7 @@ public class MissionServiceTest {
         for(MissionLevel level : MissionLevel.values()) {
             level.getLevelValue();
             System.out.println("levelValue: "+level.getLevelValue());
-            System.out.println("levelValueOf: "+MissionLevel.valueOf("HARD"));
+            System.out.println("levelValueOf: "+MissionLevel.valueOf("GOLD"));
             System.out.println(missionRepository.findById(any()));
         }
 
@@ -44,7 +44,7 @@ public class MissionServiceTest {
         given(missionRepository.findById(any()))
                 .willReturn(
                         Optional.of(
-                                new Mission(MissionLevel.valueOf("EASY"))
+                                new Mission(MissionLevel.valueOf("BRONZE"))
                         )
                 )
         ;
@@ -63,7 +63,7 @@ public class MissionServiceTest {
         given(missionRepository.findById(any()))
                 .willReturn(
                         Optional.of(
-                                new Mission(MissionLevel.EASY)
+                                new Mission(MissionLevel.BRONZE)
                         )
                 )
         ;
