@@ -164,18 +164,18 @@ public class TreasureService {
                 Mission mission;
                 switch (i2) {
                     case 1:
-                        mission = new Mission(MissionLevel.EASY);
+                        mission = new Mission(MissionLevel.BRONZE);
                         mission.setTreasure(treasure);
                         missionList.add(mission);
 
                         break;
                     case 2:
-                        mission = new Mission(MissionLevel.MEDIUM);
+                        mission = new Mission(MissionLevel.SILVER);
                         mission.setTreasure(treasure);
                         missionList.add(mission);
                         break;
                     case 3:
-                        mission = new Mission(MissionLevel.HARD);
+                        mission = new Mission(MissionLevel.GOLD);
                         mission.setTreasure(treasure);
                         missionList.add(mission);
                         break;
