@@ -2,9 +2,15 @@ package io.github.wotjd243.findbyhint.hunter.domain;
 
 import io.github.wotjd243.findbyhint.util.check.Check;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class HunterPoint {
 
     private int hunterPoint;
+
+    public HunterPoint() {
+    }
 
     public HunterPoint(int hunterPoint) {
 

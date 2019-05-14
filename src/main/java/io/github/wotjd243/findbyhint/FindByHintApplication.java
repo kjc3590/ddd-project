@@ -2,25 +2,16 @@ package io.github.wotjd243.findbyhint;
 
 import io.github.wotjd243.findbyhint.treasure.application.TreasureRequestDto;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
-import io.github.wotjd243.findbyhint.treasure.domain.Treasure;
-import io.github.wotjd243.findbyhint.treasure.domain.TreasureRepository;
-import io.github.wotjd243.findbyhint.treasure.ui.TreasureRequestDTO;
 import io.github.wotjd243.findbyhint.util.DateObject;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 
 /**

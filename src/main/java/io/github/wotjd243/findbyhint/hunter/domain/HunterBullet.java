@@ -6,13 +6,21 @@ public class HunterBullet {
 
     private int hunterBullet;
 
+    public HunterBullet() {
+    }
+
     public HunterBullet(int hunterBullet) {
 
+        hunterBullet = maxBullet(hunterBullet);
+
+        this.hunterBullet = hunterBullet;
+    }
+
+    public int maxBullet(int hunterBullet) {
         if(hunterBullet > 3){
             hunterBullet = 3;
         }
-
-        this.hunterBullet = hunterBullet;
+        return hunterBullet;
     }
 
     public int getHunterBullet() {
@@ -35,4 +43,10 @@ public class HunterBullet {
         hunterBullet++;
     }
 
+    @Override
+    public String toString() {
+        return "HunterBullet{" +
+                "hunterBullet=" + hunterBullet +
+                '}';
+    }
 }
