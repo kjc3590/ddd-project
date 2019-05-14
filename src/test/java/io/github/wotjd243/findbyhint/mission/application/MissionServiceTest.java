@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,7 +27,7 @@ public class MissionServiceTest {
 
     @Test
     public void 아이디_찾기() {
-        System.out.println(missionRepository.findById(MissionLevel.valueOf("HARD")));
+        System.out.println(missionRepository.findById(any()));
         for(MissionLevel level : MissionLevel.values()) {
             level.getLevelValue();
             System.out.println("levelValue: "+level.getLevelValue());
@@ -37,7 +38,7 @@ public class MissionServiceTest {
     }
 
     @Test
-    public void 미션_맞추면_포인트_증정() {
+    public void 미션_맞추면_포인트_증정() throws IOException{
 
         // given
         given(missionRepository.findById(any()))
@@ -49,7 +50,7 @@ public class MissionServiceTest {
         ;
 
         // when
-        final int point = missionService.takePoint("EASY");
+        final int point = missionService.takePoint(any());
 
         // then
         assertThat(point).isNotZero();
@@ -57,7 +58,7 @@ public class MissionServiceTest {
     }
 
     @Test
-    public void testMission() {
+    public void testMission() throws IOException {
         // given
         given(missionRepository.findById(any()))
                 .willReturn(
@@ -99,7 +100,7 @@ public class MissionServiceTest {
         }
         System.out.println("point: "+point);
         //when
-        final int point2 = missionService.takePoint("EASY");
+        final int point2 = missionService.takePoint(any());
 
         //then
         assertThat(point2).isNotZero();
