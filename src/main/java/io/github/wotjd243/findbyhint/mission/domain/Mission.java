@@ -1,16 +1,15 @@
 package io.github.wotjd243.findbyhint.mission.domain;
 
-import lombok.AccessLevel;
+import io.github.wotjd243.findbyhint.treasure.domain.Treasure;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "mission")
 @Getter
-public class Mission {
+public class Mission{
 
     // TODO (1) '미션’은 난이도가 4개가 있다. (브론즈, 실버, 골드, 플래티넘)
     // TODO (2) '미션' 은 Easy일 경우 브론즈, 실버 난이도로, Medium일 경우 골드 난이도로, Hard일 경우 플래티넘 난이도로 레벨이 적용된다.
@@ -28,28 +27,30 @@ public class Mission {
     public Mission() {
     }
 
+    public static final String SEQUENCE_NAME = "MISSION_SEQ";
+
+    @ManyToOne
+    @JoinColumn(name ="treasureId")
+    private Treasure treasure;
+
     //미션키
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long missionId;
 
     //미션 난이도
-    //미션 난이도
+    @Enumerated(value = EnumType.STRING)
     private MissionLevel missionLevel;
 
 
-
-    public Mission(MissionLevel missionLevel/*, int missionKey, String question, String answer, final int point*/) {
+    public Mission(MissionLevel missionLevel) {
 
         validation(missionLevel);
         this.missionLevel = missionLevel;
-        /*this.point = MissionPoint.valueOf(point);
-        this.missionKey = missionKey;
-        this.question = question;
-        this.answer = answer;*/
     }
 
     public void validation(final MissionLevel level) {
-        if(level == null) {
+        if (level == null) {
             throw new IllegalArgumentException("미션의 레벨이 없습니다.");
         }
     }
@@ -58,33 +59,27 @@ public class Mission {
         return this.missionLevel;
     }
 
-    // hintCounter 가져오기
-    public int getHintCounter(){
+    public int getHintCounter() {
         return this.missionLevel.getHintCounter();
     }
 
+    public void setTreasure(Treasure treasure) {
 
-    //private final int missionKey;
+        if(this.treasure != null){
+            if(this.treasure.getTreasureInventory() != null){
+                if(this.treasure.getTreasureInventory().getMissionList() != null){
+                    this.treasure.getTreasureInventory().getMissionList().remove(this);
+                }
+            }
+        }
 
-    //미션 난이도
-//    private final MissionLevel level;
-    //미션 문제
-    //private final String question;
-    //미션 답
-    //private final String answer;
+        this.treasure = treasure;
+        this.treasure.getTreasureInventory().getMissionList().add(this);
 
-    //미션성공시 증정 포인트
-    /*@Embedded
-    private final MissionPoint point;*/
+    }
 
+    public void setMissionId(Long missionId) {
+        this.missionId = missionId;
+    }
 }
 
-    /*public Mission(final int missionKey, final String question, final String answer, final String level, final int point) {
-        validation(question, answer, level);
-        this.missionKey = missionKey;
-        this.question = question;
-        this.answer = answer;
-        this.missionLevel = MissionLevel.valueOf(missionLevel);
-        this.level = new MissionLevel(level);
-        this.point = MissionPoint.valueOf(point);
-    }*/

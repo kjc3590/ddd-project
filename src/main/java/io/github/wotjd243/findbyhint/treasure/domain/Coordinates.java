@@ -44,10 +44,10 @@ public class Coordinates {
     //nullCheck
     private void validation(final Double latitude, final Double longitude) {
 
-        log.info("MIN_LATITUDE_VALUE :: " +MIN_LATITUDE_VALUE);
-        log.info("MAX_LATITUDE_VALUE :: " +MAX_LATITUDE_VALUE);
-        log.info("MIN_longitude_VALUE :: " +MIN_longitude_VALUE);
-        log.info("MAX_LONGITUDE_VALUE :: " +MAX_LONGITUDE_VALUE);
+//        log.info("MIN_LATITUDE_VALUE :: " +MIN_LATITUDE_VALUE);
+//        log.info("MAX_LATITUDE_VALUE :: " +MAX_LATITUDE_VALUE);
+//        log.info("MIN_longitude_VALUE :: " +MIN_longitude_VALUE);
+//        log.info("MAX_LONGITUDE_VALUE :: " +MAX_LONGITUDE_VALUE);
 
         if (latitude == null) {
             throw new IllegalArgumentException("위도의 값을 할당 받지 못했습니다.");

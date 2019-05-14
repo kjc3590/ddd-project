@@ -5,6 +5,7 @@ import io.github.wotjd243.findbyhint.util.VO.Event;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,13 +21,13 @@ public class TreasureInventory {
     @Column(name = "runningTime")
     private Event runningTime;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "targetPointId")
-    private List<TargetPoint> targetPointList;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "treasure")
+//    @JoinColumn(name = "targetPointId")
+    private List<TargetPoint> targetPointList =new ArrayList<TargetPoint>();
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "missionKey")
-    private List<Mission> missionList;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "treasure")
+//    @JoinColumn(name = "missionId")
+    private List<Mission> missionList = new ArrayList<Mission>();
 
     private TreasureInventory(
             Event runningTime, List<TargetPoint> targetPointList, List<Mission> missionList) {
