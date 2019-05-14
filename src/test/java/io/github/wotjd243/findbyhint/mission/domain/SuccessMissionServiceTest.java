@@ -7,8 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class SuccessMissionServiceTest {
-    private static final Mission TEST_MISSION_EASY_TAKE_POINT = new Mission(MissionLevel.EASY);
-    private static final Mission TEST_MISSION_HARD_TAKE_POINT = new Mission(MissionLevel.HARD);
+    private static final Mission TEST_MISSION_EASY_TAKE_POINT = new Mission(MissionLevel.BRONZE);
+    private static final Mission TEST_MISSION_HARD_TAKE_POINT = new Mission(MissionLevel.GOLD);
 
     @Test
     public void 쉬운_문제_맞췄을때() {

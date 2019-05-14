@@ -63,17 +63,17 @@ EventPeriod {
         DateObject dateObject= DateObject.getInstance();
         LocalDate todayDate = dateObject.getDate();
 
-        if(startDate.isAfter(todayDate)){
+        if(startDate.isBefore(todayDate)){
             eventPeriodValidationInfo(startDate, endDate);
-            throw new IllegalArgumentException("이벤트의 시작날짜가 현재 시간보다 빠르면 안됩니다.");
+            throw new IllegalArgumentException("이벤트의 시작날짜가 현재 시간보다 느리면 안됩니다.");
         }
 
-        if(endDate.isAfter(todayDate)){
+        if(endDate.isBefore(todayDate)){
             eventPeriodValidationInfo(startDate, endDate);
             throw new IllegalArgumentException("이벤트의 종료날짜가 현재 날짜보다 빠르면 안됩니다.");
         }
 
-        if(endDate.isAfter(startDate)){
+        if(endDate.isBefore(startDate)){
             eventPeriodValidationInfo(startDate, endDate);
             throw new IllegalArgumentException("이벤트의 종료날짜가 시작날짜 보다 빠르면 안됩니다.");
         }

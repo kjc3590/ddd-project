@@ -4,12 +4,9 @@ package io.github.wotjd243.findbyhint.hint.domain;
 //TODO 3. 보물의 targetPointId 값과 bringTargetPoint의 값 중복되는 부분을 제외하고 Treasure-TargetPoint 좌표값을
 // Treasure서비스에 리턴 Treasure서비스에서 VO를 만들어서 헌터 맵보여줌
 
-
-
 import io.github.wotjd243.findbyhint.hunter.domain.HunterId;
 import lombok.Getter;
 import lombok.ToString;
-
 import javax.persistence.*;
 import java.util.List;
 @Entity
@@ -20,28 +17,36 @@ public class Hint {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long hintId;
-    private final HunterId hunterId;
+
+    @Embedded
+    private HunterId hunterId;
 
     // hint id , hunter Id , Trasure Id ,
     @Embedded
-    private final HintInventory hintInventory;
+    private HintInventory hintInventory;
 
     // 매개변수는 모두가 아는 타입으로 설정 -> 매개변수를 토대로 VO 가져오기
-    public Hint(String hunterId, Long treasureId, List<Long> bringtargetId){
-        validation(bringtargetId);
+    private Hint(String hunterId, Long treasureId, List<Long> bringtargetIds){
+        validation(bringtargetIds);
         this.hunterId = new HunterId(hunterId);
-        this.hintInventory = new HintInventory(treasureId , BringTarget.valueOf(bringtargetId));
+        this.hintInventory = HintInventory.valueOf(treasureId, BringTarget.valueOf(bringtargetIds));
     }
 
-    public static Hint valueOf(String hunterId, Long treasureId, List<Long> bringtargetId) {
-        return new Hint(hunterId, treasureId , bringtargetId);
+    public static Hint valueOf(String hunterId, Long treasureId, List<Long> bringtargetIds) {
+        return new Hint(hunterId, treasureId , bringtargetIds);
     }
 
-    public void validation(List<Long> bringtargetId) {
-        if(bringtargetId.isEmpty()) {
+    public void validation(List<Long> bringtargetIds) {
+        if(bringtargetIds.isEmpty()) {
             new IllegalArgumentException("Treasure Exception !!!");
         }
     }
+
+
+
+
+    // TODO.1 힌트에그리거트의 핵심기능 (넣을게 있는지?)
+    // TODO.2
 
 
 
