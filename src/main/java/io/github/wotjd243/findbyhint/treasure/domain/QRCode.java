@@ -34,7 +34,7 @@ public class QRCode {
     //기본생성자
     public QRCode(){}
 
-    private final String preixUrl = "http://localhost:8080/findByHint?url=";
+    private final static String prefixUrl = "http://localhost:8080/findByHint?url=";
 
     @Column(nullable = false)
     private String qrUrl;
@@ -52,7 +52,7 @@ public class QRCode {
         AES256Cipher cipher = AES256Cipher.getInstance();
         String aes_encode_pw = cipher.AES_Encode(qrPw);
 
-        this.qrUrl = preixUrl+aes_encode_pw;
+        this.qrUrl = prefixUrl+aes_encode_pw;
         this.qrPw = aes_encode_pw;
     }
 

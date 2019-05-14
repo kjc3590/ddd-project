@@ -8,34 +8,41 @@ package io.github.wotjd243.findbyhint.treasure.domain;
 import io.github.wotjd243.findbyhint.util.VO.Distinguish;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.extern.java.Log;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Random;
 
 @Entity
 @Table(name = "targetPoint")
-@Getter(value = AccessLevel.PROTECTED)
+@Getter
+@Log
 public class TargetPoint {
 
     //기본생성자
-    public TargetPoint() {
-    }
+    public TargetPoint() {}
 
-    //longitude 경도
+    @ManyToOne
+    @JoinColumn(name ="treasureId")
+    private Treasure treasure;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long targetPointId;
 
     @Embedded
+    //좌표 VO
     private Coordinates coordinates;
 
     //진짜 가짜 유무
-    //파라미터로 distinguish  값을 받으면 안될것같아서 내부적으로 만들어지게 설정
     @Column(nullable = false)
-    @Enumerated(value =EnumType.ORDINAL)
+    @Enumerated(value =EnumType.STRING)
     private Distinguish distinguish;
 
-    private TargetPoint(Double latitude, Double longitude,Distinguish distinguish) {
+
+
+    public TargetPoint(Double latitude, Double longitude, Distinguish distinguish) {
         this.coordinates = Coordinates.valueOf(latitude,longitude);
         this.distinguish = distinguish;
     }
@@ -44,11 +51,22 @@ public class TargetPoint {
         return new TargetPoint(latitude,longitude,Distinguish.REAL);
     }
 
-    TargetPoint getFakeTargetPoint() {
-        Random random = new Random();
-        Double latitude = 33 + random.nextInt(10) + random.nextDouble();
-        Double longitude = 124 + random.nextInt(8) + random.nextDouble();
-        return new TargetPoint(latitude, longitude, Distinguish.FAKE);
+
+    public void setTreasure(Treasure treasure) {
+
+        //log.info("treasure :: " +treasure);
+
+        if(this.treasure != null) {
+            if (this.treasure.getTreasureInventory() != null) {
+                if (this.treasure.getTreasureInventory().getTargetPointList() != null) {
+                    this.treasure.getTreasureInventory().getTargetPointList().remove(this);
+                }
+            }
+        }
+        this.treasure = treasure;
+        this.treasure.getTreasureInventory().getTargetPointList().add(this);
+
     }
+
 }
 

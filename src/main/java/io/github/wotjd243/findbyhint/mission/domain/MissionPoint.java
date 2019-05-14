@@ -1,16 +1,14 @@
 package io.github.wotjd243.findbyhint.mission.domain;
 
-import lombok.NoArgsConstructor;
-
-import javax.persistence.Entity;
-
 public class MissionPoint {
+
+    private static final int MINIMUM_POINT = 0;
+    private static final int MAXIMUM_POINT = 100;
 
     MissionPoint(){}
 
     private int point;
     private MissionPoint(final int point) {
-//        randomPoint(point);
         validate(point);
         this.point = point;
     }
@@ -20,18 +18,10 @@ public class MissionPoint {
         return new MissionPoint(point);
     }
 
-    //랜덤숫자 생성
-    /*public int randomPoint(int point) {
-        double randomPoint = Math.random();
-        point = (int) (randomPoint * 100) +1;
-        System.out.println(point);
-        return point;
-    }*/
-
     //유효성 검사
     private void validate(final int point) {
-        if(point < 0 || point > 100) {
-            throw new IllegalArgumentException();
+        if(point < MINIMUM_POINT || point > MAXIMUM_POINT) {
+            throw new IllegalArgumentException("포인트는 0점 이상, 100점 이하여야 합니다.");
         }
     }
 }

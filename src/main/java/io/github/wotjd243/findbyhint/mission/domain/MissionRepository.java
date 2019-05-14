@@ -1,9 +1,9 @@
 package io.github.wotjd243.findbyhint.mission.domain;
 
-import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MissionRepository {
-    Optional<Mission> findById(final MissionLevel level);
+public interface MissionRepository extends JpaRepository<Mission, Long> {
 
-//    Optional<Mission> findByLevel(final String level);
+//    void save(MissionInfo missionInfo);
+//    Optional<Mission> findById(final Long missionId) throws IOException;
 }
