@@ -20,11 +20,17 @@ public class MissionInfo extends DateTimeEntity {
     private Long treasureId; //보물 아이디
 
     @Embedded
-    private MissionInventory missionInventory;
+    private Party party;
 
-    public MissionInfo(Long hunterId, Long treasureId, MissionInventory missionInventory) {
+    @Embedded
+    private MissionQnA missionQnA;
+
+    public MissionInfo(Long hunterId, Long treasureId) {
         this.hunterId = hunterId;
         this.treasureId = treasureId;
-        this.missionInventory = missionInventory;
+    }
+
+    private MissionInfo() {
+
     }
 }

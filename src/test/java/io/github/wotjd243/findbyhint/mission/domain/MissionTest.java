@@ -11,11 +11,11 @@ public class MissionTest {
         // given
         // when
         // then
-        new Mission(MissionLevel.EASY);
+        new Mission(MissionLevel.BRONZE);
     }
 
     @Test
-    public void 골드_레벨_미션_생성() {new Mission(MissionLevel.HARD);
+    public void 골드_레벨_미션_생성() {new Mission(MissionLevel.GOLD);
     }
 
 

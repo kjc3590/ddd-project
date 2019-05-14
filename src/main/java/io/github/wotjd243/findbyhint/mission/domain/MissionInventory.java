@@ -12,8 +12,6 @@ public class MissionInventory {
 
     private String success ="N";
 
-    private MissionQnA missionQnA;
-
     public MissionInventory(Long missionId, String success) {
         this.missionId = missionId;
         this.success = success;
