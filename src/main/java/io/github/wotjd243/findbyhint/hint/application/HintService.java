@@ -31,16 +31,18 @@ public class HintService {
     //헌터 ID,  보물 ID, HintCounter 개수
 
     //TODO (1) : 지워야할 좌표 넘겨주기
-    public void addHint(final String level){
-
+    public void addHint(final Long treasureId){
+        // Treasure 서비스가 해야할 일
         int hintCounter = 2;
         List<Long> fakeTargetIds = new ArrayList<>();
         IntStream.range(1,hintCounter).forEach(i ->{
-        fakeTargetIds.add(1L);
-        fakeTargetIds.add(2L);
-
+            fakeTargetIds.add(1L);
+            fakeTargetIds.add(2L);
         });
+
         hintRepository.save(fakeTargetIds);
+
+
     }
 
     // 조회해서 넣어라 넣는 방법은 모르지만 일단 넣어라
@@ -49,9 +51,9 @@ public class HintService {
         return hintRepository.findById(hintId).orElseThrow(IllegalArgumentException::new);
     }
 
-    private HintInventory getHintInventory(final Long trasureId,  List<Long> bringtargetList) {
+/*    private HintInventory getHintInventory(final Long trasureId,  List<Long> bringtargetList) {
         return hintRepository.findHintInventory(trasureId,bringtargetList);
-    }
+    }*/
 
     // 지워야할 좌표의 집합
 
