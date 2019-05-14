@@ -13,6 +13,7 @@ import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.math.BigInteger;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,17 +82,28 @@ public class TreasureService {
     }
 
     // COMPLETED 미션 관련정보 넘겨주기
-    public Mission getMission(Long treasureId, List<Long> ids){
+    public Object[] getMission(Long treasureId, List<Long> ids){
         Object[] result= treasureRepository.findMission(treasureId,ids);
+
+        if(result.length == 0){
+            return null;
+        }
         Object[] result2 = (Object[])result[0];
 
-        Long missionId= (Long)result2[0];
-        MissionLevel missionLevel = (MissionLevel)result2[1];
-
-        Mission mission = new Mission(missionLevel);
-        mission.setMissionId(missionId);
-
-        return mission;
+        return result2;
+//
+//        // TODO (*) 왜 BigInteger로 나오는지 모르곘다. 이걸보고있는 28세 박재성씨가 알려줬으면 좋겠다.
+//         BigInteger missionId= (BigInteger)result2[0];
+//        System.out.println("missionId :: " +missionId);
+//
+//
+//        String missionLevel = (String)result2[1];
+//        System.out.println("missionLevel :: "+ missionLevel);
+//
+//        Mission mission = new Mission(MissionLevel.GOLD);
+//        mission.setMissionId(Long.parseLong(""+missionId));
+//
+//        return mission;
     }
 
     // COMPLETED 힌트 관련 정보 넘겨주기

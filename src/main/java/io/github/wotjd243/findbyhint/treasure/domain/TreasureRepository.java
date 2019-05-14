@@ -46,7 +46,7 @@ public interface TreasureRepository extends JpaRepository<Treasure,Long> {
     @Query(value =
             (
                     "select M.MISSION_ID, M.MISSION_LEVEL " +
-                            " from TREASURE T inner join  MISSION M on T.TREASURE_ID = M.MISSION_ID " +
+                            " from TREASURE T inner join  MISSION M on T.TREASURE_ID = M.TREASURE_ID " +
                             " where T.TREASURE_ID = :treasureId " +
                             " and M.MISSION_ID not in :ids " +
                             " order by M.MISSION_LEVEL asc " +

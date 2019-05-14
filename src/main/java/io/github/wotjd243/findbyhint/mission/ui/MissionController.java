@@ -15,9 +15,14 @@ public class MissionController {
     public void index() {
     }
 
+    private final MissionApi missionApi;
+
+    public MissionController(MissionApi missionApi) {
+        this.missionApi = missionApi;
+    }
+
     @GetMapping("/mission")
     public void mission(Model model) throws IOException, IllegalAccessException {
-        MissionApi missionApi = new MissionApi();
         missionApi.execute2(model);
     }
 }

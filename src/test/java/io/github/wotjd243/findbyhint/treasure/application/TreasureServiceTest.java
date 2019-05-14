@@ -88,15 +88,20 @@ public class TreasureServiceTest {
     @Test
     public void 미션_반환_쿼리_테스트(){
         //given
-        Treasure sample = treasureRepository.findById(1L).get();
-        Long treasureId= sample.getTreasureId();
+        //Treasure sample = treasureRepository.findById(1L).get();
+        //Long treasureId= sample.getTreasureId();
+
+        Long treasureId= treasureService.getTreasureIdByActive();
+
+        System.out.println("treasureId :: "+treasureId);
+        System.out.println("treasureService.getTreasure(treasureId).isActive() :: " +treasureService.getTreasure(treasureId).isActive());
         List<Long> ids = new ArrayList<>();
         ids.add(1L);
-        ids.add(2L);
 
-        Mission mission = treasureService.getMission(treasureId,ids);
+        Object[] result= treasureService.getMission(treasureId,ids);
+        System.out.println("result[0] :: " +result[0] + ", result[1]" + result[1]);
 
-        assertThat(mission).isNotNull();
+//        assertThat(mission).isNotNull();
 
 
     }
