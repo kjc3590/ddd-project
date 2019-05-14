@@ -41,8 +41,6 @@ public static final String SEQUENCE_NAME = "MISSION_SEQ";
         validation(missionLevel);
         this.missionLevel = missionLevel;
     }
-
-
     
     public void validation(final MissionLevel level) {
         if (level == null) {
