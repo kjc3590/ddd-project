@@ -17,6 +17,7 @@ public class HunterId implements Serializable {
         return new HunterId(hunterId);
     }
 
+
     public HunterId(final String hunterId) {
 
         validation(hunterId);
@@ -31,6 +32,10 @@ public class HunterId implements Serializable {
         Check.lengthLimit(hunterId, 20);
 
         Check.idpwCheck(hunterId);
+    }
+
+    public String getHunterId() {
+        return hunterId;
     }
 
     @Override
