@@ -42,6 +42,8 @@ public static final String SEQUENCE_NAME = "MISSION_SEQ";
         this.missionLevel = missionLevel;
     }
 
+
+    
     public void validation(final MissionLevel level) {
         if (level == null) {
             throw new IllegalArgumentException("미션의 레벨이 없습니다.");
