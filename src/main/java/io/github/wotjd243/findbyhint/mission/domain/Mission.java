@@ -1,15 +1,17 @@
 package io.github.wotjd243.findbyhint.mission.domain;
 
-import lombok.AccessLevel;
+import io.github.wotjd243.findbyhint.treasure.domain.Treasure;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "mission")
 @Getter
-public class Mission {
+public class Mission{
 
     //미션 아이디
     @Id
@@ -23,10 +25,24 @@ public class Mission {
     public Mission() {
     }
 
+public static final String SEQUENCE_NAME = "MISSION_SEQ";
+
+    @ManyToOne
+    @JoinColumn(name ="treasureId")
+    private Treasure treasure;
+
+    //미션키
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long missionId;
+
     //미션 난이도
+    @Enumerated(value = EnumType.STRING)
     private MissionLevel missionLevel;
 
+
     public Mission(MissionLevel missionLevel) {
+
         validation(missionLevel);
         this.missionLevel = missionLevel;
     }
@@ -41,8 +57,27 @@ public class Mission {
         return this.missionLevel;
     }
 
-    // hintCounter 가져오기
-    public int getHintCounter(){
+    public int getHintCounter() {
         return this.missionLevel.getHintCounter();
     }
+
+    public void setTreasure(Treasure treasure) {
+
+        if(this.treasure != null){
+            if(this.treasure.getTreasureInventory() != null){
+                if(this.treasure.getTreasureInventory().getMissionList() != null){
+                    this.treasure.getTreasureInventory().getMissionList().remove(this);
+                }
+            }
+        }
+
+        this.treasure = treasure;
+        this.treasure.getTreasureInventory().getMissionList().add(this);
+
+    }
+
+    public void setMissionId(Long missionId) {
+        this.missionId = missionId;
+    }
 }
+
