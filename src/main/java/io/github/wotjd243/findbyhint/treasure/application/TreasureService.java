@@ -57,7 +57,8 @@ public class TreasureService {
         TreasureInventory treasureInventory = TreasureInventory.valueOf(runningTime,targetPointList,missionList);
         treasure.setTreasureInventory(treasureInventory);
 
-//        treasure.activeEvent();
+        // TODO 활동중으로 임이 변경
+        treasure.activeEvent();
 
 //        log.info("TreasureInventory 리스트 생성");
         Treasure result = treasureRepository.save(treasure);
@@ -79,7 +80,7 @@ public class TreasureService {
         }
     }
 
-    //TODO (2) 미션 관련정보 넘겨주기
+    // COMPLETED 미션 관련정보 넘겨주기
     public Mission getMission(Long treasureId, List<Long> ids){
         Object[] result= treasureRepository.findMission(treasureId,ids);
         Object[] result2 = (Object[])result[0];
@@ -93,7 +94,7 @@ public class TreasureService {
         return mission;
     }
 
-    //TODO (3) 힌트 관련 정보 넘겨주기
+    // COMPLETED 힌트 관련 정보 넘겨주기
     public List<Long> getTargetPointIds(Long treasureId, List<Long> ids,int hintCount){
         return treasureRepository.findTargetPointIds(treasureId,ids,hintCount);
     }
