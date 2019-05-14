@@ -20,6 +20,7 @@ public class MissionInfoService {
 
     // todo (1) 미션을 조회할 때 MissionInfo에 missionId가 존재하는지 확인
     public MissionInfo findById(Long missionId) {
-        return missionInfoRepository.findById(missionId).get();
+        return missionInfoRepository.findById(missionId)
+                .orElseThrow(() -> new IllegalArgumentException("missionId가 존재하지 않습니다."));
     }
 }
