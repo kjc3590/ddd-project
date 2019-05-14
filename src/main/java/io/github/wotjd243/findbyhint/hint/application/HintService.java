@@ -40,7 +40,9 @@ public class HintService {
             fakeTargetIds.add(2L);
         });
 
+/*
         hintRepository.save(fakeTargetIds);
+*/
 
 
     }
