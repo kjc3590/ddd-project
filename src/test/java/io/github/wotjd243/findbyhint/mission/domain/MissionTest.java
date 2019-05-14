@@ -14,8 +14,8 @@ public class MissionTest {
         new Mission(MissionLevel.EASY);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void 다이아_레벨_미션_생성() {new Mission(MissionLevel.HARD);
+    @Test
+    public void 골드_레벨_미션_생성() {new Mission(MissionLevel.HARD);
     }
 
 

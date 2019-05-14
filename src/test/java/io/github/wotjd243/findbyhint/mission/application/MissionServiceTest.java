@@ -26,8 +26,8 @@ public class MissionServiceTest {
     private MissionService missionService;
 
     @Test
-    public void 아이디_찾기() throws IOException{
-        System.out.println(missionRepository.findById(MissionLevel.valueOf("HARD")));
+    public void 아이디_찾기() {
+        System.out.println(missionRepository.findById(any()));
         for(MissionLevel level : MissionLevel.values()) {
             level.getLevelValue();
             System.out.println("levelValue: "+level.getLevelValue());
@@ -50,7 +50,7 @@ public class MissionServiceTest {
         ;
 
         // when
-        final int point = missionService.takePoint("EASY");
+        final int point = missionService.takePoint(any());
 
         // then
         assertThat(point).isNotZero();
@@ -100,7 +100,7 @@ public class MissionServiceTest {
         }
         System.out.println("point: "+point);
         //when
-        final int point2 = missionService.takePoint("EASY");
+        final int point2 = missionService.takePoint(any());
 
         //then
         assertThat(point2).isNotZero();
