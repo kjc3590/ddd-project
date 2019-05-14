@@ -13,8 +13,6 @@ public class MissionInventory extends DateTimeEntity {
     @ColumnDefault("N")
     private String success;
 
-    private MissionQnA missionQnA;
-
     public MissionInventory(Long missionId, String success) {
         this.missionId = missionId;
         this.success = success;
