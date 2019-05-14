@@ -7,6 +7,7 @@ import java.util.List;
 
 @Embeddable
 public class BringTarget {
+
     @ElementCollection
     private List<Long> bringtargetIds;
     private BringTarget(final List<Long> bringtargetIds) {

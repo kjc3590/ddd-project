@@ -8,9 +8,7 @@ import java.util.Optional;
 
 // save , List , delete
 public interface HintRepository extends JpaRepository<Hint,Long> {
-    Optional<Hint> findById(final Long id);
 
-    Optional<HintInventory> findById2(final Long id);
+//    List<Long> findHintInventory(@Param("treasureId") Long treasureId, @Param("ids") List<Long> ids);
 
-    List<Long> findHintInventory(@Param("treasureId") Long treasureId, @Param("ids") List<Long> ids);
 }

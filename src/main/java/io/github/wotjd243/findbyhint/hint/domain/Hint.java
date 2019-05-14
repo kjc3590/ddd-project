@@ -17,11 +17,13 @@ public class Hint {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long hintId;
-    private final HunterId hunterId;
+
+    @Embedded
+    private HunterId hunterId;
 
     // hint id , hunter Id , Trasure Id ,
     @Embedded
-    private final HintInventory hintInventory;
+    private HintInventory hintInventory;
 
     // 매개변수는 모두가 아는 타입으로 설정 -> 매개변수를 토대로 VO 가져오기
     private Hint(String hunterId, Long treasureId, List<Long> bringtargetIds){

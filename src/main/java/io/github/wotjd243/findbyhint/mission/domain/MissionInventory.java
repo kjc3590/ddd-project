@@ -6,7 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 
 @Embeddable
-public class MissionInventory extends DateTimeEntity {
+public class MissionInventory {
 
     private Long missionId;
 

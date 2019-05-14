@@ -4,6 +4,7 @@ import io.github.wotjd243.findbyhint.hint.domain.Hint;
 import io.github.wotjd243.findbyhint.hint.domain.HintInventory;
 import io.github.wotjd243.findbyhint.hint.domain.HintRepository;
 
+import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,10 +24,14 @@ import java.util.stream.IntStream;
 public class HintService {
     private HintRepository hintRepository;
 
-    public HintService(final HintRepository hintRepository) {
+    private TreasureService treasureService;
+
+    public HintService(HintRepository hintRepository, TreasureService treasureService) {
         this.hintRepository = hintRepository;
+        this.treasureService = treasureService;
     }
-    //다른 애그리거트가 가져올
+
+//다른 애그리거트가 가져올
     //힌트르 주는 메소드 (타겟포인트)
     //헌터 ID,  보물 ID, HintCounter 개수
 
