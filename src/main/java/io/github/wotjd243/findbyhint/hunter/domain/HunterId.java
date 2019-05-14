@@ -6,6 +6,9 @@ public class HunterId {
 
     private String hunterId;
 
+    public HunterId() {
+    }
+
     public HunterId(final String hunterId) {
 
         validation(hunterId);
@@ -20,6 +23,10 @@ public class HunterId {
         Check.lengthLimit(hunterId, 20);
 
         Check.idpwCheck(hunterId);
+    }
+
+    public String getHunterId() {
+        return hunterId;
     }
 
     @Override

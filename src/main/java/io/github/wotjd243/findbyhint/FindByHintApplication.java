@@ -1,5 +1,7 @@
 package io.github.wotjd243.findbyhint;
 
+import io.github.wotjd243.findbyhint.hint.application.HintService;
+import io.github.wotjd243.findbyhint.hunter.domain.HunterId;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureRequestDto;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
 import io.github.wotjd243.findbyhint.treasure.domain.Treasure;
@@ -37,10 +39,12 @@ import java.time.LocalDate;
 public class FindByHintApplication implements CommandLineRunner {
 
     private final TreasureService treasureService;
-    public FindByHintApplication(TreasureService treasureService) {
-        this.treasureService = treasureService;
-    }
+    private final HintService hintService;
 
+    public FindByHintApplication(TreasureService treasureService, HintService hintService) {
+        this.treasureService = treasureService;
+        this.hintService = hintService;
+    }
 
     public static void main(String[] args) { SpringApplication.run(FindByHintApplication.class, args); }
 
@@ -63,6 +67,14 @@ public class FindByHintApplication implements CommandLineRunner {
         log.info("treasureRequestDto :: "+ treasureRequestDto);
 
         treasureService.save(treasureRequestDto);
+    }
+
+    public void makeHintInventorySample(){
+
+        final HunterId hunterId = new HunterId( "hunterId");
+        final int hintCount =2;
+        hintService.addHint(hunterId,hintCount);
+
     }
 
 }
