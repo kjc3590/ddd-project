@@ -31,11 +31,6 @@ public static final String SEQUENCE_NAME = "MISSION_SEQ";
     @JoinColumn(name ="treasureId")
     private Treasure treasure;
 
-    //미션키
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long missionId;
-
     //미션 난이도
     @Enumerated(value = EnumType.STRING)
     private MissionLevel missionLevel;
@@ -47,6 +42,8 @@ public static final String SEQUENCE_NAME = "MISSION_SEQ";
         this.missionLevel = missionLevel;
     }
 
+
+    
     public void validation(final MissionLevel level) {
         if (level == null) {
             throw new IllegalArgumentException("미션의 레벨이 없습니다.");
