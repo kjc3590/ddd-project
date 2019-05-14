@@ -1,5 +1,6 @@
 package io.github.wotjd243.findbyhint;
 
+import io.github.wotjd243.findbyhint.hunter.domain.Hunter;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

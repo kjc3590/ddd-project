@@ -28,8 +28,9 @@ public class HunterPictureName {
 
         //파일 저장명 처리
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMDDHHmmss");
+        String originalNameExtension = hunterPictureName.substring(hunterPictureName.lastIndexOf(".") + 1).toLowerCase();
         String today = dateFormat.format(new Date());
-        String modifyName = today + "_" + UUID.randomUUID().toString().substring(20) + "." + hunterPictureName;
+        String modifyName = today + "_" + UUID.randomUUID().toString().substring(20) + "." + originalNameExtension;
 
         return modifyName;
 
