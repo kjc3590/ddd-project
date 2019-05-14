@@ -10,8 +10,7 @@ public class MissionInventory {
 
     private Long missionId;
 
-    @ColumnDefault("N")
-    private String success;
+    private String success ="N";
 
     private MissionQnA missionQnA;
 
