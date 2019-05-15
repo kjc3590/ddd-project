@@ -1,4 +1,4 @@
-package io.github.wotjd243.findbyhint.mission.domain;
+package io.github.wotjd243.findbyhint.MissionInventory.domain;
 
 import lombok.Getter;
 

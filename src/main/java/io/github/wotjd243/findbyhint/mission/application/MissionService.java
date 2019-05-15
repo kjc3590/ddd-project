@@ -1,15 +1,11 @@
 package io.github.wotjd243.findbyhint.mission.application;
 
-import io.github.wotjd243.findbyhint.mission.domain.Mission;
-import io.github.wotjd243.findbyhint.mission.domain.MissionInfo;
-import io.github.wotjd243.findbyhint.mission.domain.MissionRepository;
-import io.github.wotjd243.findbyhint.mission.domain.SuccessMissionService;
-import lombok.RequiredArgsConstructor;
+import io.github.wotjd243.findbyhint.mission.domain.*;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-
 @Service
+@Log
 public class MissionService {
 
     private MissionRepository missionRepository;

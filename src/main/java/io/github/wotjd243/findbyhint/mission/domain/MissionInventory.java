@@ -1,20 +1,37 @@
 package io.github.wotjd243.findbyhint.mission.domain;
 
-import io.github.wotjd243.findbyhint.util.domain.DateTimeEntity;
-import org.hibernate.annotations.ColumnDefault;
-
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Embeddable
 public class MissionInventory {
 
-    private Long missionId;
+    private BigInteger missionId;
 
-    private String success ="N";
+    @Enumerated(value = EnumType.STRING)
+    private MissionSuccessStatus status;
 
-    public MissionInventory(Long missionId, String success) {
+    public MissionInventory(BigInteger missionId) {
+        validation(missionId);
         this.missionId = missionId;
-        this.success = success;
+        this.status = MissionSuccessStatus.FAIL;
     }
+
+    public static MissionInventory valueOf(BigInteger missionId) {
+        return new MissionInventory(missionId);
+    }
+
+    private void validation(BigInteger missionId) {
+        if(missionId == null) {
+            throw new IllegalArgumentException("미션 아이디가 존재하지 않습니다.");
+        }
+    }
+
+
+    // 미션 성공
+    public void missionComplete(){
+        this.status = MissionSuccessStatus.SUCCESS;
+    }
+
 
 }

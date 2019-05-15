@@ -1,6 +1,6 @@
-package io.github.wotjd243.findbyhint.mission.ui;
+package io.github.wotjd243.findbyhint.MissionInventory.ui;
 
-import io.github.wotjd243.findbyhint.mission.infra.MissionApi;
+import io.github.wotjd243.findbyhint.MissionInventory.infra.MissionApi;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

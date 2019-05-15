@@ -1,4 +1,4 @@
-package io.github.wotjd243.findbyhint.mission.infra;
+package io.github.wotjd243.findbyhint.MissionInventory.infra;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
