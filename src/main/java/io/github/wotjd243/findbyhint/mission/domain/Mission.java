@@ -2,12 +2,14 @@ package io.github.wotjd243.findbyhint.mission.domain;
 
 import io.github.wotjd243.findbyhint.treasure.domain.Treasure;
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "mission")
 @Getter
+@ToString
 public class Mission{
 
     //미션 아이디
