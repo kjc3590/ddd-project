@@ -13,6 +13,7 @@ import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.lang.annotation.Target;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class TreasureService {
         }
     }
 
-    // TODO(1) 미션 관련정보 넘겨주기
+    // COMPLETED 미션 관련정보 넘겨주기
     public Optional<Mission> getMission(Long treasureId, List<Long> ids){
         Optional<Treasure> optionalTreasure = treasureRepository.findById(treasureId);
         Mission mission = null;
@@ -100,7 +101,21 @@ public class TreasureService {
 
     // COMPLETED 힌트 관련 정보 넘겨주기
     public List<Long> getTargetPointIds(Long treasureId, List<Long> ids,int hintCount){
-        return treasureRepository.findTargetPointIds(treasureId,ids,hintCount);
+
+        //treasureRepository.findTargetPointIds(treasureId,ids,hintCount);
+        Optional<Treasure> optionalTreasure = treasureRepository.findById(treasureId);
+        List<TargetPoint> targetPoints = new ArrayList<>();
+
+        optionalTreasure.ifPresent(treasure -> {
+          treasure.getTreasureInventory().getTargetPointList()
+                  .stream()
+                  .filter(targetPoint -> !ids.contains(targetPoint.getTargetPointId()))
+                  .filter(targetPoint -> targetPoint.getDistinguish().equals(Distinguish.FAKE))
+                  
+        });
+
+
+        return null;
     }
 
 
