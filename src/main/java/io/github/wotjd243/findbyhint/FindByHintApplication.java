@@ -78,16 +78,15 @@ public class FindByHintApplication implements CommandLineRunner {
 
         MissionDto missionDto = new MissionDto(hunterId, question, answer, level, success);
 
-        log.info("missionDto: "+missionDto);
+        log.info("missionDto: " + missionDto);
         missionInfoService.save(missionDto);
+    }
 
     public void makeHintInventorySample(){
 
         final HunterId hunterId = new HunterId( "hunterId");
         final int hintCount =2;
         hintService.addHint(hunterId,hintCount);
-
-
     }
 
 }

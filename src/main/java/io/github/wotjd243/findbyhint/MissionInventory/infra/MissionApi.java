@@ -3,7 +3,9 @@ package io.github.wotjd243.findbyhint.MissionInventory.infra;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.wotjd243.findbyhint.mission.domain.Mission;
+import io.github.wotjd243.findbyhint.mission.domain.MissionLevel;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
+import io.github.wotjd243.findbyhint.treasure.domain.Treasure;
 import io.github.wotjd243.findbyhint.treasure.domain.TreasureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class MissionApi {
@@ -45,25 +48,25 @@ public class MissionApi {
         List<Long> ids = new ArrayList<>();
 
         // TODO (4) 문제는 쉬운 문제부터 -> 어려운 문제로 나와야 함
-        Object[] result = treasureService.getMission(treasureId, ids);
+        Optional<Mission> result = treasureService.getMission(treasureId, ids);
 
         if (result != null) {
-            BigInteger id = (BigInteger) result[0];
-            String level = (String) result[1];
+            Long id = result.get().getMissionId();
+            MissionLevel level = result.get().getMissionLevel();
             System.out.println("id: " + id);
             System.out.println("level: " + level);
 
-            if (level == "BRONZE") {
-                level = "easy";
-            }
-
-            if (level == "SILVER") {
-                level = "medium";
-            }
-
-            if (level == "GOLD") {
-                level = "hard";
-            }
+//            if (level == 1) {
+//                level =  "easy";
+//            }
+//
+//            if (level == "SILVER") {
+//                level = "medium";
+//            }
+//
+//            if (level == "GOLD") {
+//                level = "hard";
+//            }
 //        ArrayList<Map<String, Object>> treasureList = 보물1 문제 데이터;
 //            for(Map<String, Object> tr : treasureList) {
 //                // tr.pk 데이터가 미션인벤토리 테이블에 값이있는지체크
