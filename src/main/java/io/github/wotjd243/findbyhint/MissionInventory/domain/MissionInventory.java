@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,18 +26,33 @@ public class MissionInventory extends DateTimeEntity {
 
     private Long treasureId; //보물 아이디
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "missionInventoryInfo")
-    private MissionInventoryInfo missionInventoryInfo;
+    @Embedded
+    private MissionBook missionBook;
 
     private MissionInventory(HunterId hunterId, Long treasureId) {
+        validation(hunterId, treasureId);
         this.hunterId = hunterId;
         this.treasureId = treasureId;
     }
 
     public static MissionInventory valueOf(HunterId hunterId, Long treasureId){
-        return new MissionInventory(hunterId,treasureId);
+        return new MissionInventory(hunterId, treasureId);
     }
 
+    private void validation(HunterId hunterId, Long treasureId) {
+        if(hunterId == null) {
+            throw new IllegalArgumentException("헌터ID가 존재하지 않습니다.");
+        }
+
+        if(treasureId == null) {
+            throw new IllegalArgumentException("보물ID가 존재하지 않습니다.");
+        }
+
+    }
+
+    public void setMissionBook(MissionBook missionBook) {
+        this.missionBook = missionBook;
+    }
 //    public void addMissionBook(List<MissionInventoryInfo> infoList){
 //         if (this.missionBook == null) {
 //             this.missionBook = new MissionBook(infoList);

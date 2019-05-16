@@ -1,35 +1,40 @@
 package io.github.wotjd243.findbyhint.MissionInventory.domain;
 
 import lombok.Getter;
+import lombok.extern.java.Log;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
+@Embeddable
 @Getter
-@Entity
+@Log
 public class MissionInventoryInfo {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long missionInventoryInfoId;
+    @Column(nullable = false)
+    private BigInteger missionId;
 
-    private Long missionId;
+//    @Embedded
+//    private MissionQnA missionQnA;
 
-    @ManyToOne
-    @JoinColumn(name = "missionInventoryInfo")
-    private MissionInventory missionInventory;
+    private String question;
+    private String answer;
 
-    @Embedded
-    private MissionQnA missionQnA;
-
+    @Enumerated(EnumType.STRING)
     private MissionSuccessStatus status;
 
-    public MissionInventoryInfo() {
+    private MissionInventoryInfo() {
     }
 
-    public MissionInventoryInfo(Long missionId, String question, String answer) {
+    public MissionInventoryInfo(BigInteger missionId, String question, String answer) {
         this.missionId = missionId;
-        this.missionQnA = MissionQnA.valueOf(question, answer);
+        this.question = question;
+        this.answer = answer;
         this.status = MissionSuccessStatus.FAIL;
+    }
+
+    public static MissionInventoryInfo valueOf(BigInteger missionId, String question, String answer) {
+        return new MissionInventoryInfo(missionId, question, answer);
     }
 
 
@@ -38,4 +43,16 @@ public class MissionInventoryInfo {
         this.status = MissionSuccessStatus.SUCCESS;
     }
 
+//    public void setMissionInventory(MissionInventory missionInventory) {
+//
+//        log.info("missionInventory.getHunterId(): "+missionInventory.getHunterId());
+//        log.info("missionInventory.getTreasureId(): "+missionInventory.getTreasureId());
+//        if(this.missionInventory != null) {
+//            if(this.missionInventory.getMissionInventoryInfoList() != null) {
+//                this.missionInventory.getMissionInventoryInfoList().remove(this);
+//            }
+//        }
+//        this.missionInventory = missionInventory;
+//        this.missionInventory.getMissionInventoryInfoList().add(this);
+//    }
 }
