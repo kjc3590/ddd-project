@@ -2,6 +2,7 @@ package io.github.wotjd243.findbyhint.MissionInventory.application;
 
 import io.github.wotjd243.findbyhint.MissionInventory.domain.*;
 import io.github.wotjd243.findbyhint.hunter.domain.HunterId;
+import io.github.wotjd243.findbyhint.mission.domain.Mission;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Log
@@ -38,8 +40,9 @@ public class MissionInventoryService {
         //현재 보물의 미션 갯수중 가장 낮은 난이도의 미션 아이디를 가져온다.
         List<Long> ids = new ArrayList<>();
 
-        Object [] result = treasureService.getMission(treasureId, ids);
-        BigInteger id = (BigInteger) result[0];
+        Optional<Mission> result = treasureService.getMission(treasureId, ids);
+        Long id = result.get().getMissionId();
+
 
         //임시로 헌터아이디 생성
         HunterId hunterId = HunterId.valueOf("aa");
