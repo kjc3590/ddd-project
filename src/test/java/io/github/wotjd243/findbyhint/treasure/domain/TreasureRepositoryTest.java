@@ -90,6 +90,19 @@ public class TreasureRepositoryTest {
 
     }
 
+    @Test
+    public void findMission_메소드테스트(){
+        System.out.println("asd");
+        Long treasureId = treasureRepository.findByTreasureInventoryByActive().getTreasureId();
+        System.out.println("treasureId :: " + treasureId);
+        List<Long> ids = new ArrayList<>();
+        ids.add(1L);
+        System.out.println("ids :: " + ids);
+//        List<Mission> mission = treasureRepository.findMission(treasureId,ids);
+//        System.out.println("mission :: "+ mission);
+    }
+
+
 
 
 }

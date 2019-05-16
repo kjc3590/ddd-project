@@ -1,9 +1,15 @@
 package io.github.wotjd243.findbyhint;
 
+
+import io.github.wotjd243.findbyhint.MissionInventory.application.MissionInventoryService;
+import io.github.wotjd243.findbyhint.mission.domain.MissionLevel;
+import io.github.wotjd243.findbyhint.MissionInventory.application.MissionDto;
+
 import io.github.wotjd243.findbyhint.hint.application.HintService;
 import io.github.wotjd243.findbyhint.hunter.application.HunterService;
 import io.github.wotjd243.findbyhint.hunter.domain.Hunter;
 import io.github.wotjd243.findbyhint.hunter.domain.HunterId;
+
 import io.github.wotjd243.findbyhint.treasure.application.TreasureRequestDto;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
 import io.github.wotjd243.findbyhint.util.DateObject;
@@ -32,11 +38,13 @@ import java.time.LocalDate;
 public class FindByHintApplication implements CommandLineRunner {
 
     private final TreasureService treasureService;
+    private final MissionInventoryService missionInfoService;
     private final HintService hintService;
     private final HunterService hunterService;
 
-    public FindByHintApplication(TreasureService treasureService, HintService hintService, HunterService hunterService) {
+    public FindByHintApplication(TreasureService treasureService, MissionInventoryService missionInfoService, HintService hintService,HunterService hunterService) {
         this.treasureService = treasureService;
+        this.missionInfoService = missionInfoService;
         this.hintService = hintService;
         this.hunterService = hunterService;
     }
@@ -47,6 +55,7 @@ public class FindByHintApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         makeTreasureSample();
         hunterSampleCreate();
+        makeMissionInfoSample();
     }
 
     public void makeTreasureSample(){
@@ -54,8 +63,8 @@ public class FindByHintApplication implements CommandLineRunner {
         final String qrPw = "1234";
         final Double latitude = 126.9941658;
         final Double longitude = 37.4954676;
-        final LocalDate startDate = dateObject.getDate().plusDays(10L);
-        final LocalDate endDate = dateObject.getDate().plusDays(12L);
+        final LocalDate startDate = dateObject.getDate().plusDays(1L);
+        final LocalDate endDate = dateObject.getDate().plusDays(22L);
         final String name = "보물의 이름";
 
         TreasureRequestDto treasureRequestDto = new TreasureRequestDto(qrPw,latitude,longitude,startDate,endDate,name);
@@ -74,12 +83,24 @@ public class FindByHintApplication implements CommandLineRunner {
         hunterService.hunterCreate(hunter2);
     }
 
+    public void makeMissionInfoSample() {
+        final String hunterId = "aa";
+        final String question = "A?";
+        final String answer = "true";
+        final MissionLevel level = MissionLevel.BRONZE;
+        final String success = "Y";
+
+        MissionDto missionDto = new MissionDto(hunterId, question, answer, level, success);
+
+        log.info("missionDto: " + missionDto);
+        missionInfoService.save(missionDto);
+    }
+
     public void makeHintInventorySample(){
 
         final HunterId hunterId = new HunterId( "hunterId");
         final int hintCount =2;
         hintService.addHint(hunterId,hintCount);
-
     }
 
 }
