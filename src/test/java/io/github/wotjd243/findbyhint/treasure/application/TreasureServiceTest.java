@@ -78,12 +78,9 @@ public class TreasureServiceTest {
         getActiveSampleTreasure();
         Long treasureId = treasureService.getTreasureIdByActive();
         List<Long> ids = new ArrayList<>();
-       // List<Long> targetPointIds = treasureService.getTargetPointIds(treasureId,ids);
-
-
-
-
+//        List<Long> targetPointIds = treasureService.getTargetPointIds(treasureId,ids);
     }
+
 
     @Test
     public void 미션_반환_쿼리_테스트(){
@@ -98,11 +95,19 @@ public class TreasureServiceTest {
         List<Long> ids = new ArrayList<>();
         ids.add(1L);
 
-        Object[] result= treasureService.getMission(treasureId,ids);
-        System.out.println("result[0] :: " +result[0] + ", result[1]" + result[1]);
+        ids.add(4L);
+        ids.add(6L);
+        ids.add(7L);
+        ids.add(10L);
+        ids.add(12L);
+        ids.add(13L);
 
-//        assertThat(mission).isNotNull();
-
+        Mission mission = treasureService.getMission(treasureId,ids).get();
+        System.out.println("===========================================================");
+        System.out.println("mission.getMissionId() :: "+ mission.getMissionId());
+        System.out.println("mission.getMissionLevel() :: "+mission.getMissionLevel());
+        System.out.println("===========================================================");
+        assertThat(mission).isNotNull();
 
     }
 

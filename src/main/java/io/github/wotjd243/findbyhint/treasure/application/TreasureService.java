@@ -17,9 +17,12 @@ import java.math.BigInteger;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
+
+import static java.util.Comparator.comparing;
 
 @Service
 //굳이 생성자를 만들지 않아도 해당 어노테이션으로 해결을 할 수 있는 것 같다.
@@ -64,7 +67,6 @@ public class TreasureService {
 //        log.info("TreasureInventory 리스트 생성");
         Treasure result = treasureRepository.save(treasure);
         // TODO (*) test 코드 상에서는 왜 result 가 null 이 나오는지 잘 모르겠다.
-
         //log.info("result :: "+ result );
 
         return treasure;
@@ -81,30 +83,22 @@ public class TreasureService {
         }
     }
 
-    // COMPLETED 미션 관련정보 넘겨주기
-    public Object[] getMission(Long treasureId, List<Long> ids){
-        Object[] result= treasureRepository.findMission(treasureId,ids);
-
-        if(result.length == 0){
-            return null;
+    // TODO(1) 미션 관련정보 넘겨주기
+    public Optional<Mission> getMission(Long treasureId, List<Long> ids){
+        Optional<Treasure> optionalTreasure = treasureRepository.findById(treasureId);
+        Mission mission = null;
+        if(optionalTreasure.isPresent()){
+            Treasure treasure = optionalTreasure.get();
+            mission = treasure.getTreasureInventory().getMissionList()
+                    .parallelStream()
+                    .filter(d -> !ids.contains(d.getMissionId()))
+                    .min(comparing(Mission::getMissionLevel))
+                    .get();
         }
-        Object[] result2 = (Object[])result[0];
+        return Optional.ofNullable(mission);
 
-        return result2;
-//
-//        // TODO (*) 왜 BigInteger로 나오는지 모르곘다. 이걸보고있는 28세 박재성씨가 알려줬으면 좋겠다.
-//         BigInteger missionId= (BigInteger)result2[0];
-//        System.out.println("missionId :: " +missionId);
-//
-//
-//        String missionLevel = (String)result2[1];
-//        System.out.println("missionLevel :: "+ missionLevel);
-//
-//        Mission mission = new Mission(MissionLevel.GOLD);
-//        mission.setMissionId(Long.parseLong(""+missionId));
-//
-//        return mission;
     }
+
 
     // COMPLETED 힌트 관련 정보 넘겨주기
     public List<Long> getTargetPointIds(Long treasureId, List<Long> ids,int hintCount){
