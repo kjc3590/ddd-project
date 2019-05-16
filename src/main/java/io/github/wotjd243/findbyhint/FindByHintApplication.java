@@ -1,7 +1,13 @@
 package io.github.wotjd243.findbyhint;
 
+
+import io.github.wotjd243.findbyhint.MissionInventory.application.MissionInventoryService;
+import io.github.wotjd243.findbyhint.mission.domain.MissionLevel;
+import io.github.wotjd243.findbyhint.MissionInventory.application.MissionDto;
+
 import io.github.wotjd243.findbyhint.hint.application.HintService;
 import io.github.wotjd243.findbyhint.hunter.domain.HunterId;
+
 import io.github.wotjd243.findbyhint.treasure.application.TreasureRequestDto;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
 import io.github.wotjd243.findbyhint.util.DateObject;
@@ -30,10 +36,12 @@ import java.time.LocalDate;
 public class FindByHintApplication implements CommandLineRunner {
 
     private final TreasureService treasureService;
+    private final MissionInventoryService missionInfoService;
     private final HintService hintService;
 
-    public FindByHintApplication(TreasureService treasureService, HintService hintService) {
+    public FindByHintApplication(TreasureService treasureService, MissionInventoryService missionInfoService, HintService hintService) {
         this.treasureService = treasureService;
+        this.missionInfoService = missionInfoService;
         this.hintService = hintService;
     }
 
@@ -42,6 +50,7 @@ public class FindByHintApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         makeTreasureSample();
+        makeMissionInfoSample();
     }
 
     public void makeTreasureSample(){
@@ -60,11 +69,24 @@ public class FindByHintApplication implements CommandLineRunner {
         treasureService.save(treasureRequestDto);
     }
 
+    public void makeMissionInfoSample() {
+        final String hunterId = "aa";
+        final String question = "A?";
+        final String answer = "true";
+        final MissionLevel level = MissionLevel.BRONZE;
+        final String success = "Y";
+
+        MissionDto missionDto = new MissionDto(hunterId, question, answer, level, success);
+
+        log.info("missionDto: "+missionDto);
+        missionInfoService.save(missionDto);
+
     public void makeHintInventorySample(){
 
         final HunterId hunterId = new HunterId( "hunterId");
         final int hintCount =2;
         hintService.addHint(hunterId,hintCount);
+
 
     }
 
