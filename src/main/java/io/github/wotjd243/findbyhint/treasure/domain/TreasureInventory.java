@@ -25,7 +25,7 @@ public class TreasureInventory {
 //    @JoinColumn(name = "targetPointId")
     private List<TargetPoint> targetPointList =new ArrayList<TargetPoint>();
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "treasure")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "treasure",fetch = FetchType.EAGER)
 //    @JoinColumn(name = "missionId")
     private List<Mission> missionList = new ArrayList<Mission>();
 

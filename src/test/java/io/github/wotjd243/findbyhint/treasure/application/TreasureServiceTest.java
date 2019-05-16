@@ -89,8 +89,18 @@ public class TreasureServiceTest {
         Long treasureId= sample.getTreasureId();
         List<Long> ids = new ArrayList<>();
         ids.add(1L);
-//        ids.add(2L);
-        Mission mission = treasureService.getMission(treasureId,ids);
+        ids.add(4L);
+        ids.add(6L);
+        ids.add(7L);
+        ids.add(10L);
+        ids.add(12L);
+        ids.add(13L);
+
+        Mission mission = treasureService.getMission(treasureId,ids).get();
+        System.out.println("===========================================================");
+        System.out.println("mission.getMissionId() :: "+ mission.getMissionId());
+        System.out.println("mission.getMissionLevel() :: "+mission.getMissionLevel());
+        System.out.println("===========================================================");
         assertThat(mission).isNotNull();
 
     }

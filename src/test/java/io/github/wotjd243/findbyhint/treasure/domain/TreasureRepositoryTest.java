@@ -98,8 +98,8 @@ public class TreasureRepositoryTest {
         List<Long> ids = new ArrayList<>();
         ids.add(1L);
         System.out.println("ids :: " + ids);
-        List<Mission> mission = treasureRepository.findMission(treasureId,ids);
-        System.out.println("mission :: "+ mission);
+//        List<Mission> mission = treasureRepository.findMission(treasureId,ids);
+//        System.out.println("mission :: "+ mission);
     }
 
 
