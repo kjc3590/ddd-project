@@ -82,8 +82,8 @@ public class TreasureService {
 
     // COMPLETED 미션 관련정보 넘겨주기
     public Mission getMission(Long treasureId, List<Long> ids){
-        Object[] result= treasureRepository.findMission(treasureId,ids);
-        Object[] result2 = (Object[])result[0];
+        List<Mission> result= treasureRepository.findMission(treasureId,ids);
+        /*Object[] result2 = (Object[])result[0];
 
         Long missionId= (Long)result2[0];
         MissionLevel missionLevel = (MissionLevel)result2[1];
@@ -91,7 +91,8 @@ public class TreasureService {
         Mission mission = new Mission(missionLevel);
         mission.setMissionId(missionId);
 
-        return mission;
+        return mission;*/
+        return result.get(0);
     }
 
     // COMPLETED 힌트 관련 정보 넘겨주기
