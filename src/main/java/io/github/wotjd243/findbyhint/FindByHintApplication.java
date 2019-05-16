@@ -1,6 +1,8 @@
 package io.github.wotjd243.findbyhint;
 
 import io.github.wotjd243.findbyhint.hint.application.HintService;
+import io.github.wotjd243.findbyhint.hunter.application.HunterService;
+import io.github.wotjd243.findbyhint.hunter.domain.Hunter;
 import io.github.wotjd243.findbyhint.hunter.domain.HunterId;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureRequestDto;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
@@ -31,10 +33,12 @@ public class FindByHintApplication implements CommandLineRunner {
 
     private final TreasureService treasureService;
     private final HintService hintService;
+    private final HunterService hunterService;
 
-    public FindByHintApplication(TreasureService treasureService, HintService hintService) {
+    public FindByHintApplication(TreasureService treasureService, HintService hintService, HunterService hunterService) {
         this.treasureService = treasureService;
         this.hintService = hintService;
+        this.hunterService = hunterService;
     }
 
     public static void main(String[] args) { SpringApplication.run(FindByHintApplication.class, args); }
@@ -42,6 +46,7 @@ public class FindByHintApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         makeTreasureSample();
+        hunterSampleCreate();
     }
 
     public void makeTreasureSample(){
@@ -58,6 +63,15 @@ public class FindByHintApplication implements CommandLineRunner {
         log.info("treasureRequestDto :: "+ treasureRequestDto);
 
         treasureService.save(treasureRequestDto);
+    }
+
+    public void hunterSampleCreate() {
+
+        Hunter hunter = new Hunter("testHunter", "1234", "김헌터", "/test/test.png", "test.png", 0, 3);
+        Hunter hunter2 = new Hunter("testHunter2", "1234", "부자헌터", "/test/test.png", "test.png", 100, 3);
+
+        hunterService.hunterCreate(hunter);
+        hunterService.hunterCreate(hunter2);
     }
 
     public void makeHintInventorySample(){
