@@ -2,6 +2,9 @@ package io.github.wotjd243.findbyhint.mission.domain;
 
 import org.junit.Test;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 public class allocatedMission {
 
     @Test

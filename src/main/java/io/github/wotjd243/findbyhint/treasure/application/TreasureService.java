@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.Comparator.comparing;
@@ -97,25 +98,39 @@ public class TreasureService {
         }
         return Optional.ofNullable(mission);
     }
+    // TODO 힌트받은거 제외하고 모든 타겟 포인트 넘기기
+    public List<TargetPoint> getTargetPointByIds(Long treasureId, List<Long> ids){
+        Optional<Treasure> optionalTreasure = treasureRepository.findById(treasureId);
+        List<TargetPoint> result = null;
 
+        if(optionalTreasure.isPresent()){
+            result = optionalTreasure.get().getTreasureInventory().getTargetPointList()
+                    .parallelStream()
+                    .filter(targetPoint -> !ids.contains(targetPoint.getTargetPointId()))
+                    .collect(Collectors.toList());
+        }
 
-    // COMPLETED 힌트 관련 정보 넘겨주기
+        return result;
+    }
+
+    // TODO 힌트 관련 정보 넘겨주기
     public List<Long> getTargetPointIds(Long treasureId, List<Long> ids,int hintCount){
-
         //treasureRepository.findTargetPointIds(treasureId,ids,hintCount);
         Optional<Treasure> optionalTreasure = treasureRepository.findById(treasureId);
-        List<TargetPoint> targetPoints = new ArrayList<>();
+        List<Long> results = null;
 
-        optionalTreasure.ifPresent(treasure -> {
-          treasure.getTreasureInventory().getTargetPointList()
-                  .stream()
-                  .filter(targetPoint -> !ids.contains(targetPoint.getTargetPointId()))
-                  .filter(targetPoint -> targetPoint.getDistinguish().equals(Distinguish.FAKE))
-                  
-        });
+        if(optionalTreasure.isPresent()){
 
+            results = optionalTreasure.get().getTreasureInventory().getTargetPointList()
+                    .parallelStream()
+                    .filter(targetPoint -> !ids.contains(targetPoint.getTargetPointId()))
+                    .filter(targetPoint -> targetPoint.getDistinguish().equals(Distinguish.FAKE))
+                    .limit(hintCount)
+                    .map(TargetPoint::getTargetPointId)
+                    .collect(Collectors.toList());
 
-        return null;
+        }
+        return results;
     }
 
 
