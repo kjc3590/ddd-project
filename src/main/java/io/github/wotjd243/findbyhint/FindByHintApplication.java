@@ -94,18 +94,6 @@ public class FindByHintApplication implements CommandLineRunner {
         hunterService.hunterCreate(hunter2);
     }
 
-    public void makeMissionInfoSample() {
-        final String hunterId = "testHunter";
-        final String question = "A?";
-        final String answer = "true";
-        final MissionLevel level = MissionLevel.BRONZE;
-        final MissionSuccessStatus status = MissionSuccessStatus.SUCCESS;
-
-        MissionDto missionDto = new MissionDto(hunterId, question, answer, level);
-
-        log.info("missionDto: " + missionDto);
-        missionInventoryService.save(missionDto);
-    }
 
     public void makeHintInventorySample(){
 

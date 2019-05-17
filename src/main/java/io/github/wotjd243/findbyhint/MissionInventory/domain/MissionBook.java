@@ -14,18 +14,22 @@ public class MissionBook {
     @ElementCollection
     private List<MissionInventoryInfo> missionBook = new ArrayList<>();
 
-    public MissionBook() {}
+    public MissionBook() {
 
-    public void setMissionBook(List<MissionInventoryInfo> missionBook) {
-        this.missionBook = missionBook;
     }
 
-    public MissionBook(List<MissionInventoryInfo> missionBook) {
-        this.missionBook = new ArrayList<>();
-    }
-
-//    public void addMissionBook(List<MissionInventoryInfo> infoList){
-//        this.infoList.addAll(infoList);
+//    public void setMissionBook(List<MissionInventoryInfo> missionBook) {
+//        this.missionBook = missionBook;
 //    }
+
+//    public MissionBook(List<MissionInventoryInfo> missionBook) {
+//
+//        this.missionBook = new ArrayList<>();
+//    }
+
+
+    public void addMissionBook(MissionInventoryInfo missionBook){
+        this.missionBook.add(missionBook);
+    }
 
 }

@@ -26,23 +26,24 @@ public class MissionInventoryInfo {
     private MissionInventoryInfo() {
     }
 
-    public MissionInventoryInfo(Long missionId, String question, String answer, MissionSuccessStatus status) {
+    public MissionInventoryInfo(Long missionId, String question, String answer) {
         this.missionId = missionId;
         this.question = question;
         this.answer = answer;
         this.status = MissionSuccessStatus.FAIL;
     }
 
-    public static MissionInventoryInfo valueOf(Long missionId, String question, String answer, MissionSuccessStatus status) {
-        return new MissionInventoryInfo(missionId, question, answer, status);
+    public static MissionInventoryInfo valueOf(Long missionId, String question, String answer) {
+        return new MissionInventoryInfo(missionId, question, answer);
     }
+
 
 
     // 미션 성공
-    public void missionComplete(){
-        this.status = MissionSuccessStatus.SUCCESS;
-    }
-
+//    public void missionComplete(){
+//        this.status = MissionSuccessStatus.SUCCESS;
+//    }
+//
 //    public void setMissionInventory(MissionInventory missionInventory) {
 //
 //        log.info("missionInventory.getHunterId(): "+missionInventory.getHunterId());
