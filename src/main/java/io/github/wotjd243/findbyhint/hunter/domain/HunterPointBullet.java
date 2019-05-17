@@ -1,9 +1,15 @@
 package io.github.wotjd243.findbyhint.hunter.domain;
 
+import io.github.wotjd243.findbyhint.util.LocalDateTimePersistenceConverter;
 import lombok.Getter;
 
+import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
@@ -22,9 +28,12 @@ public class HunterPointBullet {
     @Embedded
     private HunterBullet hunterBullet;
 
-    public HunterPointBullet(HunterPoint hunterPoint, HunterBullet hunterBullet) {
+    private Timestamp hunterBulletRefillTime;
+
+    public HunterPointBullet(HunterPoint hunterPoint, HunterBullet hunterBullet, Timestamp hunterBulletRefillTime) {
         this.hunterPoint = hunterPoint;
         this.hunterBullet = hunterBullet;
+        this.hunterBulletRefillTime = hunterBulletRefillTime;
     }
 
     public void buyOneBullet() {

@@ -5,6 +5,9 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
@@ -23,5 +26,7 @@ public class HunterDto {
     private int hunterPoint;
 
     private int hunterBullet;
+
+    private Timestamp hunterBulletRefillTime;
 
 }
