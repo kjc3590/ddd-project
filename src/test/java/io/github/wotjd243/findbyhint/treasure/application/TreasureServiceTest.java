@@ -1,6 +1,7 @@
 package io.github.wotjd243.findbyhint.treasure.application;
 
 import io.github.wotjd243.findbyhint.mission.domain.Mission;
+import io.github.wotjd243.findbyhint.treasure.domain.TargetPoint;
 import io.github.wotjd243.findbyhint.treasure.domain.Treasure;
 import io.github.wotjd243.findbyhint.treasure.domain.TreasureRepository;
 import io.github.wotjd243.findbyhint.util.DateObject;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,7 @@ public class TreasureServiceTest {
 
     @Autowired
     private TreasureRepository treasureRepository;
+
 
     @Test
     public void saveTest(){
@@ -112,7 +115,20 @@ public class TreasureServiceTest {
 
     }
 
+    @Test
+    @Transactional
+    public void 타겟넘겨주기_테스트(){
+        Long treasureId = treasureService.getTreasureIdByActive();
+        List<Long> ids = new ArrayList<>();
+        ids.add(1L);
+        ids.add(2L);
 
+        List<TargetPoint> result = treasureService.getTargetPointByIds(treasureId,ids);
+        result.forEach(targetPoint -> {
+            System.out.println("targetPoint.getTargetPointId() :: '" + targetPoint.getTargetPointId()+"'");
+        });
+
+    }
 
 
     public Treasure getSampleTreasure(){
@@ -140,5 +156,6 @@ public class TreasureServiceTest {
         treasureRepository.save(sample);
         return sample;
     }
+
 
 }

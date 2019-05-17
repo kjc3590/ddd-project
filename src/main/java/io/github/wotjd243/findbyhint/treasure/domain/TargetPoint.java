@@ -8,6 +8,7 @@ package io.github.wotjd243.findbyhint.treasure.domain;
 import io.github.wotjd243.findbyhint.util.VO.Distinguish;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.extern.java.Log;
 
 import javax.persistence.*;

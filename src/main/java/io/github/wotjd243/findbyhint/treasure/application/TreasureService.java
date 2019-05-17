@@ -13,6 +13,7 @@ import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.lang.annotation.Target;
 import java.math.BigInteger;
 import java.time.Period;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.Comparator.comparing;
@@ -83,7 +85,7 @@ public class TreasureService {
         }
     }
 
-    // TODO(1) 미션 관련정보 넘겨주기
+    // COMPLETED 미션 관련정보 넘겨주기
     public Optional<Mission> getMission(Long treasureId, List<Long> ids){
         Optional<Treasure> optionalTreasure = treasureRepository.findById(treasureId);
         Mission mission = null;
@@ -98,11 +100,39 @@ public class TreasureService {
         return Optional.ofNullable(mission);
 
     }
+    // COMPLETED 힌트받은거 제외하고 모든 타겟 포인트 넘기기
+    public List<TargetPoint> getTargetPointByIds(Long treasureId, List<Long> ids){
+        Optional<Treasure> optionalTreasure = treasureRepository.findById(treasureId);
+        List<TargetPoint> result = null;
 
+        if(optionalTreasure.isPresent()){
+            result = optionalTreasure.get().getTreasureInventory().getTargetPointList()
+                    .parallelStream()
+                    .filter(targetPoint -> !ids.contains(targetPoint.getTargetPointId()))
+                    .collect(Collectors.toList());
+        }
+
+        return result;
+    }
 
     // COMPLETED 힌트 관련 정보 넘겨주기
     public List<Long> getTargetPointIds(Long treasureId, List<Long> ids,int hintCount){
-        return treasureRepository.findTargetPointIds(treasureId,ids,hintCount);
+        //treasureRepository.findTargetPointIds(treasureId,ids,hintCount);
+        Optional<Treasure> optionalTreasure = treasureRepository.findById(treasureId);
+        List<Long> results = null;
+
+        if(optionalTreasure.isPresent()){
+
+            results = optionalTreasure.get().getTreasureInventory().getTargetPointList()
+                    .parallelStream()
+                    .filter(targetPoint -> !ids.contains(targetPoint.getTargetPointId()))
+                    .filter(targetPoint -> targetPoint.getDistinguish().equals(Distinguish.FAKE))
+                    .limit(hintCount)
+                    .map(TargetPoint::getTargetPointId)
+                    .collect(Collectors.toList());
+
+        }
+        return results;
     }
 
 
