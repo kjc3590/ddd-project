@@ -14,6 +14,11 @@ public interface HintRepository extends JpaRepository<Hint,Long> {
     @Query
     Hint findByHintMappedIds_HunterIdAndHintMappedIds_TreasureId(HunterId hunterId, Long treasureId);
 
+
+
+
+
+
 //    List<Long> findHintInventory(@Param("treasureId") Long treasureId, @Param("ids") List<Long> ids);
 
 }

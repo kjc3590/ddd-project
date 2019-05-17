@@ -3,21 +3,14 @@ package io.github.wotjd243.findbyhint.hint.application;
 import io.github.wotjd243.findbyhint.hint.domain.Hint;
 import io.github.wotjd243.findbyhint.hint.domain.HintRepository;
 
+import io.github.wotjd243.findbyhint.hunter.domain.Hunter;
 import io.github.wotjd243.findbyhint.hunter.domain.HunterId;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
+import io.github.wotjd243.findbyhint.treasure.domain.TargetPoint;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-//헌터 ID, 보물 ID를 통해서 Hint -> HintInventory 를 가져올 수 있음 => 가지고있는 타겟포인트 ID를 가져올수있음 -- 도메인
-
-//터겟포인트 ID와 HintCounter로 가져와야할 FakeTargetPoint 의 아이디를 List<Long>가져올 수 있음  -- 도메인
-
-//기존의 해당되는 힌트인벤토리에  HintInvenTory 들을 추가한다 -- 도메인
-
-// save()
-
 
 @Service
 public class HintService {
@@ -35,24 +28,24 @@ public class HintService {
     //헌터 ID,  보물 ID, HintCounter 개수
 
     //TODO (1) : 지워야할 좌표 넘겨주기
-    public void addHint(HunterId hunterId,int hintCount){
+    public void addHint(String hunterId,int hintCount){
 
         // 현재 진행중인  보물 ID
         Long treasureId = treasureService.getTreasureIdByActive();
 
         //해당 hunterId 와 treasureId 로 ids 를 가져와야함 : 완전한 객체로 가져옴
-        Hint hint = findByHunterIdAndHintInventory_TreasureId(hunterId,treasureId);
+        Hint hint = findByHunterIdAndTreasureId(hunterId,treasureId);
 
-        List<Long> ids = new ArrayList<>();
+        List<Long> ids = getHintTargetPointIds(hunterId,treasureId);
         //기존의 있는 아이디 값 가져옴
         if(hint == null){
-            hint = Hint.valueOf(hunterId.getHunterId(),treasureId);
+            hint = Hint.valueOf(hunterId,treasureId);
         }
 
         //보물의 가짜좌표 (힌트) hintCount 만큼 가져옴
         List<Long> getIds = treasureService.getTargetPointIds(treasureId,ids,hintCount);
 
-        //가져온 아이디 값 기존의 힘트에 넣어줌
+        //가져온 아이디 값 기존의 힌트에 넣어줌
         hint.addBringTargetPointIds(getIds);
 
         //저장
@@ -60,22 +53,43 @@ public class HintService {
 
     }
 
-    protected Hint findByHunterIdAndHintInventory_TreasureId(HunterId hunterId, Long treasureId) {
-        return hintRepository.findByHintMappedIds_HunterIdAndHintMappedIds_TreasureId(hunterId,treasureId);
-    }
-
-
-    // 조회해서 넣어라 넣는 방법은 모르지만 일단 넣어라
-
     private Hint getHint(final Long hintId) {
         return hintRepository.findById(hintId).orElseThrow(IllegalArgumentException::new);
     }
 
-/*    private HintInventory getHintInventory(final Long trasureId,  List<Long> bringtargetList) {
-        return hintRepository.findHintInventory(trasureId,bringtargetList);
-    }*/
 
-    // 지워야할 좌표의 집합
+
+
+    public List<Long> getHintTargetPointIds(final String hunterId, final Long treasureId){
+        // 힌트객체 가져오기
+        final Hint hint  = findByHunterIdAndTreasureId(hunterId,treasureId);
+        List<Long> ids = new ArrayList<>();
+        //TODO.1 해당 힌트에 대한 타겟 포인트의 집합  (타겟포인트들의 집합을 구하는 법)
+        if(hint != null){
+            if(hint.getBringTargetPointIds() != null){
+                ids = hint.getBringTargetPointIds();
+            }
+        }
+        return ids;
+
+    }
+
+
+    protected Hint findByHunterIdAndTreasureId(String hunterId, Long treasureId) {
+        return hintRepository.findByHintMappedIds_HunterIdAndHintMappedIds_TreasureId(HunterId.valueOf(hunterId),treasureId);
+    }
+
+
+    // TODO (*) 헌터에게 보여줄 TargetPoint 넘겨주기
+    public List<TargetPoint> getTargetPoints(String hunterId, Long treasureId){
+
+        //현재 가지고 있는 타겟포인트 가져오기
+        List<Long> targetPointIds = getHintTargetPointIds(hunterId,treasureId);
+
+        return  treasureService.getTargetPointByIds(treasureId,targetPointIds);
+
+    }
+
 
 
 }

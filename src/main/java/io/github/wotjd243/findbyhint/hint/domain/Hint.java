@@ -31,19 +31,20 @@ public class Hint {
 
     @Embedded
     private HintMappedIds hintMappedIds;
-
     // hintId, hunterId , TreasureId
     // 매개변수는 모두가 아는 타입으로 설정 -> 매개변수를 토대로 VO 가져오기
     private Hint(String hunterId, Long treasureId){
-
         validation(hunterId,treasureId);
         this.hintMappedIds = HintMappedIds.valueOf(hunterId,treasureId);
-
     }
 
     //가져온 타겟 포인트 꺼내는 메소드
     public List<Long> getBringTargetPointIds(){
-        return this.bringtarget.getBringtargetIds();
+        if(this.bringtarget != null){
+            return this.bringtarget.getBringtargetIds();
+        }else{
+            return null;
+        }
     }
 
     //가져온 타겟 포인트를 추가하는 메소드
