@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 public class Hunter extends DateTimeEntity {
 
-    // TODO (0) 올바른 Exception 처리 관련 질문해서 반영하기.
     // TODO (1) 총알 리필 시간 관련 메소드 정리
     // TODO (1-1) 총알을 사용하는 메소드 > decreaseOneBullet
     //            DB에 총알의 리필완료시간을 업데이트 하는 메소드 >

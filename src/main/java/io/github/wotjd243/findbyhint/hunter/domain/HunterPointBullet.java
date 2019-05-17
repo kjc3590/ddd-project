@@ -17,8 +17,6 @@ import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 @Getter
 public class HunterPointBullet {
 
-    //TODO(0) 총알 충전시간 객체 생성
-
     public HunterPointBullet() {
     }
 
