@@ -26,15 +26,15 @@ public class MissionInventoryInfo {
     private MissionInventoryInfo() {
     }
 
-    public MissionInventoryInfo(Long missionId, String question, String answer) {
+    public MissionInventoryInfo(Long missionId, String question, String answer, MissionSuccessStatus status) {
         this.missionId = missionId;
         this.question = question;
         this.answer = answer;
         this.status = MissionSuccessStatus.FAIL;
     }
 
-    public static MissionInventoryInfo valueOf(Long missionId, String question, String answer) {
-        return new MissionInventoryInfo(missionId, question, answer);
+    public static MissionInventoryInfo valueOf(Long missionId, String question, String answer, MissionSuccessStatus status) {
+        return new MissionInventoryInfo(missionId, question, answer, status);
     }
 
 

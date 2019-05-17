@@ -1,5 +1,6 @@
 package io.github.wotjd243.findbyhint.MissionInventory.ui;
 
+import io.github.wotjd243.findbyhint.MissionInventory.application.MissionDto;
 import io.github.wotjd243.findbyhint.MissionInventory.infra.MissionApi;
 
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class MissionController {
     }
 
     @GetMapping("/mission")
-    public void mission(Model model) throws IOException, IllegalAccessException {
-        missionApi.execute2(model);
+    public void mission(Model model, MissionDto missionDto) throws IOException, IllegalAccessException {
+        missionApi.execute2(model, missionDto);
     }
 }

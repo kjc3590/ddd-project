@@ -31,7 +31,7 @@ public class MissionInventoryService {
     }
 
 
-    // TODO (2) 미션을 풀었을 때 MissionInfo에 해당 정보 저장하기 (헌터Id, 보물Id, 미션인벤토리, QnA)
+    // TODO (2) 미션을 풀었을 때 MissionInventory에 해당 정보 저장하기 (헌터Id, 보물Id)
         public MissionInventory save(MissionDto missionDto) {
 
         //보물아이디 가져와서 저장
@@ -43,7 +43,6 @@ public class MissionInventoryService {
         Optional<Mission> result = treasureService.getMission(treasureId, ids);
         Long id = result.get().getMissionId();
 
-
         //임시로 헌터아이디 생성
         HunterId hunterId = HunterId.valueOf("aa");
 
@@ -51,25 +50,33 @@ public class MissionInventoryService {
         MissionInventory missionInventory = MissionInventory.valueOf(hunterId, treasureId);
         log.info("인벤토리에 데이터 저장");
 
-        List<MissionInventoryInfo> missionInventoryInfoList = new ArrayList<>();
-        MissionInventoryInfo missionInventoryInfo = new MissionInventoryInfo(id, missionDto.getQuestion(), missionDto.getAnswer());
-        missionInventoryInfoList.add(missionInventoryInfo);
-        MissionBook missionBook = new MissionBook();
-        missionBook.setMissionBook(missionInventoryInfoList);
-
-        missionInventory.setMissionBook(missionBook);
-
+        //MissionBook에 데이터 저장
+        infoSave(id, missionInventory, missionDto);
 
         log.info("treasureId: " +treasureId);
         log.info("missionId:" +id);
         log.info("missionDto.getHunterId(): "+missionDto.getHunterId());
         log.info("missionDto.getQuestion(): "+missionDto.getQuestion());
         log.info("missionDto.getAnswer(): "+missionDto.getAnswer());
-        log.info("missionDto.getSuccess(): "+missionDto.getSuccess());
+//        log.info("missionDto.getSuccess(): "+missionDto.getSuccess());
 
-        MissionInventory result2 = missionInventoryRepository.save(missionInventory);
+    MissionInventory result2 = missionInventoryRepository.save(missionInventory);
 
         return missionInventory;
+}
+
+    // TODO (2) 미션을 풀었을 때 MissionInventory에 해당 정보 저장하기 (MissionBook)
+    public List<MissionInventoryInfo> infoSave(Long id, MissionInventory missionInventory, MissionDto missionDto) {
+
+        List<MissionInventoryInfo> missionInventoryInfoList = new ArrayList<>();
+        MissionInventoryInfo missionInventoryInfo = new MissionInventoryInfo(id, missionDto.getQuestion(), missionDto.getAnswer(), MissionSuccessStatus.FAIL);
+        missionInventoryInfoList.add(missionInventoryInfo);
+        MissionBook missionBook = new MissionBook();
+        missionBook.setMissionBook(missionInventoryInfoList);
+
+        missionInventory.setMissionBook(missionBook);
+
+        return missionInventoryInfoList;
     }
 
 
