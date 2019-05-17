@@ -3,6 +3,8 @@ package io.github.wotjd243.findbyhint;
 
 import io.github.wotjd243.findbyhint.MissionInventory.application.MissionInventoryService;
 import io.github.wotjd243.findbyhint.MissionInventory.domain.MissionSuccessStatus;
+import io.github.wotjd243.findbyhint.hint.domain.Hint;
+import io.github.wotjd243.findbyhint.hint.domain.HintRepository;
 import io.github.wotjd243.findbyhint.mission.application.MissionService;
 import io.github.wotjd243.findbyhint.mission.domain.MissionLevel;
 import io.github.wotjd243.findbyhint.MissionInventory.application.MissionDto;
@@ -25,6 +27,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author DoYoung
@@ -44,14 +48,17 @@ public class FindByHintApplication implements CommandLineRunner {
     private final HintService hintService;
     private final HunterService hunterService;
     private final MissionService missionService;
+    private final HintRepository hintRepository;
 
-    public FindByHintApplication(TreasureService treasureService, MissionInventoryService missionInventoryService, HintService hintService, HunterService hunterService, MissionService missionService) {
+    public FindByHintApplication(TreasureService treasureService, MissionInventoryService missionInventoryService, HintService hintService, HunterService hunterService, MissionService missionService, HintRepository hintRepository) {
         this.treasureService = treasureService;
         this.missionInventoryService = missionInventoryService;
         this.hintService = hintService;
         this.hunterService = hunterService;
         this.missionService = missionService;
+        this.hintRepository = hintRepository;
     }
+
     public static void main(String[] args) { SpringApplication.run(FindByHintApplication.class, args); }
 
     @Override
@@ -59,6 +66,7 @@ public class FindByHintApplication implements CommandLineRunner {
         makeTreasureSample();
         hunterSampleCreate();
         //makeMissionInfoSample();
+        makeMissionInventorySample();
     }
 
     public void makeTreasureSample(){
@@ -101,9 +109,20 @@ public class FindByHintApplication implements CommandLineRunner {
 
     public void makeHintInventorySample(){
 
-        final HunterId hunterId = new HunterId( "hunterId");
         final int hintCount =2;
-        hintService.addHint(hunterId,hintCount);
+        hintService.addHint("testHunter",hintCount);
+    }
+
+
+    public void makeMissionInventorySample(){
+        final String hunterId = "testHunter";
+        final Long treasureId = treasureService.getTreasureIdByActive();
+        Hint hint = Hint.valueOf(hunterId,treasureId);
+        List<Long>  ids = new ArrayList<>();
+        ids.add(2L);
+        ids.add(3L);
+        hint.addBringTargetPointIds(ids);
+        hintRepository.save(hint);
     }
 
 }

@@ -37,10 +37,16 @@ public class Hint {
         validation(hunterId,treasureId);
         this.hintMappedIds = HintMappedIds.valueOf(hunterId,treasureId);
     }
+
     //가져온 타겟 포인트 꺼내는 메소드
     public List<Long> getBringTargetPointIds(){
-        return this.bringtarget.getBringtargetIds();
+        if(this.bringtarget != null){
+            return this.bringtarget.getBringtargetIds();
+        }else{
+            return null;
+        }
     }
+
     //가져온 타겟 포인트를 추가하는 메소드
     public void addBringTargetPointIds(List<Long> ids){
         if(bringtarget == null){
