@@ -35,6 +35,9 @@ public class MissionInventory extends DateTimeEntity {
         this.treasureId = treasureId;
     }
 
+    public MissionInventory() {
+    }
+
     public static MissionInventory valueOf(HunterId hunterId, Long treasureId){
         return new MissionInventory(hunterId, treasureId);
     }

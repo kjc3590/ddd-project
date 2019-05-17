@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.wotjd243.findbyhint.MissionInventory.application.MissionDto;
 import io.github.wotjd243.findbyhint.MissionInventory.application.MissionInventoryService;
+import io.github.wotjd243.findbyhint.MissionInventory.domain.MissionInventoryInfo;
 import io.github.wotjd243.findbyhint.MissionInventory.domain.MissionSuccessStatus;
 import io.github.wotjd243.findbyhint.mission.domain.Mission;
 import io.github.wotjd243.findbyhint.mission.domain.MissionLevel;
@@ -48,11 +49,17 @@ public class MissionApi {
     // TODO (2) 처음 문제 개수는 보물에 따라 정해져서 나옴
     // TODO (3) 문제를 맞출 때마다 포인트를 증정해 주어야함
 
-    public void execute2(Model model) throws IOException, IllegalAccessException {
+    // TODO(9-2) 받아온 미션 ID를 인자로 받는 미션 호출 API 수정한다.
+    //  List<Long> ids를 hunterId, activetreasureId 를 인자로 받아 찾아오는 메소드를 만들기
+
+    public void execute2(Model model, String hunterId) throws IOException, IllegalAccessException {
 
         Long treasureId = treasureService.getTreasureIdByActive();
         System.out.println("treasureId: " + treasureId);
-        List<Long> ids = new ArrayList<>();
+
+        List<MissionInventoryInfo> infoList = missionInventoryService.missionIdList(hunterId, treasureId);
+
+        List<Long> ids = missionInventoryService.missionListToLongList(infoList);
 
         // TODO (4) 문제는 쉬운 문제부터 -> 어려운 문제로 나와야 함
         Optional<Mission> result = treasureService.getMission(treasureId, ids);

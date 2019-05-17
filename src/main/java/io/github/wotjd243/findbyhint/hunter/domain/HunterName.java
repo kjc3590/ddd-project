@@ -23,6 +23,10 @@ public class HunterName {
 
     }
 
+    public String getHunterName() {
+        return hunterName;
+    }
+
     @Override
     public String toString() {
         return "HunterName{" +
