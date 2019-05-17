@@ -21,12 +21,10 @@ public class TreasureInventory {
     @Column(name = "runningTime")
     private Event runningTime;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "treasure")
-//    @JoinColumn(name = "targetPointId")
-    private List<TargetPoint> targetPointList =new ArrayList<TargetPoint>();
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "treasure" ,fetch = FetchType.LAZY)
+    private List<TargetPoint> targetPointList = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "treasure",fetch = FetchType.EAGER)
-//    @JoinColumn(name = "missionId")
     private List<Mission> missionList = new ArrayList<Mission>();
 
     private TreasureInventory(

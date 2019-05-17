@@ -98,7 +98,7 @@ public class TreasureService {
         }
         return Optional.ofNullable(mission);
     }
-    // TODO 힌트받은거 제외하고 모든 타겟 포인트 넘기기
+    // COMPLETED 힌트받은거 제외하고 모든 타겟 포인트 넘기기
     public List<TargetPoint> getTargetPointByIds(Long treasureId, List<Long> ids){
         Optional<Treasure> optionalTreasure = treasureRepository.findById(treasureId);
         List<TargetPoint> result = null;
@@ -113,7 +113,7 @@ public class TreasureService {
         return result;
     }
 
-    // TODO 힌트 관련 정보 넘겨주기
+    // COMPLETED 힌트 관련 정보 넘겨주기
     public List<Long> getTargetPointIds(Long treasureId, List<Long> ids,int hintCount){
         //treasureRepository.findTargetPointIds(treasureId,ids,hintCount);
         Optional<Treasure> optionalTreasure = treasureRepository.findById(treasureId);
