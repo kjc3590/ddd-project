@@ -27,12 +27,14 @@ import java.util.stream.IntStream;
 import static java.util.Comparator.comparing;
 
 @Service
-//굳이 생성자를 만들지 않아도 해당 어노테이션으로 해결을 할 수 있는 것 같다.
-@RequiredArgsConstructor
 @Log
 public class TreasureService {
 
     private final TreasureRepository treasureRepository;
+
+    public TreasureService(TreasureRepository treasureRepository) {
+        this.treasureRepository = treasureRepository;
+    }
 
     //보물을 등록하는 메소드
     public Treasure save(TreasureRequestDto treasureRequestDto) {
