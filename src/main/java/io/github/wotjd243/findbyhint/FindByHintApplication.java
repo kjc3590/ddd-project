@@ -3,6 +3,7 @@ package io.github.wotjd243.findbyhint;
 
 import io.github.wotjd243.findbyhint.MissionInventory.application.MissionInventoryService;
 import io.github.wotjd243.findbyhint.MissionInventory.domain.MissionSuccessStatus;
+import io.github.wotjd243.findbyhint.mission.application.MissionService;
 import io.github.wotjd243.findbyhint.mission.domain.MissionLevel;
 import io.github.wotjd243.findbyhint.MissionInventory.application.MissionDto;
 
@@ -42,21 +43,22 @@ public class FindByHintApplication implements CommandLineRunner {
     private final MissionInventoryService missionInventoryService;
     private final HintService hintService;
     private final HunterService hunterService;
+    private final MissionService missionService;
 
-    public FindByHintApplication(TreasureService treasureService, MissionInventoryService missionInventoryService, HintService hintService,HunterService hunterService) {
+    public FindByHintApplication(TreasureService treasureService, MissionInventoryService missionInventoryService, HintService hintService, HunterService hunterService, MissionService missionService) {
         this.treasureService = treasureService;
         this.missionInventoryService = missionInventoryService;
         this.hintService = hintService;
         this.hunterService = hunterService;
+        this.missionService = missionService;
     }
-
     public static void main(String[] args) { SpringApplication.run(FindByHintApplication.class, args); }
 
     @Override
     public void run(String... args) throws Exception {
         makeTreasureSample();
         hunterSampleCreate();
-        makeMissionInfoSample();
+        //makeMissionInfoSample();
     }
 
     public void makeTreasureSample(){
@@ -85,7 +87,7 @@ public class FindByHintApplication implements CommandLineRunner {
     }
 
     public void makeMissionInfoSample() {
-        final String hunterId = "aa";
+        final String hunterId = "testHunter";
         final String question = "A?";
         final String answer = "true";
         final MissionLevel level = MissionLevel.BRONZE;

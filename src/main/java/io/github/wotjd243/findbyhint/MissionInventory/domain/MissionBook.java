@@ -12,7 +12,7 @@ import java.util.List;
 public class MissionBook {
 
     @ElementCollection
-    private List<MissionInventoryInfo> missionBook = new ArrayList<>();;
+    private List<MissionInventoryInfo> missionBook = new ArrayList<>();
 
     public MissionBook() {}
 

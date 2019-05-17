@@ -1,6 +1,7 @@
 package io.github.wotjd243.findbyhint.MissionInventory.application;
 
 import io.github.wotjd243.findbyhint.MissionInventory.domain.*;
+import io.github.wotjd243.findbyhint.hunter.domain.Hunter;
 import io.github.wotjd243.findbyhint.hunter.domain.HunterId;
 import io.github.wotjd243.findbyhint.mission.domain.Mission;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
@@ -46,7 +47,7 @@ public class MissionInventoryService {
         Long id = result.get().getMissionId();
 
         //임시로 헌터아이디 생성
-        HunterId hunterId = HunterId.valueOf("aa");
+        HunterId hunterId = HunterId.valueOf("testHunter");
 
         //인벤토리에 데이터 저장
         MissionInventory missionInventory = MissionInventory.valueOf(hunterId, treasureId);
@@ -62,7 +63,7 @@ public class MissionInventoryService {
         log.info("missionDto.getAnswer(): "+missionDto.getAnswer());
 //        log.info("missionDto.getSuccess(): "+missionDto.getSuccess());
 
-    MissionInventory result2 = missionInventoryRepository.save(missionInventory);
+        MissionInventory result2 = missionInventoryRepository.save(missionInventory);
 
         return missionInventory;
 }
@@ -81,11 +82,32 @@ public class MissionInventoryService {
         return missionInventoryInfoList;
     }
 
-    public Long getMissionId(String hunterId) {
+    public List<Long> missionListToLongList(List<MissionInventoryInfo> ids) {
 
-        MissionInventory missionInventory = missionInventoryRepository.findByHunterId(hunterId).get();
+        List<Long> list = new ArrayList<>();
 
-        return null;
+        for (MissionInventoryInfo info : ids) {
+            list.add(info.getMissionId());
+        }
+
+        return list;
+    }
+
+    public List<MissionInventoryInfo> missionIdList(String hunterId, Long treasureId) {
+
+//        MissionInventory missionInventory = missionInventoryRepository.findByHunterIdAndTreasureId(HunterId.valueOf(hunterId), treasureId).get();
+//        List<MissionInventoryInfo> list = missionInventory.getMissionBook().getMissionBook();
+        List<MissionInventoryInfo> list = new ArrayList<>();
+
+        Optional<MissionInventory> byHunterIdAndTreasureId = missionInventoryRepository.findByHunterIdAndTreasureId(HunterId.valueOf(hunterId), treasureId);
+        if(byHunterIdAndTreasureId.isPresent()){
+            list = byHunterIdAndTreasureId.get().getMissionBook().getMissionBook();
+        }
+
+
+
+
+        return list;
 
     }
 

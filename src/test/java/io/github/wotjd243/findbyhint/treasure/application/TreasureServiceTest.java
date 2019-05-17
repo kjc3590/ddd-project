@@ -92,15 +92,16 @@ public class TreasureServiceTest {
 
         System.out.println("treasureId :: "+treasureId);
         System.out.println("treasureService.getTreasure(treasureId).isActive() :: " +treasureService.getTreasure(treasureId).isActive());
-        List<Long> ids = new ArrayList<>();
-        ids.add(1L);
-
-        ids.add(4L);
-        ids.add(6L);
-        ids.add(7L);
-        ids.add(10L);
-        ids.add(12L);
-        ids.add(13L);
+        //List<Long> ids = null;
+         List<Long> ids = new ArrayList<>();
+//        ids.add(1L);
+//
+//        ids.add(4L);
+//        ids.add(6L);
+//        ids.add(7L);
+//        ids.add(10L);
+//        ids.add(12L);
+//        ids.add(13L);
 
         Mission mission = treasureService.getMission(treasureId,ids).get();
         System.out.println("===========================================================");
