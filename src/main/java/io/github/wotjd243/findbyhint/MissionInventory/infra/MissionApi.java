@@ -97,7 +97,7 @@ public class MissionApi {
             log.info("missionDto.getQuestion():: "+missionDto.getQuestion());
             log.info("missionDto.getAnswer():: "+missionDto.getAnswer());
             log.info("missionDto.getLevel():: "+missionDto.getLevel());
-            missionInventoryService.save(missionDto);
+//            missionInventoryService.save(missionDto);
 
             model.addAttribute("question", question);
             model.addAttribute("correct_answer", correct_answer);
