@@ -2,11 +2,15 @@ package io.github.wotjd243.findbyhint.MissionInventory.infra;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.wotjd243.findbyhint.MissionInventory.application.MissionDto;
+import io.github.wotjd243.findbyhint.MissionInventory.application.MissionInventoryService;
+import io.github.wotjd243.findbyhint.MissionInventory.domain.MissionSuccessStatus;
 import io.github.wotjd243.findbyhint.mission.domain.Mission;
 import io.github.wotjd243.findbyhint.mission.domain.MissionLevel;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
 import io.github.wotjd243.findbyhint.treasure.domain.Treasure;
 import io.github.wotjd243.findbyhint.treasure.domain.TreasureRepository;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -27,14 +31,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Service
+@Component
+@Log
 public class MissionApi {
 
 
     private TreasureService treasureService;
+    private MissionInventoryService missionInventoryService;
 
-    public MissionApi(TreasureService treasureService) {
+    public MissionApi(TreasureService treasureService, MissionInventoryService missionInventoryService) {
         this.treasureService = treasureService;
+        this.missionInventoryService = missionInventoryService;
     }
 
     // TODO (1) 불러온 API 미션 로직에 따라 변경하기.
@@ -55,26 +62,15 @@ public class MissionApi {
 
         if (result != null) {
             Long id = result.get().getMissionId();
-            MissionLevel level = result.get().getMissionLevel();
+            String level = result.get().getMissionLevel().getLevelName();
             System.out.println("id: " + id);
             System.out.println("level: " + level);
 
-//            if (level == 1) {
-//                level =  "easy";
-//            }
-//
-//            if (level == "SILVER") {
-//                level = "medium";
-//            }
-//
-//            if (level == "GOLD") {
-//                level = "hard";
-//            }
 //        ArrayList<Map<String, Object>> treasureList = 보물1 문제 데이터;
 //            for(Map<String, Object> tr : treasureList) {
 //                // tr.pk 데이터가 미션인벤토리 테이블에 값이있는지체크
 //                if(값이없으면){
-            URL url = new URL("https://opentdb.com/api.php?amount=1&difficulty=" + level);
+            URL url = new URL("https://opentdb.com/api.php?amount=1&difficulty="+level);
 
             System.out.println("url::" + url);
 
@@ -89,13 +85,26 @@ public class MissionApi {
                 throw new IllegalAccessException("미션을 불러오지 못했습니다.");
             }
             System.out.println("results: " + results);
-            System.out.println("results.get(0).get('difficulty'): " + results.get(0).get("difficulty"));
-            System.out.println("results.get(0).get('question'): " + results.get(0).get("question"));
-            System.out.println("results.get(0).get('correct_answer'): " + results.get(0).get("correct_answer"));
-            System.out.println("results.get(0).get('incorrect_answers'): " + results.get(0).get("incorrect_answers"));
+            String difficulty = (String) results.get(0).get("difficulty");
+            String question = (String) results.get(0).get("question");
+            String correct_answer = (String) results.get(0).get("correct_answer");
+//            String incorrect_answers = (String) results.get(0).get("incorrect_answers");
 
-            model.addAttribute("question", results.get(0).get("question"));
-            model.addAttribute("correct_answer", results.get(0).get("correct_answer"));
+            MissionLevel missionLevel = result.get().getMissionLevel();
+
+            log.info("difficulty:: "+difficulty);
+            log.info("question:: "+question);
+            log.info("correct_answer:: "+correct_answer);
+//            log.info("incorrect_answers:: "+incorrect_answers);
+
+            MissionDto missionDto = new MissionDto("aa", question, correct_answer, missionLevel);
+            log.info("missionDto.getQuestion():: "+missionDto.getQuestion());
+            log.info("missionDto.getAnswer():: "+missionDto.getAnswer());
+            log.info("missionDto.getLevel():: "+missionDto.getLevel());
+            missionInventoryService.save(missionDto);
+
+            model.addAttribute("question", question);
+            model.addAttribute("correct_answer", correct_answer);
             model.addAttribute("incorrect_answers", results.get(0).get("incorrect_answers"));
 //                    break;
 //                }

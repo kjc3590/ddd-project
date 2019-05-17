@@ -1,5 +1,6 @@
 package io.github.wotjd243.findbyhint.MissionInventory.ui;
 
+import io.github.wotjd243.findbyhint.MissionInventory.application.MissionDto;
 import io.github.wotjd243.findbyhint.MissionInventory.infra.MissionApi;
 
 import org.springframework.stereotype.Controller;

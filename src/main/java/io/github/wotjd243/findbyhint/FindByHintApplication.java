@@ -2,6 +2,7 @@ package io.github.wotjd243.findbyhint;
 
 
 import io.github.wotjd243.findbyhint.MissionInventory.application.MissionInventoryService;
+import io.github.wotjd243.findbyhint.MissionInventory.domain.MissionSuccessStatus;
 import io.github.wotjd243.findbyhint.mission.domain.MissionLevel;
 import io.github.wotjd243.findbyhint.MissionInventory.application.MissionDto;
 
@@ -38,13 +39,13 @@ import java.time.LocalDate;
 public class FindByHintApplication implements CommandLineRunner {
 
     private final TreasureService treasureService;
-    private final MissionInventoryService missionInfoService;
+    private final MissionInventoryService missionInventoryService;
     private final HintService hintService;
     private final HunterService hunterService;
 
-    public FindByHintApplication(TreasureService treasureService, MissionInventoryService missionInfoService, HintService hintService,HunterService hunterService) {
+    public FindByHintApplication(TreasureService treasureService, MissionInventoryService missionInventoryService, HintService hintService,HunterService hunterService) {
         this.treasureService = treasureService;
-        this.missionInfoService = missionInfoService;
+        this.missionInventoryService = missionInventoryService;
         this.hintService = hintService;
         this.hunterService = hunterService;
     }
@@ -88,12 +89,12 @@ public class FindByHintApplication implements CommandLineRunner {
         final String question = "A?";
         final String answer = "true";
         final MissionLevel level = MissionLevel.BRONZE;
-        final String success = "Y";
+        final MissionSuccessStatus status = MissionSuccessStatus.SUCCESS;
 
-        MissionDto missionDto = new MissionDto(hunterId, question, answer, level, success);
+        MissionDto missionDto = new MissionDto(hunterId, question, answer, level);
 
         log.info("missionDto: " + missionDto);
-        missionInfoService.save(missionDto);
+        missionInventoryService.save(missionDto);
     }
 
     public void makeHintInventorySample(){
