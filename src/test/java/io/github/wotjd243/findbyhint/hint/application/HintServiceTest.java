@@ -25,13 +25,14 @@ public class HintServiceTest {
     @Test
     public void 힌트추가하기() {
 
-        Long treasureId =treasureService.getTreasureIdByActive();
-        HunterId hunterId = new HunterId("hunterId");
-        hintService.addHint(hunterId,2);
+            Long treasureId =treasureService.getTreasureIdByActive();
+            HunterId hunterId = new HunterId("hunterId");
+            hintService.addHint(hunterId,2);
 
-        Hint hint = hintService.findByHunterIdAndHintInventory_TreasureId(hunterId,treasureId);
+            Hint hint = hintService.findByHunterIdAndTreasureId(hunterId,treasureId);
 
-        for (Long bringTargetPointId : hint.getBringTargetPointIds()) {
+            // 힌트가 가지고 있는 타겟포인트의 집합 추출 , List<Long>타입으로 리턴하는데 이는 리스트가 가진
+            for (Long bringTargetPointId : hint.getBringTargetPointIds()) {
             System.out.println("bringTargetPointId :: "+bringTargetPointId);
         }
 
