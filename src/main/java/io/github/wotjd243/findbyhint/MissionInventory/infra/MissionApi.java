@@ -39,15 +39,16 @@ public class MissionApi {
     private TreasureService treasureService;
     private MissionInventoryService missionInventoryService;
 
-    public MissionApi(TreasureService treasureService) {
+    public MissionApi(TreasureService treasureService, MissionInventoryService missionInventoryService) {
         this.treasureService = treasureService;
+        this.missionInventoryService = missionInventoryService;
     }
 
     // TODO (1) 불러온 API 미션 로직에 따라 변경하기.
     // TODO (2) 처음 문제 개수는 보물에 따라 정해져서 나옴
     // TODO (3) 문제를 맞출 때마다 포인트를 증정해 주어야함
 
-    public void execute2(Model model, MissionDto missionDto) throws IOException, IllegalAccessException {
+    public void execute2(Model model) throws IOException, IllegalAccessException {
 
         Long treasureId = treasureService.getTreasureIdByActive();
         System.out.println("treasureId: " + treasureId);
@@ -93,11 +94,11 @@ public class MissionApi {
             log.info("correct_answer:: "+correct_answer);
 //            log.info("incorrect_answers:: "+incorrect_answers);
 
-            missionDto = new MissionDto("aa", question, correct_answer, missionLevel);
+            MissionDto missionDto = new MissionDto("aa", question, correct_answer, missionLevel);
             log.info("missionDto.getQuestion():: "+missionDto.getQuestion());
             log.info("missionDto.getAnswer():: "+missionDto.getAnswer());
             log.info("missionDto.getLevel():: "+missionDto.getLevel());
-//            missionInventoryService.save(missionDto);
+            missionInventoryService.save(missionDto);
 
             model.addAttribute("question", question);
             model.addAttribute("correct_answer", correct_answer);
