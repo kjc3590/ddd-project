@@ -1,6 +1,7 @@
 package io.github.wotjd243.findbyhint.MissionInventory.ui;
 
 import io.github.wotjd243.findbyhint.MissionInventory.application.MissionDto;
+import io.github.wotjd243.findbyhint.MissionInventory.application.MissionInventoryService;
 import io.github.wotjd243.findbyhint.MissionInventory.infra.MissionApi;
 
 import org.springframework.stereotype.Controller;
@@ -16,14 +17,15 @@ public class MissionController {
     public void index() {
     }
 
-    private final MissionApi missionApi;
 
-    public MissionController(MissionApi missionApi) {
-        this.missionApi = missionApi;
+    private MissionInventoryService missionInventoryService;
+
+    public MissionController(MissionInventoryService missionInventoryService) {
+        this.missionInventoryService = missionInventoryService;
     }
 
     @GetMapping("/mission")
     public void mission(Model model) throws IOException, IllegalAccessException {
-        missionApi.execute2(model,"testHunter");
+        missionInventoryService.callMissionApi("testHunter").ifPresent(missionInventory -> model.addAttribute("missionInventory",missionInventory));
     }
 }
