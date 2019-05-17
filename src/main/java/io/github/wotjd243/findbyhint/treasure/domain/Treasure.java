@@ -1,60 +1,66 @@
 package io.github.wotjd243.findbyhint.treasure.domain;
+/**
+ *
+ * @author DoYoung
+ *
+ */
 
-import io.github.wotjd243.findbyhint.mission.domain.Mission;
-import org.springframework.util.StringUtils;
+import io.github.wotjd243.findbyhint.util.domain.DateTimeEntity;
+import lombok.Getter;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import javax.persistence.*;
 
-public class Treasure {
+@Entity
+@Table(name = "treasure")
+@Getter
+@ToString
+public class Treasure extends DateTimeEntity {
 
+    public static final String SEQUENCE_NAME = "TREASURE_SEQ";
+
+    //기본 생성자
+    private Treasure() {}
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long treasureId;
 
-    //보물의 이름2
-    private String treasureName;
+    @Embedded
+    private QRCode qrCodeVO;
 
-    //현재상태
-    private String runningStatus;
+    @Embedded
+    private TreasureInventory  treasureInventory = new TreasureInventory();
 
-    private List<TargetPoint> targetPointList;
-
-    private RunningTime runningTime;
-
-    //보물로 접근할 수 있는 QR코드
-    private QRCodeVO qrCodeVO;
-
-    private List<Mission> missionList;
-
-    public Treasure(String treasureName,
-                    String runningStatus, QRCodeVO qrCodeVO,
-                    List<TargetPoint> targetPointList,
-                    RunningTime runningTime,
-                    final List<Mission> missionList) {
-        validation(treasureName,runningStatus,targetPointList,runningTime,missionList);
-        this.treasureId = UUID.randomUUID().getMostSignificantBits();
-        this.treasureName= treasureName;
-        this.runningStatus = runningStatus;
-        this.qrCodeVO = qrCodeVO;
-        this.targetPointList= targetPointList;
-        this.runningTime = runningTime;
-        this.missionList = missionList;
+    public Treasure(String qrPw) {
+        this.qrCodeVO = QRCode.valueOf(qrPw);
     }
 
-    public static Treasure valueOf(String treasureName, QRCodeVO qrCodeVO,
-                                   String runningStatus,
-                                   List<TargetPoint> targetPointList,
-                                   RunningTime runningTime,
-                                   List<Mission> missionList){
-        return new Treasure(treasureName,runningStatus,qrCodeVO,targetPointList,runningTime,missionList);
+    //RunningTime 으로 날짜 유효성 체크하기
+    public int validEvent(){
+        return this.treasureInventory.getRunningTime().checkEvent();
+    }
+    public Boolean isActive(){
+        return this.treasureInventory.getRunningTime().isActive();
     }
 
-    public void validation(String name, String runningStatus,  List<TargetPoint> targetPointList,RunningTime runningTime, List<Mission> missionList ){
-        if(missionList.isEmpty()|| StringUtils.isEmpty(name)|| StringUtils.isEmpty(runningStatus) || targetPointList.isEmpty() || runningTime == null) {
-            new IllegalArgumentException("Treasure Exception !!!");
-        }
+    public Boolean isWait(){
+        return this.treasureInventory.getRunningTime().isWait();
+    }
+    public Boolean isClose(){
+        return this.treasureInventory.getRunningTime().isClose();
+    }
+
+
+    public Boolean activeEvent(){ return this.treasureInventory.getRunningTime().activeEvent(); }
+    public Boolean closeEvent(){return this.treasureInventory.getRunningTime().closeEvent();}
+
+    public static Treasure valueOf(String qrPw) {
+        return new Treasure(qrPw);
+    }
+
+    public void setTreasureInventory(TreasureInventory treasureInventory) {
+        this.treasureInventory = treasureInventory;
     }
 
 }

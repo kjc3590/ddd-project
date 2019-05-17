@@ -1,4 +1,9 @@
 package io.github.wotjd243.findbyhint.treasure.domain;
+/**
+ *
+ * @author DoYoung
+ *
+ */
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -6,10 +11,13 @@ import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import io.github.wotjd243.findbyhint.util.AES256Cipher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.AbstractView;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
@@ -17,22 +25,57 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 
-public class QRCodeVO {
 
+@Embeddable
+public class QRCode {
+
+    //기본생성자
+    public QRCode(){}
+
+    private final static String prefixUrl = "http://localhost:8080/findByHint?url=";
+
+    @Column(nullable = false)
     private String qrUrl;
-    private int width;
-    private int height;
-    private String qrColor;
-    private String backColor;
+
+    @Column(nullable = false)
     private String qrPw;
 
-    public QRCodeVO(String qrUrl, int width, int height, String qrColor, String backColor,String qrPw) {
-        this.qrUrl = qrUrl;
-        this.width = width;
-        this.height = height;
-        this.qrColor = qrColor;
-        this.backColor = backColor;
-        this.qrPw = qrPw;
+// qrColor ="0xff000000";
+// backColor ="0xffffffff";
+
+    private QRCode(String qrPw) {
+
+        validation(qrPw);
+
+        AES256Cipher cipher = AES256Cipher.getInstance();
+        String aes_encode_pw = cipher.AES_Encode(qrPw);
+
+        this.qrUrl = prefixUrl+aes_encode_pw;
+        this.qrPw = aes_encode_pw;
+    }
+
+    public static QRCode valueOf(String qrPw){
+        return new QRCode(qrPw);
+    }
+
+    public String getQrPw(){
+        AES256Cipher cipher = AES256Cipher.getInstance();
+        return cipher.AES_Decode(this.qrPw);
+
+    }
+
+
+    public String getQrUrl(){
+        return this.qrUrl;
+    }
+
+    private void validation(String qrPw) {
+
+
+        if(StringUtils.isEmpty(qrPw)){
+            throw new IllegalArgumentException("QrCode 의 비밀번호를 할당받지 못했습니다.");
+        }
+
     }
 
 
@@ -45,7 +88,7 @@ public class QRCodeVO {
         try {
             this.qrUrl = new String(this.qrUrl.getBytes("UTF-8"), "ISO-8859-1");
 
-            matrix = qrCodeWriter.encode(this.qrUrl, BarcodeFormat.QR_CODE, width, height);
+            matrix = qrCodeWriter.encode(this.qrUrl, BarcodeFormat.QR_CODE, 300 , 300);
 
 
         } catch (UnsupportedEncodingException e) {
@@ -63,13 +106,13 @@ public class QRCodeVO {
         int intBackColor = 0;
 
         try{
-            intQrColor = Integer.parseUnsignedInt(qrColor,16);
+            intQrColor = Integer.parseUnsignedInt("qrColor",16);
         }catch(Exception e){
             intQrColor = 0xff000000;
         }
 
         try{
-            intBackColor = Integer.parseUnsignedInt(backColor,16);
+            intBackColor = Integer.parseUnsignedInt("0xffffffff",16);
         }catch(Exception e){
             intBackColor = 0xffffffff;
         }
@@ -104,63 +147,11 @@ public class QRCodeVO {
         };
     }
 
-    public String getUrl() {
-        return qrUrl;
-    }
-
-    public void setUrl(String qrUrl) {
-        this.qrUrl = qrUrl;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public String getQrColor() {
-        return qrColor;
-    }
-
-    public void setQrColor(String qrColor) {
-        this.qrColor = qrColor;
-    }
-
-    public String getBackColor() {
-        return backColor;
-    }
-
-    public void setBackColor(String backColor) {
-        this.backColor = backColor;
-    }
-
-
-    public boolean isEmpty() {
-        return  StringUtils.isEmpty(this.qrUrl) || StringUtils.isEmpty(this.width) || StringUtils.isEmpty(this.height)
-                || StringUtils.isEmpty(this.qrColor) || StringUtils.isEmpty(this.backColor) || StringUtils.isEmpty(this.qrPw);
-    }
-
-
     @Override
     public String toString() {
-        return "QRCodeVO{" +
+        return "QRCode{" +
                 "qrUrl='" + qrUrl + '\'' +
-                ", width=" + width +
-                ", height=" + height +
-                ", qrColor='" + qrColor + '\'' +
-                ", backColor='" + backColor + '\'' +
                 ", qrPw='" + qrPw + '\'' +
                 '}';
     }
-
 }

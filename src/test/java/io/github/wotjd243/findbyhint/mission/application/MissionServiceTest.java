@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,30 +27,30 @@ public class MissionServiceTest {
 
     @Test
     public void 아이디_찾기() {
-        System.out.println(missionRepository.findById(MissionLevel.valueOf("HARD")));
+        System.out.println(missionRepository.findById(any()));
         for(MissionLevel level : MissionLevel.values()) {
             level.getLevelValue();
             System.out.println("levelValue: "+level.getLevelValue());
-            System.out.println("levelValueOf: "+MissionLevel.valueOf("HARD"));
+            System.out.println("levelValueOf: "+MissionLevel.valueOf("GOLD"));
             System.out.println(missionRepository.findById(any()));
         }
 
     }
 
     @Test
-    public void 미션_맞추면_포인트_증정() {
+    public void 미션_맞추면_포인트_증정() throws IOException{
 
         // given
         given(missionRepository.findById(any()))
                 .willReturn(
                         Optional.of(
-                                new Mission(1, "How many points did LeBron James score in his first NBA game?", "25", MissionLevel.valueOf("EASY"), 0)
+                                new Mission(MissionLevel.valueOf("BRONZE"))
                         )
                 )
         ;
 
         // when
-        final int point = missionService.takePoint("EASY");
+        final int point = missionService.takePoint(any());
 
         // then
         assertThat(point).isNotZero();
@@ -57,19 +58,19 @@ public class MissionServiceTest {
     }
 
     @Test
-    public void testMission() {
+    public void testMission() throws IOException {
         // given
         given(missionRepository.findById(any()))
                 .willReturn(
                         Optional.of(
-                                new Mission(1, "How many points did LeBron James score in his first NBA game?", "25", MissionLevel.EASY, 0)
+                                new Mission(MissionLevel.BRONZE)
                         )
                 )
         ;
         int point = 0;
         int count = 12;
 
-        for(int i = 4; i > 0; i--) {
+        for(int i = 3; i > 0; i--) {
             for(int i2 =1; i2 <= i; i2++){
 
                 switch (i2) {
@@ -82,12 +83,9 @@ public class MissionServiceTest {
                     case 3:
                         System.out.println("골드 미션 생성");
                         break;
-                    case 4:
-                        System.out.println("플래티넘 미션 생성");
-                        break;
                 }
                 if(i == 1){
-                    i = 4;
+                    i = 3;
                     i2 = 0;
                 }
                 count--;
@@ -102,7 +100,7 @@ public class MissionServiceTest {
         }
         System.out.println("point: "+point);
         //when
-        final int point2 = missionService.takePoint("EASY");
+        final int point2 = missionService.takePoint(any());
 
         //then
         assertThat(point2).isNotZero();

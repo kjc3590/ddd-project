@@ -9,8 +9,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -50,7 +52,8 @@ public class HunterControllerTest {
                 .param("hunterBullet", "2");
 
         this.mockMvc.perform(buyOneBullet)
-                .andDo(print());
+                .andDo(print())
+                .andExpect(status().isBadRequest());
         //.andExpect(status().is5xxServerError());
     }
 
@@ -70,4 +73,5 @@ public class HunterControllerTest {
                 .andDo(print());
         //.andExpect(status().is5xxServerError());
     }
+
 }

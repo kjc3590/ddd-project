@@ -1,67 +1,51 @@
 package io.github.wotjd243.findbyhint.hunter.domain;
 
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
+import io.github.wotjd243.findbyhint.util.domain.DateTimeEntity;
+import lombok.Getter;
 
-public class Hunter {
+import javax.persistence.*;
 
-    // TODO (1) 올바른 Exception 처리 관련 질문해서 반영하기.
+@Entity
+@Table(name = "hunter")
+@Getter
+public class Hunter extends DateTimeEntity {
 
-    private final HunterId hunterId;
+    // TODO (0) 올바른 Exception 처리 관련 질문해서 반영하기.
+    // TODO (1) 총알 리필 시간 관련 메소드 정리
+    // TODO (1-1) 총알을 사용하는 메소드 > decreaseOneBullet
+    //            DB에 총알의 리필완료시간을 업데이트 하는 메소드 >
+    //            리필완료시간과 현 시간을 체크하는 메소드
+    //            총알을 리필하는 메소드 > increaseOneBullet
+    // TODO (3) 1급콜렉션 3개까지 허용
 
-    private final HunterPw hunterPw;
+    public Hunter() {}
 
-    private final HunterName hunterName;
+    @EmbeddedId
+    private HunterId hunterId;
 
-    private final String hunterPicturePath;
+    @Embedded
+    private HunterInfo hunterInfo;
 
-    private final HunterPictureName hunterPictureName;
+    @Embedded
+    private HunterPointBullet hunterPointBullet;
 
-    private final HunterPoint hunterPoint;
-
-    private int hunterBullet;
-
-    public Hunter(String hunterId, String hunterPw, String hunterName, String hunterPicturePath, String hunterPictureName, int hunterPoint, int hunterBullet) {
+    public Hunter(String hunterId, String hunterPw, String hunterName,String hunterPicturePath,String hunterPictureName,int hunterPoint, int hunterBullet) {
         this.hunterId = new HunterId(hunterId);
-        this.hunterPw = new HunterPw(hunterPw);
-        this.hunterName = new HunterName(hunterName);
-        this.hunterPicturePath = hunterPicturePath;
-        this.hunterPictureName = new HunterPictureName(hunterPictureName);
-        this.hunterPoint = new HunterPoint(hunterPoint);
-        this.hunterBullet = hunterBullet;
+        this.hunterInfo = new HunterInfo(new HunterPw(hunterPw), new HunterName(hunterName), hunterPicturePath, new HunterPictureName(hunterPictureName));
+        this.hunterPointBullet = new HunterPointBullet(new HunterPoint(hunterPoint), new HunterBullet(hunterBullet));
     }
 
-    public void decreaseOneBullet() {
-
-        int aa;
-
-        if (hunterBullet < 1) {
-            throw new IllegalStateException();
-        }
-        hunterBullet--;
-    }
-
-    public void increaseOneBullet() {
-        if (hunterBullet >= 3) {
-            log.println("이미 총알이 3개입니다.");
-            throw new IllegalStateException();
-        }
-        hunterBullet++;
+    @Override
+    public String toString() {
+        return "Hunter{" +
+                "hunterId=" + hunterId +
+                ", hunterInfo=" + hunterInfo +
+                ", hunterPointBullet=" + hunterPointBullet +
+                '}';
     }
 
     public void buyOneBullet() {
-
-        log.println("before_hunterPoint : " + hunterPoint.getHunterPoint());
-        log.println("before_hunterBullet : " + hunterBullet);
-
-        if (hunterPoint.bulletBuyPointCheck()) {
-            hunterPoint.hunterPointMinus(100);
-            increaseOneBullet();
-        } else {
-            log.println("포인트가 부족합니다.");
-            throw new IllegalStateException();
-        }
-        log.println("after_hunterPoint : " + hunterPoint.getHunterPoint());
-        log.println("after_hunterBullet : " + hunterBullet);
+        hunterPointBullet.buyOneBullet();
     }
 
 }

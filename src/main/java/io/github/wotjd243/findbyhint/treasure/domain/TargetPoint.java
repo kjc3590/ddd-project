@@ -1,67 +1,73 @@
 package io.github.wotjd243.findbyhint.treasure.domain;
+/**
+ *
+ * @author DoYoung
+ *
+ */
 
-import org.springframework.util.StringUtils;
+import io.github.wotjd243.findbyhint.util.VO.Distinguish;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.extern.java.Log;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Random;
-import java.util.function.DoubleUnaryOperator;
 
-// TODO (1) 경도(Hardness)범위는 124 – 132, 위도(Latitude)범위는 33 – 43 안에 범주한다.
-
+@Entity
+@Table(name = "targetPoint")
+@Getter
+@Log
 public class TargetPoint {
 
+    //기본생성자
+    public TargetPoint() {}
+
+    @ManyToOne
+    @JoinColumn(name ="treasureId")
+    private Treasure treasure;
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long targetPointId;
 
-    /*실제 보물의 위치*/
-    //위도
-    private final Double latitude;
-
-    //경도
-    private final Double hardness;
+    @Embedded
+    //좌표 VO
+    private Coordinates coordinates;
 
     //진짜 가짜 유무
-    private final String distinguish;
+    @Column(nullable = false)
+    @Enumerated(value =EnumType.STRING)
+    private Distinguish distinguish;
 
-    private TargetPoint(Double latitude, Double hardness,String distinguish) {
-        validation(latitude,hardness,distinguish);
-        this.latitude = latitude;
-        this.hardness = hardness;
-        this.distinguish =distinguish;
+
+
+    public TargetPoint(Double latitude, Double longitude, Distinguish distinguish) {
+        this.coordinates = Coordinates.valueOf(latitude,longitude);
+        this.distinguish = distinguish;
     }
 
-    public static TargetPoint valueOfIatitudeAndHardness (final Double latitude,final Double hardness,final String distinguish){
-        return new TargetPoint(latitude,hardness,distinguish);
+    public static TargetPoint valueOf(Double latitude, Double longitude){
+        return new TargetPoint(latitude,longitude,Distinguish.REAL);
     }
 
-    // TODO (1) 경도(Hardness)범위는 124 – 132, 위도(Latitude)범위는 33 – 43 안에 범주한다.
 
-    //nullCHeck
-    public void validation(final Double latitude,final Double hardness,final String distinguish){
+    public void setTreasure(Treasure treasure) {
 
-        if(latitude == null || hardness ==null || StringUtils.isEmpty(distinguish)){
-            throw new IllegalArgumentException("TargetPoint Exception !!!");
-        }else if (latitude < 33 || latitude > 43 ||  hardness < 124 || hardness > 132){
-            throw new IllegalArgumentException("경도와 위도범위가 맞지 않음 " + "경도 (hardness) :" + hardness + "위도(latitude) : "+latitude);
+        //log.info("treasure :: " +treasure);
+
+        if(this.treasure != null) {
+            if (this.treasure.getTreasureInventory() != null) {
+                if (this.treasure.getTreasureInventory().getTargetPointList() != null) {
+                    this.treasure.getTreasureInventory().getTargetPointList().remove(this);
+                }
+            }
         }
+        this.treasure = treasure;
+        this.treasure.getTreasureInventory().getTargetPointList().add(this);
 
     }
 
-    public TargetPoint getFakeTargetPoint(){
-        Random random = new Random();
-        Double latitude = 33 + random.nextInt(10) +random.nextDouble();
-        Double hardness = 124 + random.nextInt(8) +random.nextDouble();
-        return TargetPoint.valueOfIatitudeAndHardness(latitude,hardness,"0");
-    }
-
-    public Double getHardness() {
-        return hardness;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public String getDistinguish() {
-        return distinguish;
-    }
 }
 

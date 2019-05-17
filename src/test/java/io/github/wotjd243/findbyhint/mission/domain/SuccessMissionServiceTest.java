@@ -7,8 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class SuccessMissionServiceTest {
-    private static final Mission TEST_MISSION_EASY_TAKE_POINT = new Mission(1, "Brian May was the guitarist for which band?", "Queen", MissionLevel.EASY, 0);
-    private static final Mission TEST_MISSION_HARD_TAKE_POINT = new Mission(2, "Before Super Smash Bros. contained Nintendo characters, what was it known as internally?", "Dragon King: The Fighting Game", MissionLevel.HARD, 0);
+    private static final Mission TEST_MISSION_EASY_TAKE_POINT = new Mission(MissionLevel.BRONZE);
+    private static final Mission TEST_MISSION_HARD_TAKE_POINT = new Mission(MissionLevel.GOLD);
 
     @Test
     public void 쉬운_문제_맞췄을때() {
