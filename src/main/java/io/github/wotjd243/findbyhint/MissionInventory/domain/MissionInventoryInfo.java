@@ -19,6 +19,7 @@ public class MissionInventoryInfo {
 
     private String question;
     private String answer;
+    private String wrongAnswer;
 
     @Enumerated(EnumType.STRING)
     private MissionSuccessStatus status;
@@ -26,15 +27,16 @@ public class MissionInventoryInfo {
     private MissionInventoryInfo() {
     }
 
-    public MissionInventoryInfo(Long missionId, String question, String answer) {
+    public MissionInventoryInfo(Long missionId, String question, String answer, String wrongAnswer) {
         this.missionId = missionId;
         this.question = question;
         this.answer = answer;
+        this.wrongAnswer = wrongAnswer;
         this.status = MissionSuccessStatus.FAIL;
     }
 
-    public static MissionInventoryInfo valueOf(Long missionId, String question, String answer) {
-        return new MissionInventoryInfo(missionId, question, answer);
+    public static MissionInventoryInfo valueOf(Long missionId, String question, String answer, String wrongAnswer) {
+        return new MissionInventoryInfo(missionId, question, answer, wrongAnswer);
     }
 
 

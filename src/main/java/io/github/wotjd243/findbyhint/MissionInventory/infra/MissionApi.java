@@ -30,10 +30,7 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.URL;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 @Log
@@ -55,7 +52,7 @@ public class MissionApi {
         String levelName = mission.getMissionLevel().getLevelName();
         Long missionId = mission.getMissionId();
 
-        URL url = new URL("https://opentdb.com/api.php?amount=1&type=boolean&difficulty="+levelName);
+        URL url = new URL("https://opentdb.com/api.php?amount=1&difficulty="+levelName);
 
         System.out.println("url::" + url);
 
@@ -75,21 +72,26 @@ public class MissionApi {
         String difficulty = (String) results.get(0).get("difficulty");
         String question = (String) results.get(0).get("question");
         String answer = (String) results.get(0).get("correct_answer");
+        String wrongAnswer =(results.get(0).get("incorrect_answers").toString());
 
+        //String wrongAnswer = Arrays.toString(array);
 
-        apiInfo(difficulty,question,answer);
+        log.info("wrongAnswer:: "+ wrongAnswer);
 
-        return Optional.ofNullable(MissionInventoryInfo.valueOf(missionId, question, answer));
+        apiInfo(difficulty, question, answer, wrongAnswer);
+
+        return Optional.ofNullable(MissionInventoryInfo.valueOf(missionId, question, answer, wrongAnswer));
 
 
     }
 
     //로그
 
-    private void apiInfo(String difficulty, String question, String correct_answer) {
+    private void apiInfo(String difficulty, String question, String correct_answer, String wrongAnswer) {
         log.info("difficulty:: "+difficulty);
         log.info("question:: "+question);
         log.info("correct_answer:: "+correct_answer);
+        log.info("wrongAnswer:: "+wrongAnswer);
     }
 
 }
