@@ -16,6 +16,8 @@ import java.util.Optional;
 @Log
 public class MissionInventoryService {
 
+    // TODO(9-1)지금 풀어야하는 미션 Id 가져오기 (Mission)
+
     private MissionInventoryRepository missionInventoryRepository;
     private TreasureService treasureService;
 
@@ -70,6 +72,14 @@ public class MissionInventoryService {
         MissionInventory result2 = missionInventoryRepository.save(missionInventory);
 
         return missionInventory;
+    }
+
+    public Long getMissionId(String hunterId) {
+
+        MissionInventory missionInventory = missionInventoryRepository.findByHunterId(hunterId).get();
+
+        return null;
+
     }
 
 

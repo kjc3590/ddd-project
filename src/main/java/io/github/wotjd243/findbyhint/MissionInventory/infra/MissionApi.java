@@ -41,6 +41,9 @@ public class MissionApi {
     // TODO (2) 처음 문제 개수는 보물에 따라 정해져서 나옴
     // TODO (3) 문제를 맞출 때마다 포인트를 증정해 주어야함
 
+    // TODO(9-2) 받아온 미션 ID를 인자로 받는 미션 호출 API 수정한다.
+    //  List<Long> ids를 hunterId, activetreasureId 를 인자로 받아 찾아오는 메소드를 만들기
+
     public void execute2(Model model) throws IOException, IllegalAccessException {
 
         Long treasureId = treasureService.getTreasureIdByActive();
