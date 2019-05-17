@@ -23,7 +23,7 @@ public class MissionController {
     }
 
     @GetMapping("/mission")
-    public void mission(Model model, MissionDto missionDto) throws IOException, IllegalAccessException {
-        missionApi.execute2(model, missionDto);
+    public void mission(Model model) throws IOException, IllegalAccessException {
+        missionApi.execute2(model);
     }
 }
