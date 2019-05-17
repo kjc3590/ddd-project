@@ -39,7 +39,7 @@ public class MissionInventoryService {
 
 
     // TODO (2) 미션을 호출할 때 MissionInventory에 해당 정보 저장하기 (헌터Id, 보물Id)
-    public Optional<MissionInventory> callMissionApi(String hunterId) throws IOException, IllegalAccessException {
+    public Optional<MissionInventoryInfo> callMissionApi(String hunterId) throws IOException, IllegalAccessException {
 
         Long treasureId = treasureService.getTreasureIdByActive();
 
@@ -86,7 +86,7 @@ public class MissionInventoryService {
             missionInventory = missionInventoryRepository.save(missionInventory);
         }
 
-        return Optional.ofNullable(missionInventory);
+        return Optional.ofNullable(missionInventoryInfo);
 
     }
 

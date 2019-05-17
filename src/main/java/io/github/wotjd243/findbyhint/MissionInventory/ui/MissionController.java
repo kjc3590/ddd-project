@@ -26,6 +26,10 @@ public class MissionController {
 
     @GetMapping("/mission")
     public void mission(Model model) throws IOException, IllegalAccessException {
-        missionInventoryService.callMissionApi("testHunter").ifPresent(missionInventory -> model.addAttribute("missionInventory",missionInventory));
+        missionInventoryService.callMissionApi("testHunter")
+                .ifPresent(missionInventory ->
+                        model.addAttribute("mission", missionInventory)
+
+                );
     }
 }
