@@ -4,8 +4,181 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <title>Hello thymeleaf</title>
 </head>
+<style>
+.cubeWrapper .cubeContext:not(.normal):hover {
+    border: 1.6px solid #1d8bcb;
+    background: white;
+}
+
+.cubeWrapper .cubeContext:not(.normal):hover .CbuttonWrap button {
+    background:#1d8bcb;
+}
+
+.cubeWrapper .normal .CbuttonWrap button:hover {
+    background:#1d8bcb;
+}
+
+
+
+.cubeWrapper .cubeContext:not(.normal):hover {
+
+    border: 1.6px solid #1d8bcb;
+
+    background: white;
+}
+
+
+.cubeWrapper {
+    -webkit-transition: all 0.35s ease;
+    transition: all 0.35s ease;
+    width: 922px;
+    margin: 45px auto;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+    .mot3{
+        -webkit-transition: all 0.3s ease-out;
+        -moz-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+    }
+
+
+    .cubeWrapper .cubeContext {
+    width: 240px;
+    float: left;
+    position: relative;
+    border: 1.6px solid #d8d8d8;
+    min-height: 280px;
+    padding: 25px 10px;
+    background: #f7fbff;
+    cursor: pointer;
+    /* margin: 0 auto; */
+    margin: auto 2%;
+    min-height: 310px;
+}
+.cubeWrapper .cubeContext .cubeText {
+    width: 100%;
+    margin-bottom: 35px;
+}
+
+.cubeWrapper .cubeContext .cubeText h2 {
+    font-size: 23px;
+    text-align: center;
+    padding-bottom: 0;
+    margin-bottom: 15px;
+}
+
+.cubeWrapper .cubeContext .cubeText p {
+    margin-bottom: 0;
+    text-align: center;
+}
+.cubeWrapper .cubeContext .cubeImgWrapper {
+    width: 80px;
+    margin: 0 auto 35px;
+}
+.cubeWrapper .cubeContext .cubeImgWrapper img {
+    width: 100%;
+    height: auto;
+}
+
+div:after {
+    clear: both;
+    display: block;
+    content: "";
+}
+.cubeWrapper .cubeContext .CbuttonWrap {
+    text-align: center;
+}
+.cubeWrapper .cubeContext .CbuttonWrap button {
+    width: 105px;
+    height: 38px;
+    border-radius: 4px;
+    border: none;
+    background: #5f6575;
+    color: white;
+    font-weight: 550;
+}
+.twoBtn {
+    width: 40% !important;
+    margin: 0 3% !important;
+}
+.cubeWrapper .cubeContext .CbuttonWrap button {
+    width: 105px;
+    height: 38px;
+    border-radius: 4px;
+    border: none;
+    background: #5f6575;
+    color: white;
+    font-weight: 550;
+    font-size: 17px;
+    font-family: sans-serif;
+}
+
+.title h1 {
+    /* margin: 0 auto; */
+    text-align: center;
+    margin-bottom: 50px;
+}
+button{
+    cursor: pointer;
+}
+
+</style>
 <body>
-<span>HELLO WORLD</span>
+
+<div class="reserveAct-content" title="검진예약" content="reservation" imageaddress="images/introBackGround/reserveChoice-IBG.png" texth2="검진예약" textp="한신메디피아의 검진예약입니다.">
+    <div class="cubeWrapper">
+        <div class ="title">
+            <h1>FindByHint</h1>
+        </div>
+        <div class="cubeContext mot3" onclick="location.href='/hint/showTargetPoints'">
+            <div class="cubeText">
+                <h2>보물좌표보기</h2>
+                <p>힌트를 제외한 보물좌표 보기</p>
+            </div>
+            <div class="cubeImgWrapper">
+                <img src="https://medikind.com/images/iconIndividual.png">
+            </div>
+            <div class="CbuttonWrap">
+                <button type="button" class ="mot3"  onclick="location.href='/hint/showTargetPoints'">좌표보기</button>
+            </div>
+        </div>
+
+
+        <div id="school" class="cubeContext mot3" onclick="location.href='/mission'">
+            <div class="cubeText">
+                <h2>미션도전하기</h2>
+                <p><span><span>여기몇번도전했는지</span> / 3 </span></p>
+            </div>
+            <div class="cubeImgWrapper">
+                <img src="https://medikind.com/images/iconAirplane.png">
+            </div>
+            <div class="CbuttonWrap"  onclick="location.href='/mission'">
+                <button type="button" class ="mot3">도전하기</button>
+            </div>
+        </div>
+
+
+        <div class="cubeContext mot3" onclick="location.href='/buyOneBullet'">
+            <div class="cubeText">
+                <h2>총알구매하기</h2>
+                <p> <span><span>현재가지고있는포인트</span> / 10 </span></p>
+            </div>
+            <div class="cubeImgWrapper">
+                <img src="https://medikind.com/images/iconForeigner.png">
+            </div>
+            <div class="CbuttonWrap">
+                <button type="button" class ="mot3" onclick="location.href='/buyOneBullet'">구매하기</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
 </body>
 </html>
 	
