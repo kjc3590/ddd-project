@@ -87,8 +87,8 @@ public class FindByHintApplication implements CommandLineRunner {
 
     public void hunterSampleCreate() {
 
-        Hunter hunter = new Hunter("testHunter", "1234", "김헌터", "/test/test.png", "test.png", 0, 3);
-        Hunter hunter2 = new Hunter("testHunter2", "1234", "부자헌터", "/test/test.png", "test.png", 100, 3);
+        Hunter hunter = new Hunter("testHunter", "1234", "김헌터", "/test/test.png", "test.png", 0, 3, null);
+        Hunter hunter2 = new Hunter("testHunter2", "1234", "부자헌터", "/test/test.png", "test.png", 100, 3, null);
 
         hunterService.hunterCreate(hunter);
         hunterService.hunterCreate(hunter2);

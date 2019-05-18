@@ -4,13 +4,14 @@ import io.github.wotjd243.findbyhint.util.domain.DateTimeEntity;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "hunter")
 @Getter
 public class Hunter extends DateTimeEntity {
 
-    // TODO (0) 올바른 Exception 처리 관련 질문해서 반영하기.
     // TODO (1) 총알 리필 시간 관련 메소드 정리
     // TODO (1-1) 총알을 사용하는 메소드 > decreaseOneBullet
     //            DB에 총알의 리필완료시간을 업데이트 하는 메소드 >
@@ -29,10 +30,10 @@ public class Hunter extends DateTimeEntity {
     @Embedded
     private HunterPointBullet hunterPointBullet;
 
-    public Hunter(String hunterId, String hunterPw, String hunterName,String hunterPicturePath,String hunterPictureName,int hunterPoint, int hunterBullet) {
+    public Hunter(String hunterId, String hunterPw, String hunterName, String hunterPicturePath, String hunterPictureName, int hunterPoint, int hunterBullet, Timestamp hunterBulletRefillTime) {
         this.hunterId = new HunterId(hunterId);
         this.hunterInfo = new HunterInfo(new HunterPw(hunterPw), new HunterName(hunterName), hunterPicturePath, new HunterPictureName(hunterPictureName));
-        this.hunterPointBullet = new HunterPointBullet(new HunterPoint(hunterPoint), new HunterBullet(hunterBullet));
+        this.hunterPointBullet = new HunterPointBullet(new HunterPoint(hunterPoint), new HunterBullet(hunterBullet), hunterBulletRefillTime);
     }
 
     @Override

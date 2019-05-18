@@ -31,7 +31,7 @@ public class HunterService {
 
     public Hunter getHunter(HunterDto dto) {
 
-        Hunter hunter = new Hunter(dto.getHunterId(), dto.getHunterPw(), dto.getHunterName(), dto.getHunterPicturePath(), dto.getHunterPictureName(), dto.getHunterPoint(), dto.getHunterBullet());
+        Hunter hunter = new Hunter(dto.getHunterId(), dto.getHunterPw(), dto.getHunterName(), dto.getHunterPicturePath(), dto.getHunterPictureName(), dto.getHunterPoint(), dto.getHunterBullet(), dto.getHunterBulletRefillTime());
 
         return hunter;
     }

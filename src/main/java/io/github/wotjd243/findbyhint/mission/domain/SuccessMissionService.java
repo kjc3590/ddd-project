@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 public class SuccessMissionService {
 
     private static final int LEVEL = 1; //나중에 DB에서 레벨 불러와야함
-    private static final int RANDOM_INT = RandomUtils.nextInt(9);
+
 
     public int isSuccess() {
         return takePoint();
     }
 
     private int takePoint() {
+        int RANDOM_INT = RandomUtils.nextInt(9);
         return LEVEL * RANDOM_INT;
     }
-
 
 }

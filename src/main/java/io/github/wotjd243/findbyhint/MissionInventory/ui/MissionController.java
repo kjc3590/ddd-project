@@ -46,22 +46,7 @@ public class MissionController {
     @PostMapping("/missionSubmit")
     public void missionSubmit(MissionPostDto missionPostDto, Model model) {
 
-        Hunter hunter = hunterService.findById("testHunter");
-
-        boolean sucessCheck = missionPostDto.getAnswer().equals(missionPostDto.getHunterAnswer());
-        int plusPoint = 0;
-
-        if(sucessCheck) {
-            plusPoint = successMissionService.isSuccess();
-            hunterService.pointUpdate(hunter,plusPoint);
-        }
-
-        System.out.println("missionDto :: + " + missionPostDto.toString());
-
-        model.addAttribute("sucessCheck", sucessCheck);
-        model.addAttribute("plusPoint", plusPoint);
-        model.addAttribute("hunterPoint", hunter.getHunterPointBullet().getHunterPoint());
-        model.addAttribute("hunterBullet", hunter.getHunterPointBullet().getHunterBullet());
+        missionService.missionSubmit(missionPostDto, model);
 
     }
 
