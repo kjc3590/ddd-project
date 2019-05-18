@@ -35,6 +35,16 @@ public class HunterBullet {
         hunterBullet--;
     }
 
+    public void challengeMissionBullet() {
+
+        if (hunterBullet > 0) {
+            decreaseOneBullet();
+        } else{
+            throw new IllegalStateException("No bullet");
+        }
+
+    }
+
     public void increaseOneBullet() {
         if (hunterBullet >= 3) {
             log.println("이미 총알이 3개입니다.");

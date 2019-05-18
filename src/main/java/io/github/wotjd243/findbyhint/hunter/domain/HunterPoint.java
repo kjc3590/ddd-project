@@ -34,15 +34,14 @@ public class HunterPoint {
         }
     }
 
-    public HunterPoint hunterPointMinus(int minus) {
+    public int hunterPointMinus(int minus) {
         hunterPoint = hunterPoint - minus;
-        return new HunterPoint(hunterPoint);
+        return hunterPoint;
     }
 
 
-    public HunterPoint hunterPointPlus(int plus) {
+    public void hunterPointPlus(int plus) {
         hunterPoint = hunterPoint + plus;
-        return new HunterPoint(hunterPoint);
     }
 
     public int getHunterPoint() {

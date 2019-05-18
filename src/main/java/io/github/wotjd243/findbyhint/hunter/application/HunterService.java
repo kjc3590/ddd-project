@@ -23,6 +23,11 @@ public class HunterService {
         return repository.findById(HunterId.valueOf(id)).get();
     }
 
+    public void pointUpdate(Hunter hunter, int point) {
+        hunter.getHunterPointBullet().getHunterPoint().hunterPointPlus(point);
+        repository.save(hunter);
+    }
+
     public Hunter getHunter(HunterDto dto) {
 
         Hunter hunter = new Hunter(dto.getHunterId(), dto.getHunterPw(), dto.getHunterName(), dto.getHunterPicturePath(), dto.getHunterPictureName(), dto.getHunterPoint(), dto.getHunterBullet());
