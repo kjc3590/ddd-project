@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -72,7 +74,7 @@ public class MissionService {
 
     }
 
-    public void missionSubmit(MissionPostDto missionPostDto, Model model) {
+    public Map<String, Object> missionSubmit(MissionPostDto missionPostDto, Model model) {
 
         String hunterId = "testHunter";
 
@@ -96,6 +98,18 @@ public class MissionService {
         model.addAttribute("plusPoint", plusPoint);
         model.addAttribute("hunterPoint", hunter.getHunterPointBullet().getHunterPoint());
         model.addAttribute("hunterBullet", hunter.getHunterPointBullet().getHunterBullet());
+
+        Map<String, Object> map = new HashMap<String,Object>();
+        if(sucessCheck){
+            map.put("status","success");
+            map.put("mmm","미션에 성공하였습니다. \n "+plusPoint + "포인트를 획득하셨습니다.");
+        }else{
+            map.put("status","warning");
+            map.put("mmm","미션에 실패하였습니다. ㅜ0ㅜ");
+        }
+        map.put("url","/");
+
+        return map;
     }
 
 //    public Mission challengeMission(String hunterId) {

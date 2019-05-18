@@ -30,4 +30,7 @@ public class WelcomeController {
         return "/index";
     }
 
+    @GetMapping("/redirectAlert")
+    public void redirectAlert() {}
+
 }

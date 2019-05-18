@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<title>한신메디피아 | redirect</title>
+
+<style type="text/css">
+
+.swal2-popup .swal2-content {
+ 	padding-bottom: 20px !important;
+ 	font-size: 1.215em !important;
+ 	font-weight: 600 !important;
+ 	font-family: 'Noto Sans KR', sans-serif;
+ 	letter-spacing: -1px;
+}
+
+.swal2-popup .swal2-styled.swal2-confirm { 
+ 	font-weight: 600;
+}
+
+.swal2-popup .swal2-styled:focus {
+    box-shadow: none !important;
+}
+
+.swal2-popup .swal2-header {
+	padding-top:0 !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring{
+	border: .25em solid rgba(134, 161, 220, 0.3) !important;
+}
+div.swal2-popup .swal2-title {
+    font-size: 1.215em;    
+}
+</style>
+
+<body> 
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script th:src="@{/js/sweetalert2.all.min.js}"></script>
+<script src ="https://cdn.jsdelivr.net/npm/promise-polyfill@7.1.0/dist/promise.min.js"></script>
+
+<script th:inline="javascript">
+
+	var rttrMap = [[${rttrMap}]];
+	var message = rttrMap.mmm;
+	var returnUrl = rttrMap.url;
+	var type = rttrMap.status;
+
+	swal({
+		 type: type,
+		 text: message,
+		 confirmButtonText: "확인"
+
+	}).then(function() {
+	  location.replace(returnUrl);
+	});
+
+
+
+</script>
+</body>
+</html>
