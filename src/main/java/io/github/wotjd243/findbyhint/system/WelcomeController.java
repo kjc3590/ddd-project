@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class WelcomeController {
 
-    @GetMapping("/index")
+    @GetMapping("/")
     public String welcome() {
         return "/index";
     }

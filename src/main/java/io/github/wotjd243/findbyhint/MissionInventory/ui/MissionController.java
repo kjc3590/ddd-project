@@ -33,11 +33,6 @@ public class MissionController {
         this.hunterService = hunterService;
     }
 
-    @GetMapping("/")
-    public void index() {
-    }
-
-
     @GetMapping("/mission")
     public void mission(Model model) throws IOException, IllegalAccessException {
         missionService.missionCall(model);
