@@ -58,7 +58,7 @@ public class MissionApi {
 
         apiInfo(difficulty, question, answer, wrongAnswer);
 
-        return Optional.ofNullable(MissionInventoryInfo.valueOf(missionId, question, answer, wrongAnswer));
+        return Optional.of(MissionInventoryInfo.valueOf(missionId, question, answer, wrongAnswer));
 
     }
 

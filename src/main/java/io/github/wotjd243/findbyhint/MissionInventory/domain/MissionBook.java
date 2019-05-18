@@ -31,5 +31,8 @@ public class MissionBook {
     public void addMissionBook(MissionInventoryInfo missionBook) {
         this.missionBook.add(missionBook);
     }
+    public void setMissionBookAll(List<MissionInventoryInfo> missionInventoryInfos){
+        this.missionBook = missionInventoryInfos;
+    }
 
 }

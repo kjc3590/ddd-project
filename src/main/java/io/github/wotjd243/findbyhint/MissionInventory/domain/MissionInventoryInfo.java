@@ -40,6 +40,11 @@ public class MissionInventoryInfo {
         this.status =MissionSuccessStatus.SUCCESS;
     }
 
+    public void changeQna(String question, String answer){
+        this.question = question;
+        this.answer = answer;
+    }
+
 
 
     // 미션 성공

@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -53,6 +54,11 @@ public class MissionInventory extends DateTimeEntity {
 
     public void setMissionBook(MissionBook missionBook) {
         this.missionBook = missionBook;
+    }
+
+
+    public void setMissionBookAll( List<MissionInventoryInfo> missionBook) {
+        this.missionBook.setMissionBookAll(missionBook);
     }
 
 

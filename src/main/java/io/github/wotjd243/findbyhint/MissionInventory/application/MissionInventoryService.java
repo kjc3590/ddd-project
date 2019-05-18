@@ -73,6 +73,19 @@ public class MissionInventoryService {
             if (missionBook == null) {
                 missionBook = new MissionBook();
             }
+
+            MissionInventoryInfo finalMissionInventoryInfo = missionInventoryInfo;
+
+            List<MissionInventoryInfo> missionInventoryInfos = missionInventory.getMissionBook().getMissionBook().parallelStream()
+                    .filter(missionInventoryInfo1 -> missionInventoryInfo1.getMissionId().compareTo(finalMissionInventoryInfo.getMissionId()) == 0 )
+                    .collect(Collectors.toList());
+
+            List<MissionInventoryInfo>  originInfos = missionInventory.getMissionBook().getMissionBook();
+
+            originInfos.removeAll(missionInventoryInfos);
+
+            missionInventory.setMissionBookAll(originInfos);
+
             missionBook.addMissionBook(missionInventoryInfo);
             missionInventory.setMissionBook(missionBook);
             missionInventory = missionInventoryRepository.save(missionInventory);
