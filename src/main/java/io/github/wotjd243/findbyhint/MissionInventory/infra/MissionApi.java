@@ -34,7 +34,7 @@ public class MissionApi {
         String levelName = mission.getMissionLevel().getLevelName();
         Long missionId = mission.getMissionId();
 
-        URL url = new URL("https://opentdb.com/api.php?amount=1&difficulty=" + levelName);
+        URL url = new URL("https://opentdb.com/api.php?amount=1&encode=url3986&difficulty=" + levelName);
 
         System.out.println("url::" + url);
 
