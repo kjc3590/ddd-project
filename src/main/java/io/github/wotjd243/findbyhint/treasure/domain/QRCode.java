@@ -32,7 +32,11 @@ public class QRCode {
     //기본생성자
     public QRCode(){}
 
-    private final static String prefixUrl = "http://localhost:8080/findByHint?url=";
+    private final static String prefixUrl;
+
+    static {
+        prefixUrl = "http://192.168.0.3:8080:8080/treasure/findByHint?url=";
+    }
 
     @Column(nullable = false)
     private String qrUrl;
@@ -64,11 +68,6 @@ public class QRCode {
 
     }
 
-
-    public String getQrUrl(){
-        return this.qrUrl;
-    }
-
     private void validation(String qrPw) {
 
 
@@ -79,7 +78,7 @@ public class QRCode {
     }
 
 
-    public BitMatrix makeQRMatrix(){
+    private BitMatrix makeQRMatrix(){
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
 
         BitMatrix matrix = null;
@@ -100,7 +99,7 @@ public class QRCode {
         return matrix;
     }
 
-    public MatrixToImageConfig makeColorConfig(){
+    private MatrixToImageConfig makeColorConfig(){
 
         int intQrColor = 0;
         int intBackColor = 0;
