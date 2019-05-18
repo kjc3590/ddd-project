@@ -6,22 +6,21 @@ import lombok.Getter;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.*;
-import java.util.List;
 
 
-    @Entity
-    @Table
-    @Getter
-    public class MissionInventory extends DateTimeEntity {
+@Entity
+@Table
+@Getter
+public class MissionInventory extends DateTimeEntity {
 
-        // TODO (1) '일급 콜렉션' 필요한 부분에서 만들어보기
-        // TODO (2) 인스턴스 변수 3개 이하로 줄이기
+    // TODO (1) '일급 콜렉션' 필요한 부분에서 만들어보기
+    // TODO (2) 인스턴스 변수 3개 이하로 줄이기
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        private Long missionInfoId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long missionInfoId;
 
-        private HunterId hunterId; //헌터 아이디
+    private HunterId hunterId; //헌터 아이디
 
     private Long treasureId; //보물 아이디
 
@@ -53,9 +52,8 @@ import java.util.List;
     }
 
     public void setMissionBook(MissionBook missionBook) {
-            this.missionBook = missionBook;
+        this.missionBook = missionBook;
     }
-
 
 
 }

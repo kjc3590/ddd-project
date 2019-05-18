@@ -28,7 +28,7 @@ public class MissionBook {
 //    }
 
 
-    public void addMissionBook(MissionInventoryInfo missionBook){
+    public void addMissionBook(MissionInventoryInfo missionBook) {
         this.missionBook.add(missionBook);
     }
 

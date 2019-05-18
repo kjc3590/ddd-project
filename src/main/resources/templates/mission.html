@@ -6,7 +6,9 @@
 </head>
 <body>
 <div class="missionArea">
-    <p class="question" th:text="|문제: ${missionInventory}|"></p>
+    <p class="question" th:text="|문제: ${mission.question}|"></p>
+    <p class="question" th:text="|정답: ${mission.answer}|"></p>
+    <p class="question" th:text="|오답: ${mission.wrongAnswer}|"></p>
     <div id="list"></div>
     <p id="result"></p>
 </div>
@@ -16,6 +18,34 @@
 
 <script type="text/javascript">
 
+    var a = "[[${mission.answer}]]";
+    var b = "[[${mission.wrongAnswer}]]";
+    console.log(b);
+    b = b.replace("[", "").replace("]", "");
+    b = b.split(',');
+    b.push(a);
+    b = b.sort(function(){
+        return Math.random() - Math.random();
+    });
+    var resultHtml = ""
+    for(var i=0; i < b.length; i++){
+        resultHtml += "<button value='"+b[i]+"' onClick='choiceAnswer("+ i +")'>" + b[i] + "</button>";
+
+    }
+    console.log(resultHtml);
+    $('#list').append(resultHtml);
+
+    function choiceAnswer(answerIndex) {
+
+        if(b[answerIndex] == a ){
+            $('#result').text("정답");
+
+        } else {
+            $('#result').text("오답");
+        }
+
+
+    }
 
 </script>
 </body>

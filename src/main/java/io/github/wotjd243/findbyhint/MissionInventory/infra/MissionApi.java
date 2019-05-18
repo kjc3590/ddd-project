@@ -30,21 +30,18 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.URL;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 @Log
 public class MissionApi {
 
-    // TODO (1) 불러온 API 미션 로직에 따라 변경하기.
-    // TODO (2) 처음 문제 개수는 보물에 따라 정해져서 나옴
+    // COMPLETE (1) 불러온 API 미션 로직에 따라 변경하기.
+    // COMPLETE (2) 처음 문제 개수는 보물에 따라 정해져서 나옴
     // TODO (3) 문제를 맞출 때마다 포인트를 증정해 주어야함
 
-    // TODO(9-2) 받아온 미션 ID를 인자로 받는 미션 호출 API 수정한다.
-    //  List<Long> ids를 hunterId, activetreasureId 를 인자로 받아 찾아오는 메소드를 만들기
+    // COMPLETE 받아온 미션 ID를 인자로 받는 미션 호출 API 수정한다.
+    // COMPLETE List<Long> ids를 hunterId, activetreasureId 를 인자로 받아 찾아오는 메소드를 만들기
 
     public Optional<MissionInventoryInfo> findByMission(Mission mission) throws IOException, IllegalAccessException {
 
@@ -55,7 +52,7 @@ public class MissionApi {
         String levelName = mission.getMissionLevel().getLevelName();
         Long missionId = mission.getMissionId();
 
-        URL url = new URL("https://opentdb.com/api.php?amount=1&type=boolean&difficulty="+levelName);
+        URL url = new URL("https://opentdb.com/api.php?amount=1&difficulty="+levelName);
 
         System.out.println("url::" + url);
 
@@ -75,21 +72,26 @@ public class MissionApi {
         String difficulty = (String) results.get(0).get("difficulty");
         String question = (String) results.get(0).get("question");
         String answer = (String) results.get(0).get("correct_answer");
+        String wrongAnswer =(results.get(0).get("incorrect_answers").toString());
 
+        //String wrongAnswer = Arrays.toString(array);
 
-        apiInfo(difficulty,question,answer);
+        log.info("wrongAnswer:: "+ wrongAnswer);
 
-        return Optional.ofNullable(MissionInventoryInfo.valueOf(missionId, question, answer));
+        apiInfo(difficulty, question, answer, wrongAnswer);
+
+        return Optional.ofNullable(MissionInventoryInfo.valueOf(missionId, question, answer, wrongAnswer));
 
 
     }
 
     //로그
 
-    private void apiInfo(String difficulty, String question, String correct_answer) {
+    private void apiInfo(String difficulty, String question, String correct_answer, String wrongAnswer) {
         log.info("difficulty:: "+difficulty);
         log.info("question:: "+question);
         log.info("correct_answer:: "+correct_answer);
+        log.info("wrongAnswer:: "+wrongAnswer);
     }
 
 }
