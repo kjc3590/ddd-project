@@ -2,10 +2,7 @@ package io.github.wotjd243.findbyhint.treasure.application;
 
 import io.github.wotjd243.findbyhint.mission.domain.Mission;
 import io.github.wotjd243.findbyhint.mission.domain.MissionLevel;
-import io.github.wotjd243.findbyhint.treasure.domain.TargetPoint;
-import io.github.wotjd243.findbyhint.treasure.domain.Treasure;
-import io.github.wotjd243.findbyhint.treasure.domain.TreasureInventory;
-import io.github.wotjd243.findbyhint.treasure.domain.TreasureRepository;
+import io.github.wotjd243.findbyhint.treasure.domain.*;
 import io.github.wotjd243.findbyhint.util.VO.Distinguish;
 import io.github.wotjd243.findbyhint.util.VO.Event;
 import lombok.RequiredArgsConstructor;
@@ -24,15 +21,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static io.github.wotjd243.findbyhint.treasure.domain.Coordinates.*;
 import static java.util.Comparator.comparing;
 
 @Service
-//굳이 생성자를 만들지 않아도 해당 어노테이션으로 해결을 할 수 있는 것 같다.
-@RequiredArgsConstructor
 @Log
 public class TreasureService {
 
     private final TreasureRepository treasureRepository;
+
+    public TreasureService(TreasureRepository treasureRepository) {
+        this.treasureRepository = treasureRepository;
+    }
 
     //보물을 등록하는 메소드
     public Treasure save(TreasureRequestDto treasureRequestDto) {
@@ -81,7 +81,7 @@ public class TreasureService {
         if(treasure != null){
             return treasure.getTreasureId();
         }else{
-            return null;
+            throw new IllegalArgumentException("진행중인 보물이 없습니다.");
         }
     }
 
@@ -144,37 +144,6 @@ public class TreasureService {
     public boolean isExist(Long treasureId) {
         return !ObjectUtils.isEmpty(getTreasure(treasureId));
     }
-
-
-    public void checkTreasure() {
-        checkActiveTreasure();
-        checkWaitTreasure();
-    }
-
-    //현재 진행중인 보물이 있는지 확인
-    private void checkActiveTreasure() {
-        Treasure activeTreasure = treasureRepository.findByTreasureInventoryByActive();
-        int validNumber = activeTreasure.validEvent();
-        if(validNumber == 1){
-            activeTreasure.closeEvent();
-            treasureRepository.save(activeTreasure);
-        }
-    }
-
-    //현재 대기중인 보물이 있는지 확인
-    private void checkWaitTreasure() {
-        List<Treasure>  waitTreasureGroup = treasureRepository.findByTreasureInventoryByWait();
-        waitTreasureGroup.forEach(treasure -> {
-            //있다면 날짜가 유효한지 체크하기
-            int validNumber = treasure.validEvent();
-            //오늘이 시작일이라면 진행중으로 상태 변경하기
-            if(validNumber == 0){
-                treasure.activeEvent();
-                treasureRepository.save(treasure);
-            }
-        });
-    }
-
 
     //=============================================================================================//
     //미션의 총 hintCount 가져오기
@@ -263,8 +232,10 @@ public class TreasureService {
     }
     private TargetPoint getFakeTargetPoint(Treasure treasure) {
         Random random = new Random();
-        Double latitude = 33 + random.nextInt(10) + random.nextDouble();
-        Double longitude = 124 + random.nextInt(8) + random.nextDouble();
+
+
+        Double latitude = Coordinates.MIN_LATITUDE_VALUE + random.nextInt(LATITUDE_DIFFERENCE()) + random.nextDouble();
+        Double longitude = Coordinates.MIN_LONGITUDE_VALUE + random.nextInt(LONGITUDE_DIFFERENCE()) + random.nextDouble();
         TargetPoint targetPoint = new TargetPoint(latitude, longitude, Distinguish.FAKE);
         targetPoint.setTreasure(treasure);
         return targetPoint;

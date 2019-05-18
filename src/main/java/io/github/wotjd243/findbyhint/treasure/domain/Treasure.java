@@ -8,6 +8,7 @@ package io.github.wotjd243.findbyhint.treasure.domain;
 import io.github.wotjd243.findbyhint.util.domain.DateTimeEntity;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.web.servlet.View;
 
 import javax.persistence.*;
 
@@ -61,6 +62,10 @@ public class Treasure extends DateTimeEntity {
 
     public void setTreasureInventory(TreasureInventory treasureInventory) {
         this.treasureInventory = treasureInventory;
+    }
+
+    public View qrCodeView(){
+        return this.qrCodeVO.getQrView();
     }
 
 }

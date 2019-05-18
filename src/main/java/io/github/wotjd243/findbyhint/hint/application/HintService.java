@@ -6,11 +6,13 @@ import io.github.wotjd243.findbyhint.hint.domain.HintRepository;
 import io.github.wotjd243.findbyhint.hunter.domain.Hunter;
 import io.github.wotjd243.findbyhint.hunter.domain.HunterId;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
+import io.github.wotjd243.findbyhint.treasure.domain.Coordinates;
 import io.github.wotjd243.findbyhint.treasure.domain.TargetPoint;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HintService {
@@ -80,13 +82,21 @@ public class HintService {
     }
 
 
-    // TODO (*) 헌터에게 보여줄 TargetPoint 넘겨주기
-    public List<TargetPoint> getTargetPoints(String hunterId, Long treasureId){
+    // COMPLETED(*) 헌터에게 보여줄 TargetPoint 넘겨주기
+    public List<Coordinates>  getTargetPoints(String hunterId){
 
         //현재 가지고 있는 타겟포인트 가져오기
+        Long treasureId = treasureService.getTreasureIdByActive();
+
+        if(treasureId == null){
+            new IllegalArgumentException("현재 진행중인 보물 이벤트가 없습니다.");
+        }
+
         List<Long> targetPointIds = getHintTargetPointIds(hunterId,treasureId);
 
-        return  treasureService.getTargetPointByIds(treasureId,targetPointIds);
+        return  treasureService.getTargetPointByIds(treasureId,targetPointIds).stream()
+                .map(TargetPoint::getCoordinates)
+                .collect(Collectors.toList());
 
     }
 

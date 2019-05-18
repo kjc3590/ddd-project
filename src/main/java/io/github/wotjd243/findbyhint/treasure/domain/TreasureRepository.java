@@ -41,23 +41,4 @@ public interface TreasureRepository extends JpaRepository<Treasure,Long> {
            )
            List<Long> findTargetPointIds(@Param("treasureId") Long treasureId, @Param("ids") List<Long> ids,@Param("hintCount") int hintCount);
 
-   // 해당 보물의 해당 아이디들이 아니고 가장 난이도가 낮은 미션 아이디 하나 가져오는 메소드
-   // Lock
-
-//    @Query
-//    Treasure findByTreasureIdAndTreasureInventory_MissionList_MissionMissionIdNotINOrderByTreasureInventory_MissionList_MissionMissionIdDesc
-//            (@Param("treasureId") Long treasureId, @Param("ids") List<Long> ids);
-
-//    @Query(value =
-//            (
-//                    "select M.* " +
-//                            " from TREASURE T inner join  MISSION M on T.TREASURE_ID = M.MISSION_ID " +
-//                            " where T.TREASURE_ID = :treasureId " +
-//                            " and M.MISSION_ID not in :ids " +
-//                            " order by M.MISSION_LEVEL asc " +
-//                            " LIMIT 1"
-//            )
-//            ,nativeQuery = true)
-
-
 }

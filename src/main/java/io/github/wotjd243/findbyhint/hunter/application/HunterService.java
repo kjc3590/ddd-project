@@ -15,12 +15,18 @@ public class HunterService {
         this.repository = repository;
     }
 
+
     public void hunterCreate(Hunter hunter) {
         repository.save(hunter);
     }
 
     public Hunter findById(String id) {
         return repository.findById(HunterId.valueOf(id)).get();
+    }
+
+    public void pointUpdate(Hunter hunter, int point) {
+        hunter.getHunterPointBullet().getHunterPoint().hunterPointPlus(point);
+        repository.save(hunter);
     }
 
     public Hunter getHunter(HunterDto dto) {
