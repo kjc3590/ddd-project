@@ -19,7 +19,7 @@ import java.util.Optional;
 @Log
 public class MissionInventoryService {
 
-    // TODO(9-1)지금 풀어야하는 미션 Id 가져오기 (Mission)
+    // TODO(1)지금 풀어야하는 미션 Id 가져오기 (Mission)
 
     private MissionInventoryRepository missionInventoryRepository;
     private TreasureService treasureService;
@@ -31,13 +31,6 @@ public class MissionInventoryService {
         this.missionApi = missionApi;
     }
 
-//    // TODO (1) 미션을 조회할 때 MissionInfo에 missionId가 존재하는지 확인
-//    public MissionInventory findById(Long missionId) {
-//        return missionInventoryRepository.findById(missionId)
-//                .orElseThrow(() -> new IllegalArgumentException("missionId가 존재하지 않습니다."));
-//    }
-
-
     // TODO (2) 미션을 호출할 때 MissionInventory에 해당 정보 저장하기 (헌터Id, 보물Id)
     public Optional<MissionInventoryInfo> callMissionApi(String hunterId) throws IOException, IllegalAccessException {
 
@@ -45,7 +38,6 @@ public class MissionInventoryService {
 
         System.out.println("treasureId :: '" + treasureId + "'");
         System.out.println("hunterId :: '" + hunterId + "'");
-
 
         //루트 에그리거트 가져오기
         Optional<MissionInventory> optionalMissionInventory = missionInventoryRepository.findByHunterIdAndTreasureId(HunterId.valueOf(hunterId), treasureId);
@@ -55,7 +47,7 @@ public class MissionInventoryService {
         //현재 미션이 가지고있는 missionId 들
         List<Long> ids = missionListToLongList(infoList);
 
-        // TODO (4) 문제는 쉬운 문제부터 -> 어려운 문제로 나와야 함
+        // TODO (3) 문제는 쉬운 문제부터 -> 어려운 문제로 나와야 함
         //풀어야할 미션 가져오기
         Optional<Mission> result = treasureService.getMission(treasureId, ids);
         MissionInventoryInfo missionInventoryInfo = null;
@@ -69,16 +61,15 @@ public class MissionInventoryService {
 
         MissionInventory missionInventory;
 
-        if(optionalMissionInventory.isPresent()){
+        if (optionalMissionInventory.isPresent()) {
             missionInventory = optionalMissionInventory.get();
-        }else{
-            missionInventory = MissionInventory.valueOf(hunterId,treasureId);
+        } else {
+            missionInventory = MissionInventory.valueOf(hunterId, treasureId);
         }
 
-
-        if(missionInventoryInfo != null){
+        if (missionInventoryInfo != null) {
             MissionBook missionBook = missionInventory.getMissionBook();
-            if(missionBook == null){
+            if (missionBook == null) {
                 missionBook = new MissionBook();
             }
             missionBook.addMissionBook(missionInventoryInfo);
@@ -90,8 +81,7 @@ public class MissionInventoryService {
 
     }
 
-
-
+    // TODO (3) info 테이블에 없는 가장 낮은 번호의 missionKey를 가져온다.
     public List<Long> missionListToLongList(List<MissionInventoryInfo> ids) {
 
         List<Long> list = new ArrayList<>();
@@ -104,11 +94,9 @@ public class MissionInventoryService {
         return list;
     }
 
-
+    // TODO (4) 현재 로그인한 hunter, 선택한 treasure id를 가져온다.
     public List<MissionInventoryInfo> missionIdList(String hunterId, Long treasureId) {
 
-//        MissionInventory missionInventory = missionInventoryRepository.findByHunterIdAndTreasureId(HunterId.valueOf(hunterId), treasureId).get();
-//        List<MissionInventoryInfo> list = missionInventory.getMissionBook().getMissionBook();
         List<MissionInventoryInfo> list = new ArrayList<>();
 
         Optional<MissionInventory> byHunterIdAndTreasureId = missionInventoryRepository.findByHunterIdAndTreasureId(HunterId.valueOf(hunterId), treasureId);

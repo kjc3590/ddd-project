@@ -223,7 +223,7 @@ public class TreasureService {
 
         List<TargetPoint> targetPointList = new ArrayList<>();
 
-        IntStream.range(1,hintCount).forEach(i ->{
+        IntStream.range(0,hintCount).forEach(i ->{
             targetPointList.add(getFakeTargetPoint(treasure));
         });
 
