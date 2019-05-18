@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Controller
-public class MissionController {
+public class        MissionController {
 
     private MissionService missionService;
     private SuccessMissionService successMissionService;
