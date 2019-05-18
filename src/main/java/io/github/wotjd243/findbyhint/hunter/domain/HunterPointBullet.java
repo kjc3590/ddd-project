@@ -33,7 +33,7 @@ public class HunterPointBullet {
         log.println("before_hunterBullet : " + hunterBullet.getHunterBullet());
 
         if (hunterPoint.bulletBuyPointCheck()) {
-            hunterPoint.hunterPointMinus(100);
+            hunterPoint.hunterPointMinus(10);
             hunterBullet.increaseOneBullet();
         } else {
             log.println("포인트가 부족합니다.");

@@ -6,11 +6,20 @@
 </head>
 <body>
 <div class="missionArea">
+
     <p class="question" id="question"></p>
-    <p class="answer" th:text="|정답: ${mission.answer}|"></p>
-    <p class="wrongAnswer" th:text="|오답: ${mission.wrongAnswer}|"></p>
+
+<!--    <p class="question" th:text="|정답: ${mission.answer}|"></p>-->
+<!--    <p class="question" th:text="|오답: ${mission.wrongAnswer}|"></p>-->
+
     <div id="list"></div>
     <p id="result"></p>
+
+    <form action="/missionSubmit" id="f1" method="post">
+        <input th:type="hidden" id="missionId" name="missionId" th:value="${mission.missionId}">
+        <input th:type="hidden" id="answer" name="answer">
+        <input th:type="hidden" id="hunterAnswer" name="hunterAnswer">
+    </form>
 </div>
 <script src="js/vendor/modernizr-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -23,6 +32,7 @@
     var b = "[[${mission.wrongAnswer}]]";
 
     console.log(b);
+
     b = b.replace("[", "").replace("]", "");
     b = b.split(',');
     b.push(a);
@@ -36,19 +46,15 @@
     var resultHtml = "";
     for (var i = 0; i < b.length; i++) {
         resultHtml += "<button value='" + b[i] + "' onClick='choiceAnswer(" + i + ")'>" + b[i] + "</button>";
-
     }
     console.log(resultHtml);
     $('#list').append(resultHtml);
 
     function choiceAnswer(answerIndex) {
 
-        if (b[answerIndex] == a) {
-            $('#result').text("정답");
-
-        } else {
-            $('#result').text("오답");
-        }
+        $('#answer').val(a);
+        $('#hunterAnswer').val(b[answerIndex]);
+        $('#f1').submit();
     }
 
     function htmlEscape() {

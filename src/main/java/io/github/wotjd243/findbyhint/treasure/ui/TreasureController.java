@@ -43,9 +43,5 @@ public class TreasureController {
 
     }
 
-    //매일 자정 실행
-    @Scheduled(cron = "0 0 0 * * *")
-    public void checkTreasure(){
-        treasureService.checkTreasure();
-    }
+
 }
