@@ -72,8 +72,8 @@ public class FindByHintApplication implements CommandLineRunner {
     public void makeTreasureSample(){
         DateObject dateObject = DateObject.getInstance();
         final String qrPw = "1234";
-        final Double latitude = 126.9941658;
-        final Double longitude = 37.4954676;
+        final Double longitude = 126.9941658;
+        final Double latitude = 37.4954676;
         final LocalDate startDate = dateObject.getDate().plusDays(1L);
         final LocalDate endDate = dateObject.getDate().plusDays(4L);
         final String name = "보물의 이름";
