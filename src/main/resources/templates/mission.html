@@ -6,30 +6,36 @@
 </head>
 <body>
 <div class="missionArea">
-    <p class="question" th:text="|문제: ${mission.question}|"></p>
-    <p class="question" th:text="|정답: ${mission.answer}|"></p>
-    <p class="question" th:text="|오답: ${mission.wrongAnswer}|"></p>
+    <p class="question" id="question"></p>
+    <p class="answer" th:text="|정답: ${mission.answer}|"></p>
+    <p class="wrongAnswer" th:text="|오답: ${mission.wrongAnswer}|"></p>
     <div id="list"></div>
     <p id="result"></p>
 </div>
 <script src="js/vendor/modernizr-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
 
 <script type="text/javascript">
 
     var a = "[[${mission.answer}]]";
     var b = "[[${mission.wrongAnswer}]]";
+
     console.log(b);
     b = b.replace("[", "").replace("]", "");
     b = b.split(',');
     b.push(a);
-    b = b.sort(function(){
+    b = b.sort(function () {
         return Math.random() - Math.random();
     });
-    var resultHtml = ""
-    for(var i=0; i < b.length; i++){
-        resultHtml += "<button value='"+b[i]+"' onClick='choiceAnswer("+ i +")'>" + b[i] + "</button>";
+
+    htmlEscape();
+    console.log("htmlEscape::"+htmlEscape(q));
+
+    var resultHtml = "";
+    for (var i = 0; i < b.length; i++) {
+        resultHtml += "<button value='" + b[i] + "' onClick='choiceAnswer(" + i + ")'>" + b[i] + "</button>";
 
     }
     console.log(resultHtml);
@@ -37,15 +43,21 @@
 
     function choiceAnswer(answerIndex) {
 
-        if(b[answerIndex] == a ){
+        if (b[answerIndex] == a) {
             $('#result').text("정답");
 
         } else {
             $('#result').text("오답");
         }
-
-
     }
+
+    function htmlEscape() {
+        var q = "[[${mission.question}]]";
+
+        q = unescape(q);
+        $("#question").html(q);
+    }
+
 
 </script>
 </body>

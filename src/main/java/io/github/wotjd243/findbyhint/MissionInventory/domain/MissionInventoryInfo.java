@@ -14,9 +14,6 @@ public class MissionInventoryInfo {
     @Column(nullable = false)
     private Long missionId;
 
-//    @Embedded
-//    private MissionQnA missionQnA;
-
     private String question;
     private String answer;
     private String wrongAnswer;

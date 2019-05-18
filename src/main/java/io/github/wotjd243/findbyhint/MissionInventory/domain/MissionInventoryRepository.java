@@ -9,6 +9,4 @@ public interface MissionInventoryRepository extends JpaRepository<MissionInvento
 
     Optional<MissionInventory> findByHunterIdAndTreasureId(HunterId hunterId, Long treasureId);
 
-    Optional<MissionInventory> findByTreasureId(Long treasureId);
-
 }
