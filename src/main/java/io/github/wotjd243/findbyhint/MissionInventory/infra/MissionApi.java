@@ -2,32 +2,14 @@ package io.github.wotjd243.findbyhint.MissionInventory.infra;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.wotjd243.findbyhint.MissionInventory.application.MissionDto;
-import io.github.wotjd243.findbyhint.MissionInventory.application.MissionInventoryService;
-import io.github.wotjd243.findbyhint.MissionInventory.domain.MissionBook;
-import io.github.wotjd243.findbyhint.MissionInventory.domain.MissionInventory;
 import io.github.wotjd243.findbyhint.MissionInventory.domain.MissionInventoryInfo;
-import io.github.wotjd243.findbyhint.MissionInventory.domain.MissionSuccessStatus;
 import io.github.wotjd243.findbyhint.mission.domain.Mission;
-import io.github.wotjd243.findbyhint.mission.domain.MissionLevel;
-import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
-import io.github.wotjd243.findbyhint.treasure.domain.Treasure;
-import io.github.wotjd243.findbyhint.treasure.domain.TreasureRepository;
 import lombok.extern.java.Log;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.thymeleaf.util.StringUtils;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.stream.JsonParser;
 
 import java.io.IOException;
-import java.io.InputStream;
 
-import java.math.BigInteger;
 import java.net.URL;
 
 import java.util.*;
@@ -45,21 +27,21 @@ public class MissionApi {
 
     public Optional<MissionInventoryInfo> findByMission(Mission mission) throws IOException, IllegalAccessException {
 
-        if(mission == null){
+        if (mission == null) {
             throw new IllegalAccessException("미션이 없습니다.");
         }
 
         String levelName = mission.getMissionLevel().getLevelName();
         Long missionId = mission.getMissionId();
 
-        URL url = new URL("https://opentdb.com/api.php?amount=1&difficulty="+levelName);
+        URL url = new URL("https://opentdb.com/api.php?amount=1&difficulty=" + levelName);
 
         System.out.println("url::" + url);
 
         ObjectMapper objectMapper = new ObjectMapper();
         // URL 에 있는 JSON String 을 Map으로 변환하기
-        Map<String, Object> data = objectMapper.readValue(url,
-                new TypeReference<Map<String, Object>>() {
+        Map<String, Object> data = objectMapper.readValue(
+                url, new TypeReference<Map<String, Object>>() {
                 });
 
         List<Map<String, Object>> results = (List<Map<String, Object>>) data.get("results");
@@ -72,26 +54,20 @@ public class MissionApi {
         String difficulty = (String) results.get(0).get("difficulty");
         String question = (String) results.get(0).get("question");
         String answer = (String) results.get(0).get("correct_answer");
-        String wrongAnswer =(results.get(0).get("incorrect_answers").toString());
-
-        //String wrongAnswer = Arrays.toString(array);
-
-        log.info("wrongAnswer:: "+ wrongAnswer);
+        String wrongAnswer = (results.get(0).get("incorrect_answers").toString());
 
         apiInfo(difficulty, question, answer, wrongAnswer);
 
         return Optional.ofNullable(MissionInventoryInfo.valueOf(missionId, question, answer, wrongAnswer));
 
-
     }
 
     //로그
-
     private void apiInfo(String difficulty, String question, String correct_answer, String wrongAnswer) {
-        log.info("difficulty:: "+difficulty);
-        log.info("question:: "+question);
-        log.info("correct_answer:: "+correct_answer);
-        log.info("wrongAnswer:: "+wrongAnswer);
+        log.info("difficulty:: " + difficulty);
+        log.info("question:: " + question);
+        log.info("correct_answer:: " + correct_answer);
+        log.info("wrongAnswer:: " + wrongAnswer);
     }
 
 }
