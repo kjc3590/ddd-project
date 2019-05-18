@@ -29,10 +29,16 @@ public class HunterService {
         repository.save(hunter);
     }
 
+    public void buyBullet(Hunter hunter) {
+        hunter.buyOneBullet();
+        repository.save(hunter);
+    }
+
     public Hunter getHunter(HunterDto dto) {
 
         Hunter hunter = new Hunter(dto.getHunterId(), dto.getHunterPw(), dto.getHunterName(), dto.getHunterPicturePath(), dto.getHunterPictureName(), dto.getHunterPoint(), dto.getHunterBullet(), dto.getHunterBulletRefillTime());
 
         return hunter;
     }
+
 }

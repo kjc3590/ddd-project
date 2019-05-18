@@ -50,10 +50,10 @@ public class HunterController {
     public String buyOneBullet() {
 
         Hunter hunter = hunterService.findById("testHunter");
-        hunter.buyOneBullet();
+        hunterService.buyBullet(hunter);
 
         // 추후 화면 개발 후 변경
-        return "redirect:/login";
+        return "redirect:/";
     }
 
 }

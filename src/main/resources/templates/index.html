@@ -149,7 +149,7 @@ button{
         <div id="school" class="cubeContext mot3" onclick="location.href='/mission'">
             <div class="cubeText">
                 <h2>미션도전하기</h2>
-                <p><span><span>여기몇번도전했는지</span> / 3 </span></p>
+                <p><span><span th:text="${hunterBullet}">여기몇번도전했는지</span> / 3 </span></p>
             </div>
             <div class="cubeImgWrapper">
                 <img src="https://medikind.com/images/iconAirplane.png">
@@ -163,7 +163,7 @@ button{
         <div class="cubeContext mot3" onclick="location.href='/buyOneBullet'">
             <div class="cubeText">
                 <h2>총알구매하기</h2>
-                <p> <span><span>현재가지고있는포인트</span> / 10 </span></p>
+                <p> <span><span th:text="${hunterPoint}">현재가지고있는포인트</span> / 10 </span></p>
             </div>
             <div class="cubeImgWrapper">
                 <img src="https://medikind.com/images/iconForeigner.png">

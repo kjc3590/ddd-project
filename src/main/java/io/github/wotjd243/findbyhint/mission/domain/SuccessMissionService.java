@@ -15,7 +15,7 @@ public class SuccessMissionService {
     }
 
     private int takePoint() {
-        int RANDOM_INT = RandomUtils.nextInt(9);
+        int RANDOM_INT = RandomUtils.nextInt(15) + 5;
         return LEVEL * RANDOM_INT;
     }
 

@@ -91,11 +91,16 @@ public class TreasureService {
         Mission mission = null;
         if(optionalTreasure.isPresent()){
             Treasure treasure = optionalTreasure.get();
-            mission = treasure.getTreasureInventory().getMissionList()
+            Optional<Mission> omission = treasure.getTreasureInventory().getMissionList()
                     .parallelStream()
                     .filter(d -> !ids.contains(d.getMissionId()))
-                    .min(comparing(Mission::getMissionLevel))
-                    .get();
+                    .min(comparing(Mission::getMissionLevel));
+
+            if (omission.isPresent()) {
+                mission = omission.get();
+            }else{
+                throw new IllegalArgumentException("No Mission!");
+            }
         }
         return Optional.ofNullable(mission);
 

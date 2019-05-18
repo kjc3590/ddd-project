@@ -39,7 +39,6 @@ public class HunterPoint {
         return hunterPoint;
     }
 
-
     public void hunterPointPlus(int plus) {
         hunterPoint = hunterPoint + plus;
     }
