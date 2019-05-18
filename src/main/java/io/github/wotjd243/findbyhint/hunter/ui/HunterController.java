@@ -46,9 +46,10 @@ public class HunterController {
 
     }
 
-    @PostMapping("/buyOneBullet")
-    public String buyOneBullet(HunterDto hunterDto) {
-        Hunter hunter = hunterService.getHunter(hunterDto);
+    @GetMapping("/buyOneBullet")
+    public String buyOneBullet() {
+
+        Hunter hunter = hunterService.findById("testHunter");
         hunter.buyOneBullet();
 
         // 추후 화면 개발 후 변경

@@ -1,15 +1,21 @@
 package io.github.wotjd243.findbyhint.mission.application;
 
 import io.github.wotjd243.findbyhint.MissionInventory.application.MissionInventoryService;
-import io.github.wotjd243.findbyhint.MissionInventory.domain.MissionInventoryInfo;
+import io.github.wotjd243.findbyhint.MissionInventory.domain.*;
+import io.github.wotjd243.findbyhint.MissionInventory.infra.MissionApi;
+import io.github.wotjd243.findbyhint.hint.application.HintService;
 import io.github.wotjd243.findbyhint.hunter.application.HunterService;
 import io.github.wotjd243.findbyhint.hunter.domain.Hunter;
+import io.github.wotjd243.findbyhint.hunter.domain.HunterId;
 import io.github.wotjd243.findbyhint.mission.domain.*;
+import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,15 +27,23 @@ public class MissionService {
     // TODO(9-3) 미션에 대한 Model을 표현하는 화면을 구성한다.
 
     private MissionRepository missionRepository;
+    private MissionInventoryRepository missionInventoryRepository;
     private MissionInventoryService missionInventoryService;
     private SuccessMissionService successMissionService;
+    private TreasureService treasureService;
     private HunterService hunterService;
+    private MissionApi missionApi;
+    private HintService hintService;
 
-    public MissionService(MissionRepository missionRepository, MissionInventoryService missionInventoryService, SuccessMissionService successMissionService, HunterService hunterService) {
+    public MissionService(MissionRepository missionRepository, MissionInventoryRepository missionInventoryRepository, MissionInventoryService missionInventoryService, SuccessMissionService successMissionService, TreasureService treasureService, HunterService hunterService, MissionApi missionApi, HintService hintService) {
         this.missionRepository = missionRepository;
+        this.missionInventoryRepository = missionInventoryRepository;
         this.missionInventoryService = missionInventoryService;
         this.successMissionService = successMissionService;
+        this.treasureService = treasureService;
         this.hunterService = hunterService;
+        this.missionApi = missionApi;
+        this.hintService = hintService;
     }
 
     public int takePoint(final Long missionId) {
@@ -56,6 +70,32 @@ public class MissionService {
             throw new IllegalStateException("더이상 도전 할 수있는 미션이 없습니다.");
         }
 
+    }
+
+    public void missionSubmit(MissionPostDto missionPostDto, Model model) {
+
+        String hunterId = "testHunter";
+
+        Hunter hunter = hunterService.findById(hunterId);
+        Mission mission = getMission(missionPostDto.getMissionId());
+        int hinCount = mission.getHintCounter();
+
+        boolean sucessCheck = missionPostDto.getAnswer().equals(missionPostDto.getHunterAnswer());
+        int plusPoint = 0;
+
+        if(sucessCheck) {
+            plusPoint = successMissionService.isSuccess();
+            hunterService.pointUpdate(hunter,plusPoint);
+            hintService.addHint(hunterId,hinCount);
+        }
+
+        System.out.println("hunterId :: '" + hunterId + "'");
+        System.out.println("missionDto :: + " + missionPostDto.toString());
+
+        model.addAttribute("sucessCheck", sucessCheck);
+        model.addAttribute("plusPoint", plusPoint);
+        model.addAttribute("hunterPoint", hunter.getHunterPointBullet().getHunterPoint());
+        model.addAttribute("hunterBullet", hunter.getHunterPointBullet().getHunterBullet());
     }
 
 //    public Mission challengeMission(String hunterId) {
