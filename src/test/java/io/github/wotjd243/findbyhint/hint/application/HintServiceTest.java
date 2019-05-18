@@ -3,6 +3,7 @@ package io.github.wotjd243.findbyhint.hint.application;
 import io.github.wotjd243.findbyhint.hint.domain.Hint;
 import io.github.wotjd243.findbyhint.hunter.domain.HunterId;
 import io.github.wotjd243.findbyhint.treasure.application.TreasureService;
+import io.github.wotjd243.findbyhint.treasure.domain.Coordinates;
 import io.github.wotjd243.findbyhint.treasure.domain.TargetPoint;
 import org.apache.commons.lang3.builder.ToStringExclude;
 import org.junit.Test;
@@ -52,11 +53,13 @@ public class HintServiceTest {
         Long treasureId =treasureService.getTreasureIdByActive();
 
         String hunterId = "testHunter";
-        List<TargetPoint> result
-                = hintService.getTargetPoints(hunterId,treasureId);
+        List<Coordinates> result
+                = hintService.getTargetPoints(hunterId);
 
-        for (TargetPoint targetPoint : result) {
-            System.out.println("targetPoint.getTargetPointId() :: '"+targetPoint.getTargetPointId()+"'");
+        //화면에서 뿌려줄때 타고타고 하는것때문에 이렇게 바꿨어욥
+        for (Coordinates coordinates : result) {
+            System.out.println("coordinates.getLatitude() :: "+ coordinates.getLatitude());
+            System.out.println("coordinates.getLongitude() :: "+ coordinates.getLongitude());
         }
     }
 
