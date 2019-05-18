@@ -48,6 +48,7 @@ public class MissionService {
         this.hintService = hintService;
     }
 
+
     public int takePoint(final Long missionId) {
         final Mission mission = getMission(missionId);
         return successMissionService.isSuccess();
@@ -89,6 +90,13 @@ public class MissionService {
             plusPoint = successMissionService.isSuccess();
             hunterService.pointUpdate(hunter,plusPoint);
             hintService.addHint(hunterId,hinCount);
+
+            Long treasureId = treasureService.getTreasureIdByActive();
+            MissionInventory missionInventory = missionInventoryRepository.findByHunterIdAndTreasureId(HunterId.valueOf(hunterId),treasureId).get();
+            missionInventory.getMissionBook().getMissionBook().parallelStream()
+                    .filter(missionInventoryInfo -> missionInventoryInfo.getMissionId().compareTo(missionPostDto.getMissionId()) ==0)
+                    .forEach(MissionInventoryInfo::missionSuccess);
+            missionInventoryRepository.save(missionInventory);
         }
 
         System.out.println("hunterId :: '" + hunterId + "'");

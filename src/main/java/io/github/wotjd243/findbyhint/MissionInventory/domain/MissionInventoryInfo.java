@@ -36,6 +36,10 @@ public class MissionInventoryInfo {
         return new MissionInventoryInfo(missionId, question, answer, wrongAnswer);
     }
 
+    public void missionSuccess(){
+        this.status =MissionSuccessStatus.SUCCESS;
+    }
+
 
 
     // 미션 성공

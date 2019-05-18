@@ -14,6 +14,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Log
@@ -84,14 +85,21 @@ public class MissionInventoryService {
     // TODO (3) info 테이블에 없는 가장 낮은 번호의 missionKey를 가져온다.
     public List<Long> missionListToLongList(List<MissionInventoryInfo> ids) {
 
-        List<Long> list = new ArrayList<>();
+//        List<Long> list = new ArrayList<>();
+//
+//        for (MissionInventoryInfo info : ids) {
+//            System.out.println("info.getMissionId() :: '" + info.getMissionId() + "'");
+//            list.add(info.getMissionId());
+//        }
 
-        for (MissionInventoryInfo info : ids) {
-            System.out.println("info.getMissionId() :: '" + info.getMissionId() + "'");
-            list.add(info.getMissionId());
-        }
+        return ids.stream()
+                .filter(missionInventoryInfo ->missionInventoryInfo.getStatus() == MissionSuccessStatus.SUCCESS )
+                .map(MissionInventoryInfo::getMissionId)
+                .collect(Collectors.toList());
 
-        return list;
+
+
+//        return list;
     }
 
     // TODO (4) 현재 로그인한 hunter, 선택한 treasure id를 가져온다.
