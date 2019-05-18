@@ -1,13 +1,11 @@
 package io.github.wotjd243.findbyhint.treasure.application;
 
-import io.github.wotjd243.findbyhint.treasure.domain.QRCode;
-import io.github.wotjd243.findbyhint.treasure.domain.Treasure;
-import io.github.wotjd243.findbyhint.treasure.domain.TreasureRepository;
+import io.github.wotjd243.findbyhint.treasure.domain.*;
 import io.github.wotjd243.findbyhint.util.AES256Cipher;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.View;
 
 @Service
 @Log
@@ -15,24 +13,24 @@ public class QrCodeService {
 
     private final TreasureRepository treasureRepository;
     private final TreasureService treasureService;
+    private final TreasureEventService treasureEventService;
 
-    public QrCodeService(TreasureRepository treasureRepository, TreasureService treasureService) {
+    public QrCodeService(TreasureRepository treasureRepository, TreasureService treasureService, TreasureEventService treasureEventService) {
         this.treasureRepository = treasureRepository;
         this.treasureService = treasureService;
+        this.treasureEventService = treasureEventService;
     }
 
-    // TODO (5) 하나의 트랜잭션에 메소드 만들기
     @Transactional
     public String takeTreasure(String url){
         Long treasureId = treasureService.getTreasureIdByActive();
-        if(!treasureService.isExist(treasureId)){
-            new IllegalAccessException("진행중인 보물이 없습니다.");
-        }
 
         Treasure treasure = treasureService.getTreasure(treasureId);
-        if(!urlMatch(url,treasure.getQrCodeVO())){
-            new IllegalAccessException("잘못된 url 입니다.");
+        if(!(urlMatch(url,treasure.getQrCodeVO()))){
+            throw new IllegalArgumentException("잘못된 url 입니다.");
         }
+
+
 
         // COMPLETED 비밀번호 화면에 보여주어야함
         AES256Cipher cipher =AES256Cipher.getInstance();
@@ -42,13 +40,23 @@ public class QrCodeService {
         treasure.closeEvent();
         treasureRepository.save(treasure);
 
-        // TODO (4) 이벤트 발생으로 합격자 테이블에 들어감
-
-
+        // COMPLETED (4) 이벤트 발생 모든 헌터들에게 보물완료 되었다고 알려주기
+        treasureEventService.sendFindMesseage();
 
         return pwsd;
 
     }
+
+    public View currentQR(){
+        Long treasureId = treasureService.getTreasureIdByActive();
+
+        if(!treasureService.isExist(treasureId)){
+           throw new IllegalArgumentException("현재 진행중인 이벤트가 없어 QR코드를 못불러옵니다.");
+        }
+
+        return treasureService.getTreasure(treasureId).qrCodeView();
+    }
+
 
 
 
@@ -63,12 +71,10 @@ public class QrCodeService {
         log.info("url :: '"+url+"'");
         log.info("pwsd :: '"+ pwsd+"'");
 
+        log.info(" url.equals(pwsd) :: "+  url.equals(pwsd));
+
         return url.equals(pwsd);
     }
-
-
-
-
 
 
 

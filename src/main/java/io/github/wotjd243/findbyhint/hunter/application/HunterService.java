@@ -15,6 +15,7 @@ public class HunterService {
         this.repository = repository;
     }
 
+
     public void hunterCreate(Hunter hunter) {
         repository.save(hunter);
     }
