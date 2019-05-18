@@ -2,62 +2,139 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-    <title>Hello thymeleaf</title>
+    <title>FindByHint | Mission</title>
     <style>
-        .titleArea p {
-            font-size: 35px;
-            font-weight: bold;
-            color: #0d6de0;
+        .titleArea {
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+            top: 26%;
+            width: 100%;
+        }
+
+        .titleArea span {
+            font-size: 37px;
+            font-weight: 600;
+            letter-spacing: -1;
         }
 
         .missionArea {
-            text-align: center;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+            background-color: #fbfbfb;
+            margin: 0;
         }
 
         .question {
-            border: 1px solid #89c9f6;
-            border-radius: 10px;
-            padding: 15px;
+            padding: 20px;
             margin-bottom: 30px;
             font-size: 20px;
             font-weight: bold;
+            text-align: center;
         }
 
         #list button {
             border: none;
-            background: #89c9f6;
+            background: #1d8bcb;
             padding: 10px 20px;
-            margin: 0 10px;
+            margin: 0 0 20px;
             font-size: 19px;
             cursor: pointer;
             border-radius: 4px;
+            color: #fff;
+            display: block;
+            text-align: center;
         }
 
         #list button:hover {
-            color: #fff;
+            border: 1.6px solid #1d8bcb
+
         }
+
+        .titleWrap {
+            background-size: cover;
+            background-position: center;
+            background-color: #1d8bcb;
+            position: relative;
+            height: 278px;
+            color: #ffffea;
+        }
+
+        .missionContent {
+            z-index: 19;
+            margin: auto;
+            max-width: 910px;
+            width: 100%;
+        }
+
+        .missionQuestion {
+            width: 100%;
+            background-color: #fff;
+            margin-bottom: 55px;
+            -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+            box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+            padding-bottom: 6px;
+            word-wrap: break-word;
+            min-height: 800px;
+            opacity: 1;
+        }
+
+        .missionQuestion:first-of-type {
+            margin-top: -100px;
+        }
+
+        .missionBanner {
+            background-color: #1f89c3;
+            color: rgba(0, 0, 0, 1);
+            height: 8px;
+        }
+
+        .missionAnswer {
+            margin-left: 20px;
+        }
+
     </style>
 </head>
 <body>
 <div class="missionArea">
-
-    <div class="titleArea">
-        <p>Find By Hint!</p>
+    <div class="titleWrap">
+        <div class="titleArea">
+            <span>Find By Hint - Mission</span>
+        </div>
     </div>
 
-    <p class="question" id="question"></p>
+    <div class="missionContent">
+        <div class="missionQuestion">
+            <div class="missionBanner">
+
+            </div>
+            <p class="question" id="question"></p>
+            <div class="missionAnswer">
+
+                <div id="list"></div>
+            </div>
+        </div>
+
+    </div>
 
 <!--    <p class="question" th:text="|정답: ${mission.answer}|"></p>-->
 <!--    <p class="question" th:text="|오답: ${mission.wrongAnswer}|"></p>-->
 
-    <div id="list"></div>
-    <p id="result"></p>
 
-    <form action="/missionSubmit" id="f1" method="post">
-        <input th:type="hidden" id="missionId" name="missionId" th:value="${mission.missionId}">
-        <input th:type="hidden" id="answer" name="answer">
-        <input th:type="hidden" id="hunterAnswer" name="hunterAnswer">
-    </form>
+<p id="result"></p>
+
+<form action="/missionSubmit" id="f1" method="post">
+    <input th:type="hidden" id="missionId" name="missionId" th:value="${mission.missionId}">
+    <input th:type="hidden" id="answer" name="answer">
+    <input th:type="hidden" id="hunterAnswer" name="hunterAnswer">
+</form>
 </div>
 <script src="js/vendor/modernizr-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
