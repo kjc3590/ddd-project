@@ -76,15 +76,17 @@ public class MissionInventoryService {
 
             MissionInventoryInfo finalMissionInventoryInfo = missionInventoryInfo;
 
-            List<MissionInventoryInfo> missionInventoryInfos = missionInventory.getMissionBook().getMissionBook().parallelStream()
-                    .filter(missionInventoryInfo1 -> missionInventoryInfo1.getMissionId().compareTo(finalMissionInventoryInfo.getMissionId()) == 0 )
-                    .collect(Collectors.toList());
+            if(missionInventory.getMissionBook() != null){
+                List<MissionInventoryInfo> missionInventoryInfos = missionInventory.getMissionBook().getMissionBook().parallelStream()
+                        .filter(missionInventoryInfo1 -> missionInventoryInfo1.getMissionId().compareTo(finalMissionInventoryInfo.getMissionId()) == 0 )
+                        .collect(Collectors.toList());
 
-            List<MissionInventoryInfo>  originInfos = missionInventory.getMissionBook().getMissionBook();
+                List<MissionInventoryInfo>  originInfos = missionInventory.getMissionBook().getMissionBook();
 
-            originInfos.removeAll(missionInventoryInfos);
+                originInfos.removeAll(missionInventoryInfos);
 
-            missionInventory.setMissionBookAll(originInfos);
+                missionInventory.setMissionBookAll(originInfos);
+            }
 
             missionBook.addMissionBook(missionInventoryInfo);
             missionInventory.setMissionBook(missionBook);
