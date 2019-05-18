@@ -3,9 +3,47 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <title>Hello thymeleaf</title>
+    <style>
+        .titleArea p {
+            font-size: 35px;
+            font-weight: bold;
+            color: #0d6de0;
+        }
+
+        .missionArea {
+            text-align: center;
+        }
+
+        .question {
+            border: 1px solid #89c9f6;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #list button {
+            border: none;
+            background: #89c9f6;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 19px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        #list button:hover {
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
 <div class="missionArea">
+
+    <div class="titleArea">
+        <p>Find By Hint!</p>
+    </div>
 
     <p class="question" id="question"></p>
 
@@ -33,6 +71,9 @@
 
     console.log(b);
 
+    a = unescape(a);
+    b = unescape(b);
+
     b = b.replace("[", "").replace("]", "");
     b = b.split(',');
     b.push(a);
@@ -59,7 +100,10 @@
     function htmlEscape() {
         var q = "[[${mission.question}]]";
 
+        console.log(q);
+
         q = unescape(q);
+
         $("#question").html(q);
     }
 
