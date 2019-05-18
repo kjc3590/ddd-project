@@ -2,17 +2,140 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-    <title>Hello thymeleaf</title>
+    <title>FindByHint | Mission</title>
+    <style>
+        .titleArea {
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+            top: 26%;
+            width: 100%;
+        }
+
+        .titleArea span {
+            font-size: 37px;
+            font-weight: 600;
+            letter-spacing: -1;
+        }
+
+        .missionArea {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+            background-color: #fbfbfb;
+            margin: 0;
+        }
+
+        .question {
+            padding: 20px 0 0;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .question:last-of-type {
+            margin-bottom: 30px;
+        }
+
+        #list button {
+            border: none;
+            background: #1d8bcb;
+            padding: 10px 20px;
+            margin: 0 0 20px;
+            font-size: 19px;
+            cursor: pointer;
+            border-radius: 4px;
+            color: #fff;
+            text-align: center;
+        }
+
+        #list button:hover {
+            border: 1.6px solid #1d8bcb
+
+        }
+
+        .titleWrap {
+            background-size: cover;
+            background-position: center;
+            background-color: #1d8bcb;
+            position: relative;
+            height: 278px;
+            color: #ffffea;
+        }
+
+        .missionContent {
+            z-index: 19;
+            margin: auto;
+            max-width: 910px;
+            width: 100%;
+        }
+
+        .missionQuestion {
+            width: 100%;
+            background-color: #fff;
+            margin-bottom: 55px;
+            -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+            box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+            padding-bottom: 6px;
+            word-wrap: break-word;
+            min-height: 800px;
+            opacity: 1;
+        }
+
+        .missionQuestion:first-of-type {
+            margin-top: -100px;
+        }
+
+        .missionBanner {
+            background-color: #1f89c3;
+            color: rgba(0, 0, 0, 1);
+            height: 8px;
+        }
+
+        .missionAnswer {
+            text-align: center;
+        }
+
+    </style>
 </head>
 <body>
 <div class="missionArea">
-    <p class="question" th:text="|정답여부: ${sucessCheck}|"></p>
-    <p class="question" th:text="|획득포인트: ${plusPoint}|"></p>
-    <p class="question" th:text="|현재포인트: ${hunterPoint}|"></p>
-    <p class="question" th:text="|현재 총알개수: ${hunterBullet}|"></p>
+    <div class="titleWrap">
+        <div class="titleArea">
+            <span>Find By Hint - Mission</span>
+        </div>
+    </div>
 
-    <button type="button" onclick="location.href='/mission'">미션도전</button>
-    <button type="button" onclick="location.href='/'">홈으로</button>
+    <div class="missionContent">
+        <div class="missionQuestion">
+            <div class="missionBanner">
+
+            </div>
+            <p class="question" th:text="|정답여부: ${sucessCheck}|"></p>
+            <p class="question" th:text="|획득포인트: ${plusPoint}|"></p>
+            <p class="question" th:text="|현재포인트: ${hunterPoint}|"></p>
+            <p class="question" th:text="|현재 총알개수: ${hunterBullet}|"></p>
+
+            <div class="missionAnswer">
+
+                <div id="list">
+                    <button type="button" onclick="location.href='/mission'">미션도전</button>
+                    <button type="button" onclick="location.href='/'">홈으로</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+   <!-- <button type="button" onclick="location.href='/mission'">미션도전</button>
+    <button type="button" onclick="location.href='/'">홈으로</button>-->
 </div>
 <script src="js/vendor/modernizr-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
