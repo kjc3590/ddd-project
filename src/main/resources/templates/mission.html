@@ -99,7 +99,7 @@
         .missionAnswer {
             margin-left: 20px;
         }
-
+        button.asd {border: 1px solid #00d3f5 !important;}
     </style>
 </head>
 <body>
@@ -162,14 +162,24 @@
 
     var resultHtml = "";
     for (var i = 0; i < b.length; i++) {
-        resultHtml += "<button value='" + b[i] + "' onClick='choiceAnswer(" + i + ")'>" + b[i] + "</button>";
+        resultHtml += "<button " ;
+
+        if(a === b[i]){
+            resultHtml +=  "class='asd' " ;
+        }
+
+        resultHtml +=  "value='" + b[i] + "' onClick='choiceAnswer(" + i + ")'>" + b[i]  +"</button>";
+
     }
     console.log(resultHtml);
     $('#list').append(resultHtml);
 
+    $("."+a).addClass("asd");
+
     function choiceAnswer(answerIndex) {
 
         $('#answer').val(a);
+
         $('#hunterAnswer').val(b[answerIndex]);
         $('#f1').submit();
     }
