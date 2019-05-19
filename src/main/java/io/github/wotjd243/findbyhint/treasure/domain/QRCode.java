@@ -35,7 +35,7 @@ public class QRCode {
     private final static String prefixUrl;
 
     static {
-        prefixUrl = "http://192.168.0.3:8080:8080/treasure/findByHint?url=";
+            prefixUrl = "http://192.168.1.47:8080/treasure/findByHint?url=";
     }
 
     @Column(nullable = false)
